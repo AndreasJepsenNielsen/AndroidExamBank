@@ -1,5 +1,6 @@
 package com.example.bankapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        DatabaseReference userRef = database.getReference("/users/131188-2485");
+        
+        /*DatabaseReference userRef = database.getReference("/users/131188-2485");
         DatabaseReference userRef1 = database.getReference("/users/121195-3235");
 
         CustomerModel kasper = new CustomerModel("131188-2485","lovinstone@gmail.com","lovin123","Silkeborggade 41", "Kasper", "Lovin", "30563053");
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
         writeNewUser(kasper);
         readFromDatabaseTest(userRef);
         writeNewUser(andreas);
-        readFromDatabaseTest(userRef1);
+        readFromDatabaseTest(userRef1);*/
+        startActivity(new Intent(this,RegisterActivity.class));
 
     }
 
