@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BankApp</string>
+    <string name="email_login">E-Mail</string>
+    <string name="password_login">Password</string>
+    <string name="login_button">Login</string>
+    <string name="text_to_register_button">If you are not registered in the bank. Click the register button</string>
+    <string name="register_button">Register</string>
 </resources>
