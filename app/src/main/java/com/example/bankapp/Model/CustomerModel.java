@@ -9,6 +9,7 @@ public class CustomerModel {
     private String lastName;
     private String SSN;
     private String phoneNumber;
+    private DefaultAccountModel defaultAccount = new DefaultAccountModel();
 
     public CustomerModel(String SSN, String email, String password, String address, String firstName, String lastName, String phoneNumber) {
         this.SSN = SSN;
@@ -77,6 +78,14 @@ public class CustomerModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public DefaultAccountModel getDefaultAccount() {
+        return defaultAccount;
+    }
+
+    public void setDefaultAccount(DefaultAccountModel defaultAccount) {
+        this.defaultAccount = defaultAccount;
     }
 
     @Override

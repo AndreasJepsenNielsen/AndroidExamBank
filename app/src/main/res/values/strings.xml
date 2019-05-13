@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">BankApp</string>
+    <string name="payBills">Pay bills</string>
+    <string name="transferMoney">Transfer</string>
+    <string name="applyToNewAccount">Apply for accounts</string>
+
+    <!-- Accounts -->
+    <string name="defaultAccount">Default Account</string>
+    <string name="budgetAccount">Budget Account</string>
+    <string name="businessAccount">Business Account</string>
+    <string name="pensionAccount">Pension Account</string>
+    <string name="balance">Balance:</string>
+
     <string name="email_login">E-Mail</string>
     <string name="password_login">Password</string>
     <string name="login_button">Login</string>
