@@ -1,9 +1,13 @@
 package com.example.bankapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bankapp.Model.CustomerModel;
@@ -18,9 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-
 public class MainActivity extends AppCompatActivity {
+
+    Button loginButton;
+    Button registerButton;
+    EditText emailLogin;
+    EditText passwordLogin;
+    boolean valid = false;
 
     final String TAG = "MAINACTIVITY";
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -30,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         DatabaseReference userRef = database.getReference("/users/131188-2485");
         DatabaseReference userRef1 = database.getReference("/users/121195-3235");
@@ -42,6 +49,31 @@ public class MainActivity extends AppCompatActivity {
         writeNewUser(andreas);
         readFromDatabaseTest(userRef1);
 
+        loginButton = findViewById(R.id.button);
+        registerButton = findViewById(R.id.button2);
+        emailLogin = findViewById(R.id.editText);
+        passwordLogin = findViewById(R.id.editText2);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Login(emailLogin.getText().toString(), passwordLogin.getText().toString())){
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class );
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(MainActivity.this,
+                            "" , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void writeNewUser(CustomerModel customerToCreate){
@@ -72,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
-
     private void readFromDatabaseTest(DatabaseReference myRef){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,5 +120,29 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+    }
+
+    private Boolean Login(String email, String password ) {
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            valid = true;
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            valid = false;
+                        }
+                    }
+                });
+        return  valid;
     }
 }
