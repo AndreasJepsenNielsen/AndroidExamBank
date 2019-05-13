@@ -1,5 +1,6 @@
 package com.example.bankapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -74,6 +75,9 @@ public class RegisterActivity extends AppCompatActivity {
                             Password.getText().toString(), Address.getText().toString(), Firstname.getText().toString(),
                             Lastname.getText().toString(), Phonenumber.getText().toString());
                     writeNewUser(tempCustomer);
+
+                    Intent login = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(login);
                 }
             }
         });

@@ -1,6 +1,11 @@
 package com.example.bankapp.Model;
 
-public class CustomerModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
+public class CustomerModel implements Parcelable {
 
     private String email;
     private String password;
@@ -9,7 +14,10 @@ public class CustomerModel {
     private String lastName;
     private String SSN;
     private String phoneNumber;
-    private DefaultAccountModel defaultAccount = new DefaultAccountModel();
+    private ArrayList<AccountModel> accounts;
+    private AccountModel defaultAccount;
+    private AccountModel budgetAccount;
+
 
     public CustomerModel(String SSN, String email, String password, String address, String firstName, String lastName, String phoneNumber) {
         this.SSN = SSN;
@@ -19,10 +27,37 @@ public class CustomerModel {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.accounts = new ArrayList<>();
+        defaultAccount = new AccountModel(0.0,"DEFAULT");
+        budgetAccount = new AccountModel(0.0,"BUDGET");
+        this.accounts.add(defaultAccount);
+        this.accounts.add(budgetAccount);
     }
 
     public CustomerModel() {
     }
+
+    protected CustomerModel(Parcel in) {
+        email = in.readString();
+        password = in.readString();
+        address = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        SSN = in.readString();
+        phoneNumber = in.readString();
+    }
+
+    public static final Creator<CustomerModel> CREATOR = new Creator<CustomerModel>() {
+        @Override
+        public CustomerModel createFromParcel(Parcel in) {
+            return new CustomerModel(in);
+        }
+
+        @Override
+        public CustomerModel[] newArray(int size) {
+            return new CustomerModel[size];
+        }
+    };
 
     public String getEmail() {
         return email;
@@ -80,12 +115,12 @@ public class CustomerModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public DefaultAccountModel getDefaultAccount() {
-        return defaultAccount;
+    public ArrayList<AccountModel> getAccounts() {
+        return accounts;
     }
 
-    public void setDefaultAccount(DefaultAccountModel defaultAccount) {
-        this.defaultAccount = defaultAccount;
+    public void setAccounts(ArrayList<AccountModel> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
@@ -98,6 +133,23 @@ public class CustomerModel {
                 ", lastName='" + lastName + '\'' +
                 ", SSN='" + SSN + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", accounts=" + accounts +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(address);
+        parcel.writeString(firstName);
+        parcel.writeString(lastName);
+        parcel.writeString(SSN);
+        parcel.writeString(phoneNumber);
     }
 }

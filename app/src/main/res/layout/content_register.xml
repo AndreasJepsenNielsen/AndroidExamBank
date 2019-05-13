@@ -40,7 +40,7 @@
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="@string/Phonenumber"
-            android:inputType="textPhonetic"
+            android:inputType="number"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.643"
