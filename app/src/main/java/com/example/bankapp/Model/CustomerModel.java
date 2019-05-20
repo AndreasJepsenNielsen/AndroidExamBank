@@ -17,9 +17,10 @@ public class CustomerModel implements Parcelable {
     private ArrayList<AccountModel> accounts;
     private AccountModel defaultAccount;
     private AccountModel budgetAccount;
+    private String affiliate;
 
 
-    public CustomerModel(String SSN, String email, String password, String address, String firstName, String lastName, String phoneNumber) {
+    public CustomerModel(String SSN, String email, String password, String address, String firstName, String lastName, String phoneNumber, String affiliate) {
         this.SSN = SSN;
         this.email = email;
         this.password = password;
@@ -32,6 +33,7 @@ public class CustomerModel implements Parcelable {
         budgetAccount = new AccountModel(0.0,"BUDGET");
         this.accounts.add(defaultAccount);
         this.accounts.add(budgetAccount);
+        this.affiliate = affiliate;
     }
 
     public CustomerModel() {
@@ -123,6 +125,14 @@ public class CustomerModel implements Parcelable {
         this.accounts = accounts;
     }
 
+    public String getAffiliate() {
+        return affiliate;
+    }
+
+    public void setAffiliate(String affiliate) {
+        this.affiliate = affiliate;
+    }
+
     @Override
     public String toString() {
         return "CustomerModel{" +
@@ -134,6 +144,7 @@ public class CustomerModel implements Parcelable {
                 ", SSN='" + SSN + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", accounts=" + accounts +
+                ", affiliate='" + affiliate + '\'' +
                 '}';
     }
 
@@ -151,5 +162,6 @@ public class CustomerModel implements Parcelable {
         parcel.writeString(lastName);
         parcel.writeString(SSN);
         parcel.writeString(phoneNumber);
+        parcel.writeString(affiliate);
     }
 }

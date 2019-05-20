@@ -16,7 +16,7 @@ public class MenuActivity extends AppCompatActivity {
     Button transferBtn, payBillsBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn;
     TextView defaultAccountBalance;
     // TEST
-    CustomerModel andreas = new CustomerModel("121195-3235", "andreas@gmail.com", "andreas123", "Michael berings vang 10", "Andreas", "Nielsen", "31663421");
+    //CustomerModel andreas = new CustomerModel("121195-3235", "andreas@gmail.com", "andreas123", "Michael berings vang 10", "Andreas", "Nielsen", "31663421");
 
 
     @Override

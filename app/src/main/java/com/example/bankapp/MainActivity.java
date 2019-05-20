@@ -1,6 +1,7 @@
 package com.example.bankapp;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -186,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtra("user", currentUser);
                                     intent.putParcelableArrayListExtra("accounts", currentUser.getAccounts());
                                     startActivity(intent);
+                                }
+
+                                @Override
+                                public void onCallBackLocation(Location value) {
+
                                 }
                             },currentUserRef);
 
