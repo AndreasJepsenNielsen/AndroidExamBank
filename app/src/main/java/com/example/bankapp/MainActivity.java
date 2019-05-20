@@ -1,8 +1,12 @@
 package com.example.bankapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     final String TAG = "MAINACTIVITY";
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private Boolean mLocationPermissionGranted = false;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private DatabaseReference currentUserRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
         readFromDatabaseTest(userRef);
         writeNewUser(andreas);
         readFromDatabaseTest(userRef1);
+
 */
+
+
         loginButton = findViewById(R.id.button);
         registerButton = findViewById(R.id.button2);
         emailLogin = findViewById(R.id.editText);
@@ -61,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkLoginValidity()){
 
-                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString());
+
+                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference("Copenhagen/users/" + emailLogin.getText().toString().replace(".","")));
 
 
+                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference("Odense/users/" + emailLogin.getText().toString().replace(".","")));
 
                 }
             }
@@ -72,8 +86,14 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                if(ContextCompat.checkSelfPermission(MainActivity.this.getApplicationContext(),
+                        FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(MainActivity.this.getApplicationContext(),
+                        COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+                    Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                    startActivity(intent);
+                }else{
+                    getLocationPermission();
+                }
             }
         });
     }
@@ -82,6 +102,31 @@ public class MainActivity extends AppCompatActivity {
         EmailValidator validator = EmailValidator.getInstance();
         Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
         return validator.isValid(email);
+
+    }
+
+    private void getLocationPermission(){
+        String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+
+
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+
+
 
     }
 
@@ -160,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void Login(final String email, final String password ) {
+    private void Login(final String email, final String password, final DatabaseReference userRef) {
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -168,7 +213,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            DatabaseReference currentUserRef = database.getReference("/users/" + email.replace(".",""));
+
+
+
+                        currentUserRef = userRef;
+
+
 
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
@@ -176,17 +226,24 @@ public class MainActivity extends AppCompatActivity {
                             readFromDatabaseTest(new MyCallBack() {
                                 @Override
                                 public void onCallBack(CustomerModel value) {
-                                    System.out.println(value.getAccounts());
-                                    currentUser = value;
-                                    currentUser.setAccounts(value.getAccounts());
-                                    System.out.println("HAEJKWJEOKAW" + currentUser.getAccounts());
 
-                                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                                    try {
 
 
-                                    intent.putExtra("user", currentUser);
-                                    intent.putParcelableArrayListExtra("accounts", currentUser.getAccounts());
-                                    startActivity(intent);
+                                        System.out.println(value.getAccounts());
+                                        currentUser = value;
+                                        currentUser.setAccounts(value.getAccounts());
+                                        System.out.println("HAEJKWJEOKAW" + currentUser.getAccounts());
+
+                                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+
+
+                                        intent.putExtra("user", currentUser);
+                                        intent.putParcelableArrayListExtra("accounts", currentUser.getAccounts());
+                                        startActivity(intent);
+                                    }catch (NullPointerException npe){
+                                        return ;
+                                    }
                                 }
 
                                 @Override

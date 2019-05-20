@@ -35,10 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     final String TAG = "REGISTERACTIVITY";
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private Boolean mLocationPermissionGranted = false;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private String affiliate;
     private Location userLocation;
@@ -57,11 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        getLocationPermission();
-
-
-
 
 
         RegisterButton = (Button) findViewById(R.id.button);
@@ -82,7 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        if(mLocationPermissionGranted) {
+
+
+
             getDeviceLocation(new MyCallBack() {
                 @Override
                 public void onCallBack(CustomerModel value) {
@@ -108,16 +101,16 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
+
 
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 CheckValidity();
-
-                if(CheckValidity()){
-                    CustomerModel tempCustomer = new CustomerModel(SSN.getText().toString(),Email.getText().toString(),
+            try {
+                if (CheckValidity()) {
+                    CustomerModel tempCustomer = new CustomerModel(SSN.getText().toString(), Email.getText().toString(),
                             Password.getText().toString(), Address.getText().toString(), Firstname.getText().toString(),
                             Lastname.getText().toString(), Phonenumber.getText().toString(), affiliate);
                     writeNewUser(tempCustomer);
@@ -125,6 +118,9 @@ public class RegisterActivity extends AppCompatActivity {
                     Intent login = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(login);
                 }
+            }catch(NullPointerException Npe){
+                Toast.makeText(RegisterActivity.this,"Make sure to allow the app to use your location", Toast.LENGTH_LONG).show();
+            }
             }
         });
 
@@ -290,7 +286,6 @@ public class RegisterActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         Log.d(TAG,"getDeviceLocation: getting current location");
         try {
-            if (mLocationPermissionGranted) {
                 Task location = fusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
@@ -309,32 +304,17 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
+
         } catch (SecurityException SE) {
             Log.d(TAG,"getDeviceLocation: SecurityException" + SE.getMessage());
         }
     }
 
-    private void getLocationPermission(){
-        String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                mLocationPermissionGranted = true;
 
-            }else{
-                ActivityCompat.requestPermissions(this,
-                        permissions,
-                        LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        }else{
-            ActivityCompat.requestPermissions(this,
-                    permissions,
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        }
-
+    private void restart(){
+        finish();
+        startActivity(getIntent());
     }
 
 

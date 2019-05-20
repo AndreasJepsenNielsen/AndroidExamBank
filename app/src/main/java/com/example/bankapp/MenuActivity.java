@@ -66,7 +66,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
-
     }
 
     private void init() {
