@@ -18,15 +18,16 @@ public class DepositActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
-    AccountModel account = getIntent().getParcelableExtra("account");
-    CustomerModel user = getIntent().getParcelableExtra("user");
+    AccountModel account;
+    CustomerModel user;
     Button depositButton;
     EditText depositField;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
-
+        account = getIntent().getParcelableExtra("account");
+        user = getIntent().getParcelableExtra("user");
         depositButton = findViewById(R.id.depositButton);
         depositField  = findViewById(R.id.depositField);
         depositButton.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +65,9 @@ public class DepositActivity extends AppCompatActivity {
 
         }
         try {
-            myref.child(user.getAffiliate()).child(user.getEmail().replace(".","")).child("accounts").child(number).child("balance").setValue(amount);
+
+            myref.child("/" + user.getAffiliate() + "/users/" + user.getEmail().replace(".","") + "/accounts/" + number + "/balance").setValue(amount + account.getBalance());
+
         } catch (Exception e) {
             e.printStackTrace();
         }

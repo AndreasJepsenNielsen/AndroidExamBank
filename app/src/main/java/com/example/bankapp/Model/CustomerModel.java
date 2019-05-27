@@ -47,6 +47,7 @@ public class CustomerModel implements Parcelable {
         lastName = in.readString();
         SSN = in.readString();
         phoneNumber = in.readString();
+        affiliate = in.readString();
     }
 
     public static final Creator<CustomerModel> CREATOR = new Creator<CustomerModel>() {

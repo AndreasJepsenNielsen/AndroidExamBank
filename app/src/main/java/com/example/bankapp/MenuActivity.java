@@ -37,7 +37,10 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
+                System.out.println(userDetails.getAffiliate());
+                System.out.println(userDetails.getFirstName());
                 intent.putExtra("user", userDetails);
+
                 intent.putExtra("account", accounts.get(0));
                 startActivity(intent);
             }

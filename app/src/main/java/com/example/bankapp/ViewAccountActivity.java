@@ -41,6 +41,7 @@ public class ViewAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewAccountActivity.this, DepositActivity.class);
+                System.out.println(userDetails.getAffiliate());
                 intent.putExtra("user", userDetails);
                 intent.putExtra("account", account);
                 startActivity(intent);
