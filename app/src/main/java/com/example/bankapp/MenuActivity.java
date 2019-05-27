@@ -15,6 +15,9 @@ import java.util.ArrayList;
 public class MenuActivity extends AppCompatActivity {
     Button transferBtn, payBillsBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn;
     TextView defaultAccountBalance;
+
+    CustomerModel userDetails;
+    ArrayList<AccountModel> accounts;
     // TEST
     //CustomerModel andreas = new CustomerModel("121195-3235", "andreas@gmail.com", "andreas123", "Michael berings vang 10", "Andreas", "Nielsen", "31663421");
 
@@ -24,17 +27,67 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-
-
-
+         userDetails = getIntent().getParcelableExtra("user");
+         accounts = getIntent().getParcelableArrayListExtra("accounts");
 
         init();
         displayAccounts();
+
+        defaultAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
+                intent.putExtra("user", userDetails);
+                intent.putExtra("account", accounts.get(0));
+                startActivity(intent);
+            }
+        });
+
+        budgetAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
+                intent.putExtra("user", userDetails);
+                intent.putExtra("account", accounts.get(1));
+                startActivity(intent);
+            }
+        });
+
+        businessAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
+                intent.putExtra("user", userDetails);
+                intent.putExtra("account", accounts.get(2));
+                startActivity(intent);
+            }
+        });
+
+        pensionAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
+                intent.putExtra("user", userDetails);
+                intent.putExtra("account", accounts.get(3));
+                startActivity(intent);
+            }
+        });
+
+        /*savingsAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
+                intent.putExtra("user", userDetails);
+                intent.putExtra("account", accounts.get(4));
+                startActivity(intent);
+            }
+        });
+        */
+
     }
 
     private void displayAccounts(){
-        CustomerModel userDetails = getIntent().getParcelableExtra("user");
-        ArrayList<AccountModel> accounts = getIntent().getParcelableArrayListExtra("accounts");
+
         System.out.println(accounts);
 
         for (int i = 0; i < accounts.size() ; i++) {
@@ -65,11 +118,10 @@ public class MenuActivity extends AppCompatActivity {
                // savingsAccountBtn.setVisibility(View.GONE);
             }
         }
-
     }
 
+
     private void init() {
-        transferBtn = findViewById(R.id.transferBtn);
         payBillsBtn = findViewById(R.id.payBillsBtn);
         applyAccountBtn = findViewById(R.id.applyAccountBtn);
         defaultAccountBalance = findViewById(R.id.defaultAccountBalance);
@@ -79,8 +131,6 @@ public class MenuActivity extends AppCompatActivity {
         pensionAccountBtn = findViewById(R.id.pensionAccountBtn);
         businessAccountBtn.setVisibility(View.GONE);
         //savingsAccountBtn = findViewById()
-
-
 
         // TEST
         //andreas.getDefaultAccount().setBalance(390.00);

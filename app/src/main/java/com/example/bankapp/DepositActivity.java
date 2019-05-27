@@ -2,10 +2,8 @@ package com.example.bankapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.example.bankapp.Model.AccountModel;
 
-import java.util.ArrayList;
 
 public class DepositActivity extends AppCompatActivity {
 
@@ -16,6 +14,4 @@ public class DepositActivity extends AppCompatActivity {
 
         AccountModel accounts = getIntent().getParcelableExtra("account");
     }
-
-
 }

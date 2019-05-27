@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
         readFromDatabaseTest(userRef1);
 
 */
-
-
         loginButton = findViewById(R.id.button);
         registerButton = findViewById(R.id.button2);
         emailLogin = findViewById(R.id.editText);
@@ -78,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                         Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference("Odense/users/" + emailLogin.getText().toString().replace(".","")));
-
                 }
             }
         });
@@ -169,13 +166,11 @@ public class MainActivity extends AppCompatActivity {
         if(passwordLogin.getText().toString().isEmpty() || passwordLogin.getText().toString().length() < 7){
             Toast.makeText(this, "Must be atleast 8 characters", Toast.LENGTH_LONG).show();
             return false;
-
         }
 
         if(checkPassword(passwordLogin.getText().toString())){
             Toast.makeText(this, "Must contain atleast one uppercase letter and a number", Toast.LENGTH_LONG).show();
             return false;
-
         }
 
         return true;
@@ -193,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
                 Log.d(TAG, "Value is: " + currentUser);
                 myCallBack.onCallBack(user);
-
             }
 
             @Override
@@ -214,11 +208,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-
-
                         currentUserRef = userRef;
-
-
 
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
@@ -228,15 +218,12 @@ public class MainActivity extends AppCompatActivity {
                                 public void onCallBack(CustomerModel value) {
 
                                     try {
-
-
                                         System.out.println(value.getAccounts());
                                         currentUser = value;
                                         currentUser.setAccounts(value.getAccounts());
                                         System.out.println("HAEJKWJEOKAW" + currentUser.getAccounts());
 
                                         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-
 
                                         intent.putExtra("user", currentUser);
                                         intent.putParcelableArrayListExtra("accounts", currentUser.getAccounts());
@@ -248,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCallBackLocation(Location value) {
-
                                 }
                             },currentUserRef);
 
@@ -258,11 +244,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
-
     }
-
 }
