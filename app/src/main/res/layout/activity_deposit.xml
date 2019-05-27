@@ -6,4 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".DepositActivity">
 
+    <Button
+        android:id="@+id/depositButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="97dp"
+        android:text="@string/depositToAccount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/depositField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="290dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="@string/depositAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

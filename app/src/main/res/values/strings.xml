@@ -3,6 +3,10 @@
     <string name="payBills">Pay bills</string>
     <string name="transferMoney">Transfer</string>
     <string name="applyToNewAccount">Apply for accounts</string>
+    <string name="depositToAccount">Deposit</string>
+    <string name="depositAmount">Amount To Deposit</string>
+
+
 
     <!-- Accounts -->
     <string name="defaultAccount">Default Account</string>
