@@ -1,15 +1,11 @@
 package com.example.bankapp;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -54,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         RegisterButton = (Button) findViewById(R.id.button);
         SSN = findViewById(R.id.editText3);
         Email = findViewById(R.id.editText4);
@@ -73,13 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-
-
             getDeviceLocation(new MyCallBack() {
                 @Override
                 public void onCallBack(CustomerModel value) {
-
                 }
 
                 @Override
@@ -123,12 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
             }
         });
-
-
-
     }
-
-
 
     private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
         double theta = lon1 - lon2;
