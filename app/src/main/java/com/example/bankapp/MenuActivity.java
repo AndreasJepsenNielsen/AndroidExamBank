@@ -13,7 +13,7 @@ import com.example.bankapp.Model.CustomerModel;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
-    Button transferBtn, payBillsBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn;
+    Button transferBtn, payBillsBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn;
     TextView defaultAccountBalance;
 
     CustomerModel userDetails;
@@ -76,7 +76,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        /*savingsAccountBtn.setOnClickListener(new View.OnClickListener() {
+        savingsAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
@@ -85,7 +85,20 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        */
+
+
+        applyAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent applyForAccounts = new Intent(MenuActivity.this, ApplyForAccountsActivity.class);
+                applyForAccounts.putExtra("user", userDetails);
+                applyForAccounts.putParcelableArrayListExtra("accounts", accounts);
+                System.out.println("USERAPPLY: " + userDetails);
+                System.out.println("ACCOUNTSAPPLY: " + accounts);
+
+                startActivity(applyForAccounts);
+            }
+        });
 
     }
 
@@ -93,33 +106,38 @@ public class MenuActivity extends AppCompatActivity {
 
         System.out.println(accounts);
 
+
         for (int i = 0; i < accounts.size() ; i++) {
-            if(accounts.get(i).getType().equals("DEFAULT")){
-                System.out.println("INDE");
-                defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-            }
+           try {
+               if(accounts.get(i).getType().equals("DEFAULT")){
+                   System.out.println("INDE");
+                   defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+               }
 
-            if(accounts.get(i).getType().equals("BUDGET")) {
-                budgetAccountBtn.setText(getString(R.string.budgetAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-            }
+               if(accounts.get(i).getType().equals("BUDGET")) {
+                   budgetAccountBtn.setText(getString(R.string.budgetAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+               }
 
-            if(accounts.get(i).getType().equals("BUSINESS")){
-                businessAccountBtn.setText(getString(R.string.businessAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-            }else{
-                businessAccountBtn.setVisibility(View.GONE);
-            }
+               if(accounts.get(i).getType().equals("BUSINESS")){
+                   businessAccountBtn.setVisibility(View.VISIBLE);
+                   businessAccountBtn.setText(getString(R.string.businessAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+               }
 
-            if(accounts.get(i).getType().equals("PENSION")){
-                pensionAccountBtn.setText(getString(R.string.pensionAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-            }else{
-                pensionAccountBtn.setVisibility(View.GONE);
-            }
+               if(accounts.get(i).getType().equals("SAVINGS")){
+                   savingsAccountBtn.setVisibility(View.VISIBLE);
+                   savingsAccountBtn.setText(getString(R.string.savingsAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+               }
 
-            if(accounts.get(i).getType().equals("SAVINGS")){
-                //savingsAccountBtn.setText(getString(R.string.savingsAccount) + getString(R.string.balance) + userDetails.getAccounts().get(i).getBalance());
-            }else{
-               // savingsAccountBtn.setVisibility(View.GONE);
-            }
+               if(accounts.get(i).getType().equals("PENSION")){
+                   pensionAccountBtn.setVisibility(View.VISIBLE);
+                   pensionAccountBtn.setText(getString(R.string.pensionAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+               }
+           }
+           catch (NullPointerException npE) {
+               System.out.println(npE);
+           }
+
+
         }
     }
 
@@ -132,8 +150,14 @@ public class MenuActivity extends AppCompatActivity {
         budgetAccountBtn = findViewById(R.id.budgetAccountBtn);
         businessAccountBtn = findViewById(R.id.businessAccountBtn);
         pensionAccountBtn = findViewById(R.id.pensionAccountBtn);
+        savingsAccountBtn = findViewById(R.id.savingsAccountBtn);
+
         businessAccountBtn.setVisibility(View.GONE);
-        //savingsAccountBtn = findViewById()
+        pensionAccountBtn.setVisibility(View.GONE);
+        savingsAccountBtn.setVisibility(View.GONE);
+
+
+
 
         // TEST
         //andreas.getDefaultAccount().setBalance(390.00);

@@ -6,9 +6,22 @@
     <string name="DepositMoney">Deposit</string>
     <string name="AccountInViewActivity">Account</string>
     <string name="applyToNewAccount">Apply for accounts</string>
+    <string name="applyForAccount">Apply for the account</string>
     <string name="depositToAccount">Deposit</string>
     <string name="depositAmount">Amount To Deposit</string>
 
+    <string-array name="applyForAccountsItems">
+        <item>Choose an account to apply for</item>
+        <item>Business account</item>
+        <item>Savings account</item>
+        <item>Pension account</item>
+    </string-array>
+
+    <string name="BUSINESS">BUSINESS</string>
+    <string name="SAVINGS">SAVINGS</string>
+    <string name="PENSION">PENSION</string>
+
+    <string name="chooseAcc">Please choose an account</string>
 
 
     <!-- Accounts -->
