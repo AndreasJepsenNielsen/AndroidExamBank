@@ -71,11 +71,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(checkLoginValidity()){
 
+                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathCPHSlashUser) + emailLogin.getText().toString().replace(".","")));
 
-                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference("Copenhagen/users/" + emailLogin.getText().toString().replace(".","")));
-
-
-                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference("Odense/users/" + emailLogin.getText().toString().replace(".","")));
+                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathOdenseSlashUser) + emailLogin.getText().toString().replace(".","")));
                 }
             }
         });
@@ -109,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-
-
-
+                
             }else{
                 ActivityCompat.requestPermissions(this,
                         permissions,

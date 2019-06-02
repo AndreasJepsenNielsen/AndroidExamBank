@@ -47,11 +47,11 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
         switch (position) {
             case 1:
                 if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])){
-                    accountName = "BUSINESS";
+                    accountName = getString(R.string.BUSINESS);
                 }else if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])){
-                    accountName = "SAVINGS";
+                    accountName = getString(R.string.SAVINGS);
                 }else if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])){
-                accountName = "PENSION";
+                accountName = getString(R.string.PENSION);
 
                 }
 
@@ -59,15 +59,15 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
             case 2:
                 if(items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])){
-                    accountName = "SAVINGS";
+                    accountName = getString(R.string.SAVINGS);
                 }else if(items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])){
-                    accountName = "PENSION";
+                    accountName = getString(R.string.PENSION);
 
                 }
                 break;
 
             case 3:
-                accountName = getString(R.string.typePension);
+                accountName = getString(R.string.PENSION);
                 break;
         }
 
@@ -92,23 +92,23 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
 
     private void applyForAccount(String type, AccountModel newAccount){
-        String number = "0";
-        if(type.equals(getString(R.string.typeBusiness))) {
+        String number = getString(R.string.zero);
+        if(type.equals(getString(R.string.BUSINESS))) {
             adapter.notifyDataSetChanged();
-            number = "2";
+            number = getString(R.string.two);
         }
-        else if(type.equals(R.string.typeSavings)) {
+        else if(type.equals(R.string.SAVINGS)) {
             adapter.notifyDataSetChanged();
-            number = "3";
+            number = getString(R.string.three);
         }
-        else if(type.equals(R.string.typePension)) {
+        else if(type.equals(R.string.PENSION)) {
             adapter.notifyDataSetChanged();
-            number = "4";
+            number = getString(R.string.four);
         }
 
 
         try {
-           myref.child("/" + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
+           myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                 for (int j = 0; j < items.size() ; j++) {
 
 
-                    if (accountArrayList.get(i).getType().equals("BUSINESS") && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
+                    if (accountArrayList.get(i).getType().equals(getString(R.string.BUSINESS)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
                         System.out.println(items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1]));
                         System.out.println("jeg er business");
 
@@ -148,7 +148,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
                     }
 
-                    if (accountArrayList.get(i).getType().equals("SAVINGS") && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
+                    if (accountArrayList.get(i).getType().equals(getString(R.string.SAVINGS)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
                         System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[2]);
                         System.out.println(items.get(j));
                         System.out.println("jeg er savings");
@@ -157,7 +157,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
                     }
 
-                    if (accountArrayList.get(i).getType().equals("PENSION") && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
+                    if (accountArrayList.get(i).getType().equals(getString(R.string.PENSION)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
                         System.out.println("jeg er pension");
                         items.remove(j);
 

@@ -46,20 +46,20 @@ public class DepositActivity extends AppCompatActivity {
 
     private void depositMoney(double amount){
         String number = getString(R.string.zero);
-        if(account.getType().equals(getString(R.string.typeBudget))){
+        if(account.getType().equals(getString(R.string.BUDGET))){
             number = getString(R.string.one);
         }
 
-        if(account.getType().equals(getString(R.string.typeBusiness))){
+        if(account.getType().equals(getString(R.string.BUSINESS))){
             number = getString(R.string.two);
 
         }
 
-        if(account.getType().equals(getString(R.string.typePension))){
+        if(account.getType().equals(getString(R.string.PENSION))){
             number = getString(R.string.three);
 
         }
-        if(account.getType().equals(getString(R.string.typeSavings))){
+        if(account.getType().equals(getString(R.string.SAVINGS))){
             number = getString(R.string.four);
 
         }

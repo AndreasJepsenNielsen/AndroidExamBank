@@ -17,12 +17,6 @@
         <item>Pension account</item>
     </string-array>
 
-    <string name="BUDGET">BUDGET</string>
-    <string name="DEFAULT">DEFAULT</string>
-    <string name="BUSINESS">BUSINESS</string>
-    <string name="SAVINGS">SAVINGS</string>
-    <string name="PENSION">PENSION</string>
-
     <string name="chooseAcc">Please choose an account</string>
 
 
@@ -61,15 +55,17 @@
     <!-- MainActivity -->
     <string name="intentUser">user</string>
     <string name="intentAccounts">accounts</string>
-    <string name="typeDefualt">DEFAULT</string>
-    <string name="typeBudget">BUDGET</string>
-    <string name="typeBusiness">BUSINESS</string>
-    <string name="typeSavings">SAVINGS</string>
-    <string name="typePension">PENSION</string>
+    <string name="pathCPHSlashUser">Copenhagen/users/</string>
+    <string name="pathOdenseSlashUser">Odense/users/</string>
 
     <!-- applyForAccountActivity -->
     <string name="pathUserSlash">/users/</string>
     <string name="pathAccountSlash">/accounts/</string>
+    <string name="BUDGET">BUDGET</string>
+    <string name="DEFAULT">DEFAULT</string>
+    <string name="BUSINESS">BUSINESS</string>
+    <string name="SAVINGS">SAVINGS</string>
+    <string name="PENSION">PENSION</string>
 
     <!-- DepositActivity -->
     <string name="pathBalance">/balance</string>
