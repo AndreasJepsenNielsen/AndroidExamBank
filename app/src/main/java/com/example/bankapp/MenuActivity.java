@@ -28,8 +28,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-         userDetails = getIntent().getParcelableExtra("user");
-         accounts = getIntent().getParcelableArrayListExtra("accounts");
+         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
+         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
 
         init();
         displayAccounts();
@@ -98,8 +98,8 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent applyForAccounts = new Intent(MenuActivity.this, ApplyForAccountsActivity.class);
-                applyForAccounts.putExtra("user", userDetails);
-                applyForAccounts.putParcelableArrayListExtra("accounts", accounts);
+                applyForAccounts.putExtra(getString(R.string.intentUser), userDetails);
+                applyForAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 System.out.println("USERAPPLY: " + userDetails);
                 System.out.println("ACCOUNTSAPPLY: " + accounts);
 
@@ -132,26 +132,26 @@ public class MenuActivity extends AppCompatActivity {
 
         for (int i = 0; i < accounts.size() ; i++) {
            try {
-               if(accounts.get(i).getType().equals("DEFAULT")){
+               if(accounts.get(i).getType().equals(getString(R.string.typeDefualt))){
                    System.out.println("INDE");
                    defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                }
 
-               if(accounts.get(i).getType().equals("BUDGET")) {
+               if(accounts.get(i).getType().equals(getString(R.string.typeBudget))) {
                    budgetAccountBtn.setText(getString(R.string.budgetAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                }
 
-               if(accounts.get(i).getType().equals("BUSINESS")){
+               if(accounts.get(i).getType().equals(getString(R.string.typeBusiness))){
                    businessAccountBtn.setVisibility(View.VISIBLE);
                    businessAccountBtn.setText(getString(R.string.businessAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                }
 
-               if(accounts.get(i).getType().equals("SAVINGS")){
+               if(accounts.get(i).getType().equals(getString(R.string.typeSavings))){
                    savingsAccountBtn.setVisibility(View.VISIBLE);
                    savingsAccountBtn.setText(getString(R.string.savingsAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                }
 
-               if(accounts.get(i).getType().equals("PENSION")){
+               if(accounts.get(i).getType().equals(getString(R.string.typePension))){
                    pensionAccountBtn.setVisibility(View.VISIBLE);
                    pensionAccountBtn.setText(getString(R.string.pensionAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                }

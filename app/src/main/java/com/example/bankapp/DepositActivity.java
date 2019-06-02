@@ -25,8 +25,8 @@ public class DepositActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
-        account = getIntent().getParcelableExtra("account");
-        user = getIntent().getParcelableExtra("user");
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
+        user = getIntent().getParcelableExtra(getString(R.string.intentUser));
         depositButton = findViewById(R.id.depositButton);
         depositField  = findViewById(R.id.depositField);
         depositButton.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +35,7 @@ public class DepositActivity extends AppCompatActivity {
                 if( !depositField.getText().toString().isEmpty() && Double.parseDouble(depositField.getText().toString()) > 0.0){
                     depositMoney(Double.parseDouble(depositField.getText().toString()));
                 }else{
-                    Toast.makeText(DepositActivity.this, "Make Sure you deposit a positive amount",Toast.LENGTH_LONG).show();
+                    Toast.makeText(DepositActivity.this, getString(R.string.depositPositiveAmount),Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -45,27 +45,27 @@ public class DepositActivity extends AppCompatActivity {
 
 
     private void depositMoney(double amount){
-        String number = "0";
-        if(account.getType().equals( "BUDGET")){
-            number = "1";
+        String number = getString(R.string.zero);
+        if(account.getType().equals(getString(R.string.typeBudget))){
+            number = getString(R.string.one);
         }
 
-        if(account.getType().equals("BUSINESS")){
-            number = "2";
+        if(account.getType().equals(getString(R.string.typeBusiness))){
+            number = getString(R.string.two);
 
         }
 
-        if(account.getType().equals("PENSION")){
-            number = "3";
+        if(account.getType().equals(getString(R.string.typePension))){
+            number = getString(R.string.three);
 
         }
-        if(account.getType().equals("SAVINGS")){
-            number = "4";
+        if(account.getType().equals(getString(R.string.typeSavings))){
+            number = getString(R.string.four);
 
         }
         try {
 
-            myref.child("/" + user.getAffiliate() + "/users/" + user.getEmail().replace(".","") + "/accounts/" + number + "/balance").setValue(amount + account.getBalance());
+            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(amount + account.getBalance());
 
         } catch (Exception e) {
             e.printStackTrace();

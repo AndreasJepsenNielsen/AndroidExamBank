@@ -59,15 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
         Lastname = findViewById(R.id.editText2);
         Phonenumber = findViewById(R.id.editText);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
             getDeviceLocation(new MyCallBack() {
                 @Override
                 public void onCallBack(CustomerModel value) {
@@ -84,11 +75,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if(copenhagen < odense){
                         System.out.println("Du er tættest på kbh");
-                        affiliate = "Copenhagen";
+                        affiliate = getString(R.string.copenhagen);
 
                     }else{
                         System.out.println("Du er tættest på odense");
-                        affiliate = "Odense";
+                        affiliate = getString(R.string.odense);
                     }
                 }
             });
@@ -110,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(login);
                 }
             }catch(NullPointerException Npe){
-                Toast.makeText(RegisterActivity.this,"Make sure to allow the app to use your location", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this,getString(R.string.allowLocation), Toast.LENGTH_LONG).show();
             }
             }
         });
@@ -148,56 +139,56 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean CheckValidity(){
         if(SSN.getText().toString().isEmpty() || SSN.getText().length() < 10 || SSN.getText().length() > 10){
-            Toast.makeText(this, "SSN must be 10 characters long", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.ssn10Characters), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(Email.getText().toString().isEmpty()){
-            Toast.makeText(this, "Email must not be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(!isValidEmailAddress(Email.getText().toString())){
-            Toast.makeText(this, "Email is not valid",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.emailNotValid),Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(Password.getText().toString().isEmpty() || Password.getText().toString().length() < 8){
-            Toast.makeText(this, "Must be atleast 8 characters", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.mustBe8Characters), Toast.LENGTH_LONG).show();
             return false;
 
         }
 
         if(checkPassword(Password.getText().toString())){
-            Toast.makeText(this, "Must contain atleast one uppercase letter and a number", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
 
         }
 
         if(Address.getText().toString().isEmpty()){
-            Toast.makeText(this,"Address must not be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.addressNotEmpty), Toast.LENGTH_LONG).show();
             return false;
 
         }
 
         if(Firstname.getText().toString().isEmpty()){
-            Toast.makeText(this,"Firstname must not be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.firstnameNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(Lastname.getText().toString().isEmpty()){
-            Toast.makeText(this,"Lastname must not be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.lastnameNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(Phonenumber.getText().toString().isEmpty() || Phonenumber.getText().toString().length()< 8 ||
                 Phonenumber.getText().toString().length() > 8){
-            Toast.makeText(this, "Phonenumber must not be empty or greater or less than 8 digits", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.phonenumberAuth), Toast.LENGTH_LONG).show();
 
             return false;
         }
@@ -242,7 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         String emailNotDot = fn[0] + fn[1].replace(".","");
         System.out.println("KIG HER ANDREAS" + emailNotDot);
-        database.getReference(affiliate + "/users").child(emailNotDot).setValue(testCustomer1);
+        database.getReference(affiliate + getString(R.string.pathUser)).child(emailNotDot).setValue(testCustomer1);
 
         createAuthUser(customerToCreate.getEmail(), customerToCreate.getPassword());
 
@@ -260,7 +251,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         }else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                            Toast.makeText(RegisterActivity.this, getString(R.string.authenticationFailed),
                                     Toast.LENGTH_SHORT).show();
 
                         }

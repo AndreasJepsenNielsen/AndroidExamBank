@@ -50,4 +50,46 @@
     <string name="Phonenumber">Phonenumber</string>
     <string name="Password">Password</string>
     <string name="Register">Register</string>
+
+    <!-- MainActivity -->
+    <string name="emailNotEmpty">Email must not be empty</string>
+    <string name="emailNotValid">Email is not valid</string>
+    <string name="mustBe8Characters">Must be atleast 8 characters</string>
+    <string name="mustContainUppercaseLetterAndNumber">Must contain atleast one uppercase letter and a number</string>
+    <string name="authenticationFailed">Authentication failed</string>
+
+    <!-- MainActivity -->
+    <string name="intentUser">user</string>
+    <string name="intentAccounts">accounts</string>
+    <string name="typeDefualt">DEFAULT</string>
+    <string name="typeBudget">BUDGET</string>
+    <string name="typeBusiness">BUSINESS</string>
+    <string name="typeSavings">SAVINGS</string>
+    <string name="typePension">PENSION</string>
+
+    <!-- applyForAccountActivity -->
+    <string name="pathUserSlash">/users/</string>
+    <string name="pathAccountSlash">/accounts/</string>
+
+    <!-- DepositActivity -->
+    <string name="pathBalance">/balance</string>
+    <string name="depositPositiveAmount">Make Sure you deposit a positive amount</string>
+    <string name="pathSlash">/</string>
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+
+    <!-- RegisterActivity -->
+    <string name="pathUser">/users</string>
+    <string name="phonenumberAuth">Phonenumber must not be empty or greater or less than 8 digits</string>
+    <string name="lastnameNotEmpty">Lastname must not be empty</string>
+    <string name="firstnameNotEmpty">Firstname must not be empty</string>
+    <string name="addressNotEmpty">Address must not be empty</string>
+    <string name="ssn10Characters">SSN must be 10 characters long</string>
+    <string name="allowLocation">Make sure to allow the app to use your location</string>
+    <string name="copenhagen">Copenhagen</string>
+    <string name="odense">Odense</string>
+
 </resources>

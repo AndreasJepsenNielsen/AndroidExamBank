@@ -27,8 +27,8 @@ public class ViewAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_account);
 
-        userDetails = getIntent().getParcelableExtra("user");
-        account = getIntent().getParcelableExtra("account");
+        userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
 
         accountView = findViewById(R.id.AccountBtn2);
         transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
@@ -41,8 +41,8 @@ public class ViewAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewAccountActivity.this, DepositActivity.class);
-                intent.putExtra("user", userDetails);
-                intent.putExtra("account", account);
+                intent.putExtra(getString(R.string.intentUser), userDetails);
+                intent.putExtra(getString(R.string.intentAccounts), account);
                 startActivity(intent);
             }
         });

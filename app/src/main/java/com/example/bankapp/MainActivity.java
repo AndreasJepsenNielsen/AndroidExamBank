@@ -152,24 +152,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(emailLogin.getText().toString().isEmpty()){
-            Toast.makeText(this, "Email must not be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(!isValidEmailAddress(emailLogin.getText().toString())){
-            Toast.makeText(this, "Email is not valid",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.emailNotValid),Toast.LENGTH_LONG).show();
 
             return false;
         }
 
         if(passwordLogin.getText().toString().isEmpty() || passwordLogin.getText().toString().length() < 7){
-            Toast.makeText(this, "Must be atleast 8 characters", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.mustBe8Characters), Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(checkPassword(passwordLogin.getText().toString())){
-            Toast.makeText(this, "Must contain atleast one uppercase letter and a number", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -225,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
 
                                         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 
-                                        intent.putExtra("user", currentUser);
-                                        intent.putParcelableArrayListExtra("accounts", currentUser.getAccounts());
+                                        intent.putExtra(getString(R.string.intentUser), currentUser);
+                                        intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), currentUser.getAccounts());
                                         startActivity(intent);
                                     }catch (NullPointerException npe){
                                         return ;
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             System.out.println("EMAIL:" + email + " PASS:" + password);
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(MainActivity.this, getString(R.string.authenticationFailed),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

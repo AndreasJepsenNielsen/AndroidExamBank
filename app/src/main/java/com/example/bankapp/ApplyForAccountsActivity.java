@@ -34,8 +34,8 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_for_accounts);
-        user = getIntent().getParcelableExtra("user");
-        accounts = getIntent().getParcelableArrayListExtra("accounts");
+        user = getIntent().getParcelableExtra(getString(R.string.intentUser));
+        accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
         init();
         checkAccounts(accounts);
 
@@ -67,7 +67,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                 break;
 
             case 3:
-                accountName = "PENSION";
+                accountName = getString(R.string.typePension);
                 break;
         }
 
@@ -79,7 +79,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                 applyForAccount(accountName, newAccount);
 
                 Intent backToMenu = new Intent(ApplyForAccountsActivity.this, MenuActivity.class);
-                backToMenu.putParcelableArrayListExtra("accounts", accounts);
+                backToMenu.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(backToMenu);
             }
         });
@@ -93,22 +93,22 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
     private void applyForAccount(String type, AccountModel newAccount){
         String number = "0";
-        if(type.equals("BUSINESS")) {
+        if(type.equals(getString(R.string.typeBusiness))) {
             adapter.notifyDataSetChanged();
             number = "2";
         }
-        else if(type.equals("SAVINGS")) {
+        else if(type.equals(R.string.typeSavings)) {
             adapter.notifyDataSetChanged();
             number = "3";
         }
-        else if(type.equals("PENSION")) {
+        else if(type.equals(R.string.typePension)) {
             adapter.notifyDataSetChanged();
             number = "4";
         }
 
 
         try {
-           myref.child("/" + user.getAffiliate() + "/users/" + user.getEmail().replace(".","") + "/accounts/" + number).setValue(newAccount);
+           myref.child("/" + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
 
         } catch (Exception e) {
             e.printStackTrace();
