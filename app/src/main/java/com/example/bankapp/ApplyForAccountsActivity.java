@@ -46,11 +46,24 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
         switch (position) {
             case 1:
-                accountName = "BUSINESS";
+                if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])){
+                    accountName = "BUSINESS";
+                }else if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])){
+                    accountName = "SAVINGS";
+                }else if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])){
+                accountName = "PENSION";
+
+                }
+
                 break;
 
             case 2:
-                accountName = "SAVINGS";
+                if(items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])){
+                    accountName = "SAVINGS";
+                }else if(items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])){
+                    accountName = "PENSION";
+
+                }
                 break;
 
             case 3:
@@ -74,6 +87,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(ApplyForAccountsActivity.this, "Please choose an account", Toast.LENGTH_LONG).show();
     }
 
 
@@ -123,19 +137,32 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
         for (int i = 0; i < accountArrayList.size(); i++) {
             if (accountArrayList.get(i) != null) {
-                if (items.get(i).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
-                    System.out.println("jeg er business");
+                for (int j = 0; j < items.size() ; j++) {
 
-                }
 
-                if (items.get(i).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
-                    System.out.println("jeg er savings");
+                    if (accountArrayList.get(i).getType().equals("BUSINESS") && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
+                        System.out.println(items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1]));
+                        System.out.println("jeg er business");
 
-                }
+                       items.remove(j);
 
-                if (items.get(i).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
-                    System.out.println("jeg er pension");
+                    }
 
+                    if (accountArrayList.get(i).getType().equals("SAVINGS") && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
+                        System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[2]);
+                        System.out.println(items.get(j));
+                        System.out.println("jeg er savings");
+                        items.remove(j);
+
+
+                    }
+
+                    if (accountArrayList.get(i).getType().equals("PENSION") && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
+                        System.out.println("jeg er pension");
+                        items.remove(j);
+
+
+                    }
                 }
             }
         }

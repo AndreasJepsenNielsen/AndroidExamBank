@@ -18,6 +18,7 @@ public class MenuActivity extends AppCompatActivity {
 
     CustomerModel userDetails;
     ArrayList<AccountModel> accounts;
+    AccountModel clickedAccount;
     // TEST
     //CustomerModel andreas = new CustomerModel("121195-3235", "andreas@gmail.com", "andreas123", "Michael berings vang 10", "Andreas", "Nielsen", "31663421");
 
@@ -40,8 +41,9 @@ public class MenuActivity extends AppCompatActivity {
                 System.out.println(userDetails.getAffiliate());
                 System.out.println(userDetails.getFirstName());
                 intent.putExtra("user", userDetails);
+                clickedAccount = getAccount(getString(R.string.DEFAULT));
 
-                intent.putExtra("account", accounts.get(0));
+                intent.putExtra("account", clickedAccount);
                 startActivity(intent);
             }
         });
@@ -51,7 +53,8 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra("user", userDetails);
-                intent.putExtra("account", accounts.get(1));
+                clickedAccount = getAccount(getString(R.string.BUDGET));
+                intent.putExtra("account", clickedAccount);
                 startActivity(intent);
             }
         });
@@ -61,7 +64,8 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra("user", userDetails);
-                intent.putExtra("account", accounts.get(2));
+                clickedAccount = getAccount(getString(R.string.BUSINESS));
+                intent.putExtra("account", clickedAccount);
                 startActivity(intent);
             }
         });
@@ -71,7 +75,8 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra("user", userDetails);
-                intent.putExtra("account", accounts.get(3));
+                clickedAccount = getAccount(getString(R.string.PENSION));
+                intent.putExtra("account", clickedAccount);
                 startActivity(intent);
             }
         });
@@ -81,7 +86,9 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra("user", userDetails);
-                intent.putExtra("account", accounts.get(4));
+                clickedAccount = getAccount(getString(R.string.SAVINGS));
+
+                intent.putExtra("account", clickedAccount);
                 startActivity(intent);
             }
         });
@@ -100,6 +107,22 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private AccountModel getAccount(String type){
+        AccountModel temp = null;
+        for (int i = 0; i < accounts.size(); i++) {
+            try {
+                if (accounts.get(i).getType().equals(type)) {
+                    temp = accounts.get(i);
+                }
+            }catch(NullPointerException npe){
+
+            }
+        }
+
+        System.out.println("TEMP" + temp);
+        return temp;
     }
 
     private void displayAccounts(){

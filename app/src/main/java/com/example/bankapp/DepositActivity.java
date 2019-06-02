@@ -12,7 +12,6 @@ import com.example.bankapp.Model.CustomerModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 
 public class DepositActivity extends AppCompatActivity {
 
@@ -33,7 +32,7 @@ public class DepositActivity extends AppCompatActivity {
         depositButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( Double.parseDouble(depositField.getText().toString()) > 0.0 && !depositField.getText().toString().isEmpty()){
+                if( !depositField.getText().toString().isEmpty() && Double.parseDouble(depositField.getText().toString()) > 0.0){
                     depositMoney(Double.parseDouble(depositField.getText().toString()));
                 }else{
                     Toast.makeText(DepositActivity.this, "Make Sure you deposit a positive amount",Toast.LENGTH_LONG).show();

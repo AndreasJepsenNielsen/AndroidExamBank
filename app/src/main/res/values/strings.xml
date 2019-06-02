@@ -17,6 +17,8 @@
         <item>Pension account</item>
     </string-array>
 
+    <string name="BUDGET">BUDGET</string>
+    <string name="DEFAULT">DEFAULT</string>
     <string name="BUSINESS">BUSINESS</string>
     <string name="SAVINGS">SAVINGS</string>
     <string name="PENSION">PENSION</string>
