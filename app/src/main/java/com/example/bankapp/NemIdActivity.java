@@ -40,7 +40,6 @@ public class NemIdActivity extends AppCompatActivity{
         choice = getIntent().getStringExtra(getString(R.string.clicked));
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
         account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
-        System.out.println("CHOICE AWARD" + choice);
         verifyButton = findViewById(R.id.verifyButton);
         inputCode = findViewById(R.id.inputCode);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

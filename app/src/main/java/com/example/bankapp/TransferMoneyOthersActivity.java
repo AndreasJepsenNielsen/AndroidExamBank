@@ -120,9 +120,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                     receiverAccount = value.getAccounts().get(0);
                     myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
 
-
-
-
                 }catch (NullPointerException npe){
 
                     return;
@@ -145,8 +142,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                    // run some code
-
                     CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
                     myCallBack.onCallBack(user);
 
