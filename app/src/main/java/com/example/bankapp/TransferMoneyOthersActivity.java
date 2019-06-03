@@ -2,6 +2,7 @@ package com.example.bankapp;
 
 import android.content.Intent;
 import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class TransferMoneyOthersActivity extends AppCompatActivity {
+public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
@@ -94,10 +97,10 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
 
         }
         try {
-            depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
-            depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
+            System.out.println("KIG HER ELLER" + receiveUser);
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - amount);
-            myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
+            depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
+            depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,19 +111,26 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
         currentUserRef = ref;
 
         readFromDatabaseTest(new MyCallBack() {
+
             @Override
             public void onCallBack(CustomerModel value) {
 
                 try {
                     receiveUser = value;
                     receiverAccount = value.getAccounts().get(0);
-                    System.out.println(receiverAccount);
+                    myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
+
+
+
 
                 }catch (NullPointerException npe){
-                    npe.printStackTrace();
+
+                    return;
                 }
 
             }
+
+
 
 
             @Override
@@ -130,20 +140,30 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
     }
 
     private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
-                myCallBack.onCallBack(user);
+                    // run some code
+
+                    CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
+                    myCallBack.onCallBack(user);
+
             }
+
+
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
+                return ;
             }
+
+
         });
+
+
 
     }
 

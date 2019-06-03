@@ -1,8 +1,6 @@
 package com.example.bankapp;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,11 +13,9 @@ import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 
 
-import java.io.File;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -29,8 +25,9 @@ public class NemIdActivity extends AppCompatActivity{
     static String nemId;
     Button verifyButton;
     EditText inputCode;
-    CustomerModel currentUser;
-    ArrayList<AccountModel> accounts;
+    CustomerModel userDetails;
+    AccountModel account;
+    String choice;
     private static final int TEN_MINUTES = 10 * 60 * 1000;
     private long timeStamp10;
 
@@ -40,8 +37,10 @@ public class NemIdActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nem_id);
-        currentUser = getIntent().getParcelableExtra("user");
-        accounts = getIntent().getParcelableArrayListExtra("accounts");
+        choice = getIntent().getStringExtra(getString(R.string.clicked));
+        userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
+        System.out.println("CHOICE AWARD" + choice);
         verifyButton = findViewById(R.id.verifyButton);
         inputCode = findViewById(R.id.inputCode);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -58,7 +57,15 @@ public class NemIdActivity extends AppCompatActivity{
                     sendMail();
                 }else{
                     if(inputCode.getText().toString().equals(nemId)){
-                        System.out.println("Correct");
+                        System.out.println("Rigtig kode");
+                        if(choice.equals(getString(R.string.transfer))){
+                            Intent transferIntent = new Intent(NemIdActivity.this, TransferMoneyOthersActivity.class);
+                            transferIntent.putExtra(getString(R.string.intentUser), userDetails);
+                            transferIntent.putExtra(getString(R.string.intentAccounts), account);
+                            startActivity(transferIntent);
+                        }else{
+                            System.out.println("WRong");
+                        }
                     }else{
                         Toast.makeText(NemIdActivity.this, "NemId is incorrect", Toast.LENGTH_LONG).show();
                     }
@@ -100,7 +107,7 @@ public class NemIdActivity extends AppCompatActivity{
 
             Message message = new MimeMessage(session);
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("vmanpro2008@live.dk"));
+                    InternetAddress.parse(userDetails.getEmail()));
             message.setSubject("NemId Code");
             message.setText("Here is your nemId Code it expires in 10 minutes: "
                     + "\n\n" + nemId );

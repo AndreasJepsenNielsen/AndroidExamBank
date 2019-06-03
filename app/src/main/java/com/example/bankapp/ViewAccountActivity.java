@@ -32,7 +32,7 @@ public class ViewAccountActivity extends AppCompatActivity {
         transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
         transferMoneyToOtherAccounts = findViewById(R.id.transferMoneyToOtherAccountsBtn);
         depositButton = findViewById(R.id.DepositBtn);
-        payBillsBtn = findViewById(R.id.payBillsBtn);
+        //payBillsBtn = findViewById(R.id.payBillsBtn);
 
         accountView.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) + " " + getString(R.string.balance) + account.getBalance());
 
@@ -49,9 +49,10 @@ public class ViewAccountActivity extends AppCompatActivity {
         transferMoneyToOtherAccounts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent transferToOthers = new Intent(ViewAccountActivity.this, TransferMoneyOthersActivity.class);
+                Intent transferToOthers = new Intent(ViewAccountActivity.this, NemIdActivity.class);
                 transferToOthers.putExtra(getString(R.string.intentUser), userDetails);
                 transferToOthers.putExtra(getString(R.string.intentAccounts), account);
+                transferToOthers.putExtra(getString(R.string.clicked), getString(R.string.transfer));
                 startActivity(transferToOthers);
             }
         });

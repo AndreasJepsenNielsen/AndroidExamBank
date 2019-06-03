@@ -105,4 +105,10 @@
     <!-- ResetPasswordActivity -->
     <string name="resetPasswordBTN">Reset password</string>
 
+    <!-- ViewAccount -->
+    <string name="clicked">clicked</string>
+    <string name="transfer">transfer</string>
+    <string name="pay">pay</string>
+    <string name="please_check_your_email_for_your_nemid_code">Please check your email for your NemId code</string>
+
 </resources>

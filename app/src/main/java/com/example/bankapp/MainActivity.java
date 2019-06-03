@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //BELOW TWO LINES IS FOR TESTING
-        Intent intent = new Intent(MainActivity.this, NemIdActivity.class);
-        startActivity(intent);
+
 
         loginButton = findViewById(R.id.button);
         registerButton = findViewById(R.id.button2);
