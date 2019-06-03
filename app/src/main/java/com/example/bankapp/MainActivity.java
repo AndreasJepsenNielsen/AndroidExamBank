@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bankapp.Model.CustomerModel;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button registerButton;
     EditText emailLogin;
     EditText passwordLogin;
+    TextView forgotPassword;
     CustomerModel currentUser;
     final String TAG = "MAINACTIVITY";
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.button2);
         emailLogin = findViewById(R.id.editText);
         passwordLogin = findViewById(R.id.editText2);
+        forgotPassword = findViewById(R.id.textView3);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +88,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RestPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static boolean isValidEmailAddress(String email) {
@@ -100,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                
+
             }else{
                 ActivityCompat.requestPermissions(this,
                         permissions,

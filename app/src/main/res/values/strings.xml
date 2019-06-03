@@ -34,6 +34,7 @@
     <string name="text_to_register_button">If you are not registered in the bank. Click the register button</string>
     <string name="register_button">Register</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="resetPassword">forgot your password?</string>
 
     <string name="action_settings">Settings</string>
     <string name="SSN">SSN</string>
@@ -89,5 +90,8 @@
     <string name="odense">Odense</string>
     <string name="nemid">NemId</string>
     <string name="verify">Verify</string>
+
+    <!-- ResetPasswordActivity -->
+    <string name="resetPasswordBTN">Reset password</string>
 
 </resources>
