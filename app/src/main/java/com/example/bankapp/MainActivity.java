@@ -50,17 +50,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*DatabaseReference userRef = database.getReference("/users/131188-2485");
-        DatabaseReference userRef1 = database.getReference("/users/121195-3235");
+        //BELOW TWO LINES IS FOR TESTING
+        Intent intent = new Intent(MainActivity.this, NemIdActivity.class);
+        startActivity(intent);
 
-        CustomerModel kasper = new CustomerModel("131188-2485","lovinstone@gmail.com","lovin123","Silkeborggade 41", "Kasper", "Lovin", "30563053");
-        CustomerModel andreas = new CustomerModel("121195-3235", "andreas@gmail.com", "andreas123", "Michael berings vang 10", "Andreas", "Nielsen", "31663421");
-        writeNewUser(kasper);
-        readFromDatabaseTest(userRef);
-        writeNewUser(andreas);
-        readFromDatabaseTest(userRef1);
-
-*/
         loginButton = findViewById(R.id.button);
         registerButton = findViewById(R.id.button2);
         emailLogin = findViewById(R.id.editText);

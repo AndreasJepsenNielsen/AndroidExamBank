@@ -87,5 +87,7 @@
     <string name="allowLocation">Make sure to allow the app to use your location</string>
     <string name="copenhagen">Copenhagen</string>
     <string name="odense">Odense</string>
+    <string name="nemid">NemId</string>
+    <string name="verify">Verify</string>
 
 </resources>
