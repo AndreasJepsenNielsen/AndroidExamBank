@@ -25,7 +25,7 @@
             android:ems="10"
             android:hint="@string/Lastname"
             android:inputType="textPersonName"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
             android:ems="10"
             android:hint="@string/Phonenumber"
             android:inputType="number"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.643"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
             android:ems="10"
             android:hint="@string/SSN"
             android:inputType="number"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.606"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
             android:ems="10"
             android:hint="@string/Email"
             android:inputType="textWebEmailAddress"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="@+id/editText3"
             app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
@@ -81,7 +81,7 @@
             android:ems="10"
             android:hint="@string/Password"
             android:inputType="textPassword"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="@+id/editText4"
             app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
@@ -93,7 +93,7 @@
             android:ems="10"
             android:hint="@string/Address"
             android:inputType="textPostalAddress"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="@+id/editText5"
             app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
@@ -105,7 +105,7 @@
             android:ems="10"
             android:hint="@string/Firstname"
             android:inputType="textPersonName"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             app:layout_constraintStart_toStartOf="@+id/editText6"
             app:layout_constraintTop_toBottomOf="@+id/editText6" />
 

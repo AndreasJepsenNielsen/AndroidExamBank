@@ -50,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         RegisterButton = (Button) findViewById(R.id.button);
         SSN = findViewById(R.id.editText3);
         Email = findViewById(R.id.editText4);

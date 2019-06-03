@@ -45,6 +45,8 @@ public class MenuActivity extends AppCompatActivity {
 
                 intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
                 startActivity(intent);
+
+
             }
         });
 
@@ -56,6 +58,8 @@ public class MenuActivity extends AppCompatActivity {
                 clickedAccount = getAccount(getString(R.string.BUDGET));
                 intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
                 startActivity(intent);
+
+
             }
         });
 
@@ -78,6 +82,7 @@ public class MenuActivity extends AppCompatActivity {
                 clickedAccount = getAccount(getString(R.string.PENSION));
                 intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
                 startActivity(intent);
+
             }
         });
 
@@ -90,6 +95,8 @@ public class MenuActivity extends AppCompatActivity {
 
                 intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
                 startActivity(intent);
+
+
             }
         });
 
@@ -104,6 +111,7 @@ public class MenuActivity extends AppCompatActivity {
                 System.out.println("ACCOUNTSAPPLY: " + accounts);
 
                 startActivity(applyForAccounts);
+                finish();
             }
         });
 

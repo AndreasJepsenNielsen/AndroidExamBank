@@ -119,7 +119,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                     receiveUser = value;
                     receiverAccount = value.getAccounts().get(0);
                     myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
-
+                    finish();
                 }catch (NullPointerException npe){
 
                     return;

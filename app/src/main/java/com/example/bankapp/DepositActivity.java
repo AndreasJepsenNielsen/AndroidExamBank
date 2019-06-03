@@ -66,6 +66,7 @@ public class DepositActivity extends AppCompatActivity {
         try {
 
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(amount + account.getBalance());
+            finish();
 
         } catch (Exception e) {
             e.printStackTrace();

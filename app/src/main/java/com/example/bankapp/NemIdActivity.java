@@ -62,6 +62,7 @@ public class NemIdActivity extends AppCompatActivity{
                             transferIntent.putExtra(getString(R.string.intentUser), userDetails);
                             transferIntent.putExtra(getString(R.string.intentAccounts), account);
                             startActivity(transferIntent);
+                            finish();
                         }else{
                             System.out.println("WRong");
                         }

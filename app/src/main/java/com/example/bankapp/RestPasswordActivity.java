@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class RestPasswordActivity extends AppCompatActivity {
 
@@ -40,13 +43,30 @@ public class RestPasswordActivity extends AppCompatActivity {
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PassResetViaEmail();
-                Intent intent = new Intent(RestPasswordActivity.this, MainActivity.class);
-                startActivity(intent);
+                if(emailfield.getText().length() <= 0 ){
+                    Toast.makeText(RestPasswordActivity.this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
+                }
+
+                else if(!isValidEmailAddress(emailfield.getText().toString())){
+                    Toast.makeText(RestPasswordActivity.this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
+                }else{
+                    PassResetViaEmail();
+                    Intent intent = new Intent(RestPasswordActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
     }
 
+
+    public static boolean isValidEmailAddress(String email) {
+        EmailValidator validator = EmailValidator.getInstance();
+        Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
+        return validator.isValid(email);
+
+    }
     private void PassResetViaEmail(){
 
         if(mAuth != null) {

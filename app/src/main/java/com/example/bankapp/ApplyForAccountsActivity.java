@@ -85,6 +85,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                     Intent backToMenu = new Intent(ApplyForAccountsActivity.this, MenuActivity.class);
                     backToMenu.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                     startActivity(backToMenu);
+                    finish();
                 }
                 else{
                     Toast.makeText(ApplyForAccountsActivity.this, "Please choose an account", Toast.LENGTH_LONG).show();
