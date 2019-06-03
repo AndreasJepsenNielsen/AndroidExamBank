@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ApplyForAccountsActivity"></activity>
+        <activity android:name=".TransferMoneyAccounts"></activity>
+        <activity android:name=".TransferMoneyOthersActivity" />
+        <activity android:name=".ApplyForAccountsActivity" />
         <activity android:name=".ViewAccountActivity" />
         <activity android:name=".DepositActivity" />
         <activity

@@ -10,6 +10,17 @@
     <string name="depositToAccount">Deposit</string>
     <string name="depositAmount">Amount To Deposit</string>
 
+
+    <!-- Transfer Money others Activity -->
+    <string name="transferMoneyFrom">Transfer money from</string>
+    <string name="checkBoxAutoPay">Transfer automatically every month</string>
+    <string name="emailOtherAccount">Email for the other person</string>
+    <string name="amountToTransfer">Amount to transfer</string>
+    <string name="accountBalance">Balance:&#160;</string>
+    <string name="emptyFieldsTransfer">Please fill out the transfer information</string>
+    <string name="notEnoughMoney">Not enough money on the account to transfer the money</string>
+    <string name="transferMoney">Transfer money</string>
+
     <string-array name="applyForAccountsItems">
         <item>Choose an account to apply for</item>
         <item>Business account</item>

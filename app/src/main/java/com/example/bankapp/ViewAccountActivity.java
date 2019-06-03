@@ -9,8 +9,6 @@ import android.widget.Button;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 
-import java.util.ArrayList;
-
 public class ViewAccountActivity extends AppCompatActivity {
 
     CustomerModel userDetails;
@@ -19,7 +17,7 @@ public class ViewAccountActivity extends AppCompatActivity {
     Button accountView;
     Button transferMoneyBetweenAccounts;
     Button transferMoneyToOtherAccounts;
-    Button depositButton;
+    Button depositButton, payBillsBtn;
 
 
     @Override
@@ -34,6 +32,7 @@ public class ViewAccountActivity extends AppCompatActivity {
         transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
         transferMoneyToOtherAccounts = findViewById(R.id.transferMoneyToOtherAccountsBtn);
         depositButton = findViewById(R.id.DepositBtn);
+        payBillsBtn = findViewById(R.id.payBillsBtn);
 
         accountView.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) + " " + getString(R.string.balance) + account.getBalance());
 
@@ -44,6 +43,16 @@ public class ViewAccountActivity extends AppCompatActivity {
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 intent.putExtra(getString(R.string.intentAccounts), account);
                 startActivity(intent);
+            }
+        });
+
+        transferMoneyToOtherAccounts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent transferToOthers = new Intent(ViewAccountActivity.this, TransferMoneyOthersActivity.class);
+                transferToOthers.putExtra(getString(R.string.intentUser), userDetails);
+                transferToOthers.putExtra(getString(R.string.intentAccounts), account);
+                startActivity(transferToOthers);
             }
         });
 

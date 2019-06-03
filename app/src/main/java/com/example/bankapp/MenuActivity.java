@@ -13,7 +13,7 @@ import com.example.bankapp.Model.CustomerModel;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
-    Button transferBtn, payBillsBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn;
+    Button transferBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn;
     TextView defaultAccountBalance;
 
     CustomerModel userDetails;
@@ -165,7 +165,6 @@ public class MenuActivity extends AppCompatActivity {
 
 
     private void init() {
-        payBillsBtn = findViewById(R.id.payBillsBtn);
         applyAccountBtn = findViewById(R.id.applyAccountBtn);
         defaultAccountBalance = findViewById(R.id.defaultAccountBalance);
         defaultAccountBtn = findViewById(R.id.defaultAccountBtn);
