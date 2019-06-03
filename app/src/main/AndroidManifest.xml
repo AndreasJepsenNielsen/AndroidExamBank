@@ -17,6 +17,10 @@
         <activity android:name=".TransferMoneyAccounts"></activity>
         <activity android:name=".TransferMoneyOthersActivity" />
         <activity android:name=".ApplyForAccountsActivity" />
+        <activity android:name=".NemIdActivity"></activity>
+        <activity android:name=".ApplyForAccountsActivity" />
+        <activity android:name=".RestPasswordActivity"></activity>
+        <activity android:name=".ApplyForAccountsActivity" />
         <activity android:name=".ViewAccountActivity" />
         <activity android:name=".DepositActivity" />
         <activity
