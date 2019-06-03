@@ -34,6 +34,7 @@
     <string name="text_to_register_button">If you are not registered in the bank. Click the register button</string>
     <string name="register_button">Register</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="resetPassword">forgot your password?</string>
 
     <string name="action_settings">Settings</string>
     <string name="SSN">SSN</string>
@@ -87,5 +88,8 @@
     <string name="allowLocation">Make sure to allow the app to use your location</string>
     <string name="copenhagen">Copenhagen</string>
     <string name="odense">Odense</string>
+
+    <!-- ResetPasswordActivity -->
+    <string name="resetPasswordBTN">Reset password</string>
 
 </resources>
