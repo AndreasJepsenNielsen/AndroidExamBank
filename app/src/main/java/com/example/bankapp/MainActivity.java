@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            System.out.println("EMAIL:" + email + " PASS:" + password);
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, getString(R.string.authenticationFailed),
                                     Toast.LENGTH_SHORT).show();

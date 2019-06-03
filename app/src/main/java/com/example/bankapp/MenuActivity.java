@@ -133,7 +133,6 @@ public class MenuActivity extends AppCompatActivity {
         for (int i = 0; i < accounts.size() ; i++) {
            try {
                if(accounts.get(i).getType().equals(getString(R.string.DEFAULT))){
-                   System.out.println("INDE");
                    defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                }
 

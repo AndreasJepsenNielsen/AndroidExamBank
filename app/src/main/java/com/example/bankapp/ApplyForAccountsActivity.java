@@ -69,27 +69,33 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
             case 3:
                 accountName = getString(R.string.PENSION);
                 break;
+            default:
+                accountName = "NONE";
         }
 
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AccountModel newAccount = new AccountModel(0, accountName);
-                accounts.add(newAccount);
-                applyForAccount(accountName, newAccount);
+                if(!accountName.equals("NONE")) {
+                    AccountModel newAccount = new AccountModel(0, accountName);
+                    accounts.add(newAccount);
+                    applyForAccount(accountName, newAccount);
 
-                Intent backToMenu = new Intent(ApplyForAccountsActivity.this, MenuActivity.class);
-                backToMenu.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-                startActivity(backToMenu);
+
+                    Intent backToMenu = new Intent(ApplyForAccountsActivity.this, MenuActivity.class);
+                    backToMenu.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+                    startActivity(backToMenu);
+                }
+                else{
+                    Toast.makeText(ApplyForAccountsActivity.this, "Please choose an account", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(ApplyForAccountsActivity.this, "Please choose an account", Toast.LENGTH_LONG).show();
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
-
 
     private void applyForAccount(String type, AccountModel newAccount){
         String number = getString(R.string.zero);
@@ -97,11 +103,11 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
             adapter.notifyDataSetChanged();
             number = getString(R.string.two);
         }
-        else if(type.equals(R.string.SAVINGS)) {
+        else if(type.equals(getString(R.string.SAVINGS))) {
             adapter.notifyDataSetChanged();
             number = getString(R.string.three);
         }
-        else if(type.equals(R.string.PENSION)) {
+        else if(type.equals(getString(R.string.PENSION))) {
             adapter.notifyDataSetChanged();
             number = getString(R.string.four);
         }
@@ -167,29 +173,4 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
             }
         }
     }
-
-    /*
-    private void checkAccounts(ArrayList<AccountModel> accountArrayList) {
-        for (int i = 0; i < accountArrayList.size(); i++) {
-            System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[i]);
-            if (accountArrayList.get(i) != null){
-                for (int j = 0; j < items.size(); j++) {
-                    if (items.get(j).contains(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
-                        items.remove(j);
-                    }
-
-                    if (items.get(j).contains(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
-                        items.remove(j);
-                    }
-
-                    if (items.get(j).contains(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
-                        items.remove(j);
-                    }
-                }
-            }
-        }
-    }
-    */
-
-
 }
