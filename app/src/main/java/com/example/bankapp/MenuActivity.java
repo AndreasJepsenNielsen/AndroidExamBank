@@ -5,23 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
     Button transferBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn;
+    ImageButton  logOutBtn;
     TextView defaultAccountBalance;
 
     CustomerModel userDetails;
     ArrayList<AccountModel> accounts;
     AccountModel clickedAccount;
-    // TEST
-    //CustomerModel andreas = new CustomerModel("121195-3235", "andreas@gmail.com", "andreas123", "Michael berings vang 10", "Andreas", "Nielsen", "31663421");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +38,12 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
-                System.out.println(userDetails.getAffiliate());
-                System.out.println(userDetails.getFirstName());
+
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 clickedAccount = getAccount(getString(R.string.DEFAULT));
 
-                intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
+                intent.putExtra(getString(R.string.intentAccount), clickedAccount);
+                intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(intent);
 
 
@@ -56,7 +56,8 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 clickedAccount = getAccount(getString(R.string.BUDGET));
-                intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
+                intent.putExtra(getString(R.string.intentAccount), clickedAccount);
+                intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(intent);
 
 
@@ -69,7 +70,9 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 clickedAccount = getAccount(getString(R.string.BUSINESS));
-                intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
+                intent.putExtra(getString(R.string.intentAccount), clickedAccount);
+                intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+
                 startActivity(intent);
             }
         });
@@ -80,7 +83,9 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 clickedAccount = getAccount(getString(R.string.PENSION));
-                intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
+                intent.putExtra(getString(R.string.intentAccount), clickedAccount);
+                intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+
                 startActivity(intent);
 
             }
@@ -92,8 +97,9 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 clickedAccount = getAccount(getString(R.string.SAVINGS));
+                intent.putExtra(getString(R.string.intentAccount), clickedAccount);
+                intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
 
-                intent.putExtra(getString(R.string.intentAccounts), clickedAccount);
                 startActivity(intent);
 
 
@@ -112,6 +118,16 @@ public class MenuActivity extends AppCompatActivity {
 
                 startActivity(applyForAccounts);
                 finish();
+            }
+        });
+
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent logOut = new Intent(getApplicationContext(), MainActivity.class);
+                logOut.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(logOut);
+                FirebaseAuth.getInstance().signOut();
             }
         });
 
@@ -134,9 +150,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void displayAccounts(){
-
         System.out.println(accounts);
-
 
         for (int i = 0; i < accounts.size() ; i++) {
            try {
@@ -180,6 +194,7 @@ public class MenuActivity extends AppCompatActivity {
         businessAccountBtn = findViewById(R.id.businessAccountBtn);
         pensionAccountBtn = findViewById(R.id.pensionAccountBtn);
         savingsAccountBtn = findViewById(R.id.savingsAccountBtn);
+        logOutBtn = findViewById(R.id.logOutBtn);
 
         businessAccountBtn.setVisibility(View.GONE);
         pensionAccountBtn.setVisibility(View.GONE);

@@ -39,7 +39,7 @@ public class NemIdActivity extends AppCompatActivity{
         setContentView(R.layout.activity_nem_id);
         choice = getIntent().getStringExtra(getString(R.string.clicked));
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
-        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         verifyButton = findViewById(R.id.verifyButton);
         inputCode = findViewById(R.id.inputCode);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -60,7 +60,7 @@ public class NemIdActivity extends AppCompatActivity{
                         if(choice.equals(getString(R.string.transfer))){
                             Intent transferIntent = new Intent(NemIdActivity.this, TransferMoneyOthersActivity.class);
                             transferIntent.putExtra(getString(R.string.intentUser), userDetails);
-                            transferIntent.putExtra(getString(R.string.intentAccounts), account);
+                            transferIntent.putExtra(getString(R.string.intentAccount), account);
                             startActivity(transferIntent);
                             finish();
                         }else{

@@ -9,15 +9,15 @@ import android.widget.Button;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 
+import java.util.ArrayList;
+
 public class ViewAccountActivity extends AppCompatActivity {
 
     CustomerModel userDetails;
     AccountModel account;
+    ArrayList<AccountModel> accounts;
 
-    Button accountView;
-    Button transferMoneyBetweenAccounts;
-    Button transferMoneyToOtherAccounts;
-    Button depositButton, payBillsBtn;
+    Button accountView, transferMoneyBetweenAccounts, transferMoneyToOtherAccounts, depositButton, payBillsBtn;
 
 
     @Override
@@ -26,7 +26,8 @@ public class ViewAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_account);
 
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
-        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
+        accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
 
         accountView = findViewById(R.id.AccountBtn2);
         transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
@@ -41,8 +42,20 @@ public class ViewAccountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ViewAccountActivity.this, DepositActivity.class);
                 intent.putExtra(getString(R.string.intentUser), userDetails);
-                intent.putExtra(getString(R.string.intentAccounts), account);
+                intent.putExtra(getString(R.string.intentAccount), account);
                 startActivity(intent);
+            }
+        });
+
+        transferMoneyBetweenAccounts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent transferBetweenAccounts = new Intent(ViewAccountActivity.this, TransferMoneyAccounts.class);
+                transferBetweenAccounts.putExtra(getString(R.string.intentUser), userDetails);
+                transferBetweenAccounts.putExtra(getString(R.string.intentAccount), account);
+                transferBetweenAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+                startActivity(transferBetweenAccounts);
+
             }
         });
 
@@ -51,7 +64,7 @@ public class ViewAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent transferToOthers = new Intent(ViewAccountActivity.this, NemIdActivity.class);
                 transferToOthers.putExtra(getString(R.string.intentUser), userDetails);
-                transferToOthers.putExtra(getString(R.string.intentAccounts), account);
+                transferToOthers.putExtra(getString(R.string.intentAccount), account);
                 transferToOthers.putExtra(getString(R.string.clicked), getString(R.string.transfer));
                 startActivity(transferToOthers);
             }

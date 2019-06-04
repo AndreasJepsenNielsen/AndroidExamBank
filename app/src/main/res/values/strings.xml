@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BankApp</string>
     <string name="payBills">Pay bills</string>
-    <string name="transferMoneyBetweenAccounts">Transfer between account</string>
-    <string name="transferMoneyToOtherAccounts">Transfer to other accounts</string>
+    <string name="transferMoneyBetweenAccounts">Transfer between accounts</string>
+    <string name="transferMoneyToOtherAccounts">Transfer to other account</string>
     <string name="DepositMoney">Deposit</string>
     <string name="AccountInViewActivity">Account</string>
     <string name="applyToNewAccount">Apply for accounts</string>
@@ -18,6 +18,7 @@
     <string name="amountToTransfer">Amount to transfer</string>
     <string name="accountBalance">Balance:&#160;</string>
     <string name="emptyFieldsTransfer">Please fill out the transfer information</string>
+    <string name="invalidUser">Cannot find an account with the given email</string>
     <string name="notEnoughMoney">Not enough money on the account to transfer the money</string>
     <string name="transferMoney">Transfer money</string>
 
@@ -67,6 +68,7 @@
     <!-- MainActivity -->
     <string name="intentUser">user</string>
     <string name="intentAccounts">accounts</string>
+    <string name="intentAccount">account</string>
     <string name="pathCPHSlashUser">Copenhagen/users/</string>
     <string name="pathOdenseSlashUser">Odense/users/</string>
 

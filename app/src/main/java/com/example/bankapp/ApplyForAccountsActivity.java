@@ -115,7 +115,9 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
 
         try {
-           myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
+            System.out.println(user.getAffiliate());
+            System.out.println(myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number));
+            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
 
         } catch (Exception e) {
             e.printStackTrace();

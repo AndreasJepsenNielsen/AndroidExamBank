@@ -25,7 +25,7 @@ public class DepositActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
-        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         user = getIntent().getParcelableExtra(getString(R.string.intentUser));
         depositButton = findViewById(R.id.depositButton);
         depositField  = findViewById(R.id.depositField);
@@ -55,11 +55,11 @@ public class DepositActivity extends AppCompatActivity {
 
         }
 
-        if(account.getType().equals(getString(R.string.PENSION))){
+        if(account.getType().equals(getString(R.string.SAVINGS))){
             number = getString(R.string.three);
 
         }
-        if(account.getType().equals(getString(R.string.SAVINGS))){
+        if(account.getType().equals(getString(R.string.PENSION))){
             number = getString(R.string.four);
 
         }

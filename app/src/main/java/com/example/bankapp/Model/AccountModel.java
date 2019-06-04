@@ -50,10 +50,7 @@ public class AccountModel implements Parcelable {
 
     @Override
     public String toString() {
-        return "AccountModel{" +
-                "balance=" + balance +
-                ", type='" + type + '\'' +
-                '}';
+        return this.type + " account";
     }
 
     @Override

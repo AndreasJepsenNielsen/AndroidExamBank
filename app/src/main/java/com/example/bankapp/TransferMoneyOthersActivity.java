@@ -32,6 +32,8 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
     private DatabaseReference currentUserRef;
     CustomerModel receiveUser;
 
+    String number;
+
     CustomerModel user;
     AccountModel account, receiverAccount;
 
@@ -47,14 +49,13 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_transfer_money_others);
 
         user = getIntent().getParcelableExtra(getString(R.string.intentUser));
-        account = getIntent().getParcelableExtra(getString(R.string.intentAccounts));
+        account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
 
         init();
 
         transferMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 validate(emailOtherAccount, amountToTransfer, account.getBalance());
             }
         });
@@ -78,7 +79,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
 
     private void transferMoneyToOthers(double amount){
-        String number = getString(R.string.zero);
+        number = getString(R.string.zero);
         if(account.getType().equals(getString(R.string.BUDGET))){
             number = getString(R.string.one);
         }
@@ -88,21 +89,22 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
         }
 
-        if(account.getType().equals(getString(R.string.PENSION))){
+        if(account.getType().equals(getString(R.string.SAVINGS))){
             number = getString(R.string.three);
 
         }
-        if(account.getType().equals(getString(R.string.SAVINGS))){
+        if(account.getType().equals(getString(R.string.PENSION))){
             number = getString(R.string.four);
 
         }
         try {
             System.out.println("KIG HER ELLER" + receiveUser);
-            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - amount);
             depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
             depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
 
+
         } catch (Exception e) {
+            System.out.println("FEJL ANDROGGELS");
             e.printStackTrace();
         }
     }
@@ -119,9 +121,11 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                     receiveUser = value;
                     receiverAccount = value.getAccounts().get(0);
                     myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
+                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - Double.parseDouble(amountToTransfer.getText().toString()));
+
                     finish();
                 }catch (NullPointerException npe){
-
+                    Toast.makeText(TransferMoneyOthersActivity.this, getString(R.string.invalidUser), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
