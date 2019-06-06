@@ -13,7 +13,6 @@
 
     <!-- Transfer Money others Activity -->
     <string name="transferMoneyFrom">Transfer money from</string>
-    <string name="checkBoxAutoPay">Transfer automatically every month</string>
     <string name="emailOtherAccount">Email for the other person</string>
     <string name="amountToTransfer">Amount to transfer</string>
     <string name="accountBalance">Balance:&#160;</string>
@@ -112,5 +111,31 @@
     <string name="transfer">transfer</string>
     <string name="pay">pay</string>
     <string name="please_check_your_email_for_your_nemid_code">Please check your email for your NemId code</string>
+    <string name="logoutbutton">LogOutButton</string>
+
+
+    <!-- PayBills -->
+
+    <string-array name="paySpinner">
+        <item>+01</item>
+        <item>+04</item>
+        <item>+15</item>
+        <item>+71</item>
+        <item>+73</item>
+        <item>+75</item>
+    </string-array>
+
+    <string name="payment_id">Payment Id</string>
+    <string name="payment_name">Payment Name</string>
+    <string name="creditor">Creditor</string>
+    <string name="emptyFieldsPayBills">Please fill out the bill information</string>
+    <string name="creditorLength">Creditor must be 8 digits long</string>
+    <string name="paymentIdLength">Payment Id must be 14 digits long</string>
+    <string name="amountToPay">Amount to pay</string>
+    <string name="checkBoxAutoPay">Transfer automatically every month</string>
+    <string name="payBill">Pay bill</string>
+    <string name="payFrom">Pay from</string>
+
+
 
 </resources>
