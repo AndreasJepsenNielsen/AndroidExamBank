@@ -36,6 +36,10 @@
         <activity
             android:name=".MenuActivity"
             android:label="MenuActivity" />
+
+        <receiver
+            android:name=".Service.AutoPayReceiver"
+            android:exported="true" />
     </application>
 
 </manifest>

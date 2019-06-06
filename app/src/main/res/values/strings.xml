@@ -115,7 +115,6 @@
 
 
     <!-- PayBills -->
-
     <string-array name="paySpinner">
         <item>+01</item>
         <item>+04</item>
@@ -124,7 +123,6 @@
         <item>+73</item>
         <item>+75</item>
     </string-array>
-
     <string name="payment_id">Payment Id</string>
     <string name="payment_name">Payment Name</string>
     <string name="creditor">Creditor</string>
@@ -136,6 +134,11 @@
     <string name="payBill">Pay bill</string>
     <string name="payFrom">Pay from</string>
 
+    <string name="intentAutoAmount">amountToWithdraw</string>
+    <string name="intentAutoNumber">numberAccountAuto</string>
+    <string name="intentAffiliate">userAffiliate</string>
+    <string name="intentUserAccountBalance">userAccountBalance</string>
+    <string name="intentUserEmail">userEmail</string>
 
 
 </resources>

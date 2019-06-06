@@ -1,5 +1,9 @@
 package com.example.bankapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +18,11 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.Service.AutoPayReceiver;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 public class PayBillsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText paymentId, paymentName, paymentCreditor, paymentAmount;
@@ -28,6 +35,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
     String number;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
+    boolean checkedAutoPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,34 +47,63 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
 
         init();
 
+
+
+
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validatePayment()){
-
+                    checkedAutoPay = paymentAutoCheckbox.isChecked();
                     myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - Double.parseDouble(paymentAmount.getText().toString()));
+
+                    if (checkedAutoPay) {
+                        autoPayEveryMonthAlarm(PayBillsActivity.this, 1);
+                    }
 
                     finish();
                 }
+
+
             }
         });
+    }
+
+    private void autoPayEveryMonthAlarm(Context context, int requestCode) {
+        int HOUR = 60 * 60 * 1000;
+        Intent intent = new Intent(context, AutoPayReceiver.class);
+
+        intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
+        intent.putExtra(getString(R.string.intentAutoNumber), number);
+        intent.putExtra(getString(R.string.intentUserEmail), user.getEmail());
+        intent.putExtra(getString(R.string.intentUserAccountBalance), account.getBalance());
+        intent.putExtra(getString(R.string.intentAutoAmount), Double.parseDouble(paymentAmount.getText().toString()));
 
 
+
+
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+                ,5000, pendingIntent);
     }
 
 
+
     private boolean validatePayment() {
-        if(paymentId.getText().toString().isEmpty() || paymentCreditor.getText().toString().isEmpty() || paymentName.getText().toString().isEmpty() || paymentAmount.toString().isEmpty()){
+        if(paymentId.getText().toString().isEmpty() || paymentCreditor.getText().toString().isEmpty() || paymentName.getText().toString().isEmpty() || paymentAmount.getText().toString().isEmpty()){
             Toast.makeText(this, getString(R.string.emptyFieldsPayBills),Toast.LENGTH_LONG).show();
             return false;
         }
-
-        if(paymentCreditor.length() != 8){
+//8
+        if(paymentCreditor.length() != 1){
             Toast.makeText(this, getString(R.string.creditorLength),Toast.LENGTH_LONG).show();
             return false;
         }
-
-        if(paymentId.length() != 14){
+//14
+        if(paymentId.length() != 1){
             Toast.makeText(this, getString(R.string.paymentIdLength),Toast.LENGTH_LONG).show();
             return false;
 
@@ -74,7 +111,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
 
         if(Double.parseDouble(paymentAmount.getText().toString()) > account.getBalance()) {
             Toast.makeText(this, getString(R.string.notEnoughMoney),Toast.LENGTH_LONG).show();
-
             return false;
         }
 
