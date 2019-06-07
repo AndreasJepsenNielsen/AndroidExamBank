@@ -137,6 +137,11 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
             @Override
             public void onCallBackLocation(Location value) {
             }
+
+            @Override
+            public void onCallBackBalance(Double value) {
+
+            }
         },currentUserRef);
     }
 

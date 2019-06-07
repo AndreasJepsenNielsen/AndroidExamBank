@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -234,6 +235,11 @@ public class MainActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCallBackLocation(Location value) {
+                                }
+
+                                @Override
+                                public void onCallBackBalance(Double value) {
+
                                 }
                             },currentUserRef);
 

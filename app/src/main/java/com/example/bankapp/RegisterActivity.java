@@ -83,6 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
                         affiliate = getString(R.string.odense);
                     }
                 }
+
+                @Override
+                public void onCallBackBalance(Double value) {
+
+                }
             });
 
 

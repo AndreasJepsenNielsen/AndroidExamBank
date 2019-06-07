@@ -8,5 +8,5 @@ import com.example.bankapp.Model.CustomerModel;
 public interface MyCallBack {
     void onCallBack(CustomerModel value);
     void onCallBackLocation(Location value);
-    void onCallBackAccount(AccountModel value);
+    void onCallBackBalance(Double value);
 }

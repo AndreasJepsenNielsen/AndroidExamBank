@@ -27,6 +27,7 @@ public class NemIdActivity extends AppCompatActivity{
     EditText inputCode;
     CustomerModel userDetails;
     AccountModel account;
+    ArrayList<AccountModel> accounts;
     String choice;
     private static final int TEN_MINUTES = 10 * 60 * 1000;
     private long timeStamp10;
@@ -40,6 +41,7 @@ public class NemIdActivity extends AppCompatActivity{
         choice = getIntent().getStringExtra(getString(R.string.clicked));
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
+        accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
         verifyButton = findViewById(R.id.verifyButton);
         inputCode = findViewById(R.id.inputCode);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -64,7 +66,12 @@ public class NemIdActivity extends AppCompatActivity{
                             startActivity(transferIntent);
                             finish();
                         }else{
-                            System.out.println("WRong");
+                            Intent transferIntent = new Intent(NemIdActivity.this, PayBillsActivity.class);
+                            transferIntent.putExtra(getString(R.string.intentUser), userDetails);
+                            transferIntent.putExtra(getString(R.string.intentAccount), account);
+                            transferIntent.putExtra(getString(R.string.intentAccounts), accounts);
+                            startActivity(transferIntent);
+                            finish();
                         }
                     }else{
                         Toast.makeText(NemIdActivity.this, "NemId is incorrect", Toast.LENGTH_LONG).show();

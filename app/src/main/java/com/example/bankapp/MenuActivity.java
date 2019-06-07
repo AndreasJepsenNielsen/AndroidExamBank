@@ -1,5 +1,8 @@
 package com.example.bankapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.Service.AutoPayReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -131,7 +135,15 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
     }
+
+
+
 
     private AccountModel getAccount(String type){
         AccountModel temp = null;
@@ -195,6 +207,7 @@ public class MenuActivity extends AppCompatActivity {
         pensionAccountBtn = findViewById(R.id.pensionAccountBtn);
         savingsAccountBtn = findViewById(R.id.savingsAccountBtn);
         logOutBtn = findViewById(R.id.logOutBtn);
+
 
         businessAccountBtn.setVisibility(View.GONE);
         pensionAccountBtn.setVisibility(View.GONE);

@@ -1,5 +1,7 @@
 package com.example.bankapp.Service;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,58 +33,75 @@ public class AutoPayReceiver extends BroadcastReceiver{
     DatabaseReference myref = database.getReference();
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
 
         affiliate = intent.getStringExtra(context.getString(R.string.intentAffiliate));
         accountNumber = intent.getStringExtra(context.getString(R.string.intentAutoNumber));
         userEmail = intent.getStringExtra(context.getString(R.string.intentUserEmail));
-        userBalance = intent.getDoubleExtra(context.getString(R.string.intentUserAccountBalance), 0.0);
+
         amountWithdraw = intent.getDoubleExtra(context.getString(R.string.intentAutoAmount), 0.0);
 
         System.out.println(affiliate);
         System.out.println(accountNumber);
         System.out.println(userEmail);
-        System.out.println(userBalance);
         System.out.println(amountWithdraw);
 
         readFromDatabaseTest(new MyCallBack() {
             @Override
-            public void onCallBack(CustomerModel value) {
+            public void onCallBackBalance(Double value) {
 
                 try {
-                    currentUser = value;
-                    currentUser.setAccounts(value.getAccounts());
-                    System.out.println("HAEJKWJEOKAW" + currentUser.getAccounts());
+                    Intent intent = new Intent(context, AutoPayReceiver.class);
+                    intent.setAction("uniqueCode");
+                    intent.putExtra(context.getString(R.string.intentAffiliate), affiliate);
+                    intent.putExtra(context.getString(R.string.intentAutoNumber), accountNumber);
+                    intent.putExtra(context.getString(R.string.intentUserEmail), userEmail);
+                    intent.putExtra(context.getString(R.string.intentUserAccountBalance), userBalance);
+                    intent.putExtra(context.getString(R.string.intentAutoAmount), amountWithdraw);
 
-                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 
-                    intent.putExtra(getString(R.string.intentUser), currentUser);
-                    intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), currentUser.getAccounts());
-                    startActivity(intent);
+
+
+
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                            context, Integer.parseInt(accountNumber), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
+
+                    currentBalance = value;
+                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance - amountWithdraw);
+
+
                 }catch (NullPointerException npe){
-                    return ;
+                    npe.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onCallBack(CustomerModel value) {
+
             }
 
             @Override
             public void onCallBackLocation(Location value) {
             }
+
+
         },myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
 
-        myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(userBalance - amountWithdraw);
 
         Log.d("DailyAlarmReceiver", affiliate + " // test virk pls");
     }
 
     private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
-                Log.d(TAG, "Value is: " + currentUser);
-                myCallBack.onCallBack(user);
+                Double currentBalance = dataSnapshot.getValue(Double.class);
+                Log.d(TAG, "Value is: " + currentBalance);
+                myCallBack.onCallBackBalance(currentBalance);
             }
 
             @Override

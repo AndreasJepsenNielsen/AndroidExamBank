@@ -112,6 +112,7 @@
     <string name="pay">pay</string>
     <string name="please_check_your_email_for_your_nemid_code">Please check your email for your NemId code</string>
     <string name="logoutbutton">LogOutButton</string>
+    <string name="notOldEnough">You are not old enough to access these functions</string>
 
 
     <!-- PayBills -->
@@ -139,6 +140,7 @@
     <string name="intentAffiliate">userAffiliate</string>
     <string name="intentUserAccountBalance">userAccountBalance</string>
     <string name="intentUserEmail">userEmail</string>
+    <string name="cancel_payments">Cancel Payments</string>
 
 
 </resources>
