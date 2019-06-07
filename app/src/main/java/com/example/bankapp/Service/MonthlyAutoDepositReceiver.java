@@ -6,14 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.nfc.Tag;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.bankapp.MainActivity;
-import com.example.bankapp.MenuActivity;
-import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.MonthlyPaymentsActivity;
 import com.example.bankapp.MyCallBack;
 import com.example.bankapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -24,10 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
 
-public class AutoPayReceiver extends BroadcastReceiver{
-
+public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
     String affiliate, accountNumber, userEmail;
-    Double amountWithdraw, userBalance, currentBalance;
+    Double amountDeposit, userBalance, currentBalance;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
@@ -39,33 +34,36 @@ public class AutoPayReceiver extends BroadcastReceiver{
         accountNumber = intent.getStringExtra(context.getString(R.string.intentAutoNumber));
         userEmail = intent.getStringExtra(context.getString(R.string.intentUserEmail));
 
-        amountWithdraw = intent.getDoubleExtra(context.getString(R.string.intentAutoAmount), 0.0);
+        amountDeposit = intent.getDoubleExtra(context.getString(R.string.intentAutoAmount), 0.0);
 
         System.out.println(affiliate);
         System.out.println(accountNumber);
         System.out.println(userEmail);
-        System.out.println(amountWithdraw);
+        System.out.println(amountDeposit);
 
         readFromDatabaseTest(new MyCallBack() {
             @Override
             public void onCallBackBalance(Double value) {
 
                 try {
-                    Intent intent = new Intent(context, AutoPayReceiver.class);
+                    System.out.println("MONTHLYAUTODEPOSITRECIEVER inde i try onCallBackBalance -> readfromdatabasetest");
+                    Intent intent = new Intent(context, MonthlyPaymentsActivity.class);
                     intent.setAction("uniqueCode");
                     intent.putExtra(context.getString(R.string.intentAffiliate), affiliate);
                     intent.putExtra(context.getString(R.string.intentAutoNumber), accountNumber);
                     intent.putExtra(context.getString(R.string.intentUserEmail), userEmail);
                     intent.putExtra(context.getString(R.string.intentUserAccountBalance), userBalance);
-                    intent.putExtra(context.getString(R.string.intentAutoAmount), amountWithdraw);
+                    intent.putExtra(context.getString(R.string.intentAutoAmount), amountDeposit);
+
+                    String concatRequestCode = accountNumber + context.getString(R.string.one);
 
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                            context, Integer.parseInt(accountNumber), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            context, Integer.parseInt(concatRequestCode), intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
 
                     currentBalance = value;
-                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance - amountWithdraw);
+                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance + amountDeposit);
 
 
                 }catch (NullPointerException npe){
@@ -106,7 +104,5 @@ public class AutoPayReceiver extends BroadcastReceiver{
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
     }
-
 }

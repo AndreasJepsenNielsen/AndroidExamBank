@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
-    Button transferBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn;
+    Button transferBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn, monthlyPayBtn;
     ImageButton  logOutBtn;
     TextView defaultAccountBalance;
 
@@ -125,6 +125,19 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        monthlyPayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent monthlyPay = new Intent(MenuActivity.this, MonthlyPaymentsActivity.class);
+
+                monthlyPay.putExtra(getString(R.string.intentUser), userDetails);
+                monthlyPay.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+
+                startActivity(monthlyPay);
+                finish();
+            }
+        });
+
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,12 +147,6 @@ public class MenuActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
             }
         });
-
-
-
-
-
-
     }
 
 
@@ -207,6 +214,7 @@ public class MenuActivity extends AppCompatActivity {
         pensionAccountBtn = findViewById(R.id.pensionAccountBtn);
         savingsAccountBtn = findViewById(R.id.savingsAccountBtn);
         logOutBtn = findViewById(R.id.logOutBtn);
+        monthlyPayBtn = findViewById(R.id.montlyPayBtn);
 
 
         businessAccountBtn.setVisibility(View.GONE);

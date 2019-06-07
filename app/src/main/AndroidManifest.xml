@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PayBillsActivity"></activity>
+        <activity android:name=".MonthlyPaymentsActivity"></activity>
+        <activity android:name=".PayBillsActivity" />
         <activity android:name=".TransferMoneyAccounts" />
         <activity android:name=".TransferMoneyOthersActivity" />
         <activity android:name=".ApplyForAccountsActivity" />
@@ -39,6 +40,9 @@
 
         <receiver
             android:name=".Service.AutoPayReceiver"
+            android:exported="true" />
+        <receiver
+            android:name=".Service.MonthlyAutoDepositReceiver"
             android:exported="true" />
     </application>
 

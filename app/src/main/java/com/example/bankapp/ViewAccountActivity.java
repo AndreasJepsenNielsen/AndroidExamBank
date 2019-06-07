@@ -42,7 +42,7 @@ public class ViewAccountActivity extends AppCompatActivity {
         transferMoneyToOtherAccounts = findViewById(R.id.transferMoneyToOtherAccountsBtn);
         depositButton = findViewById(R.id.DepositBtn);
         payBillsBtn = findViewById(R.id.payBillsBtn);
-        cancelButton = findViewById(R.id.cancelButton);
+        cancelButton = findViewById(R.id.cancelBtn);
 
         accountView.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) + " " + getString(R.string.balance) + account.getBalance());
 

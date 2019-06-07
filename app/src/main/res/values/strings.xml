@@ -142,5 +142,15 @@
     <string name="intentUserEmail">userEmail</string>
     <string name="cancel_payments">Cancel Payments</string>
 
+    <!-- MonthlyPaymentsActivity -->
+    <string name="monthlyPay">Monthly pay to</string>
+    <string name="monthlyFromAccount">From account</string>
+    <string name="monthlyPayButton">Monthly pay</string>
+    <string-array name="monthlyAccounts">
+        <item>Budget account</item>
+        <item>Savings account</item>
+    </string-array>
+    <string name="amountGreaterThanZero">Amount must be greater than zero</string>
+
 
 </resources>
