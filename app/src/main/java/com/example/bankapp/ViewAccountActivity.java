@@ -125,13 +125,7 @@ public class ViewAccountActivity extends AppCompatActivity {
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
-                        Toast.makeText(ViewAccountActivity.this, getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
-                    } else {
                         cancelPayments();
-
-                    }
-
                 }
             });
 
@@ -166,12 +160,6 @@ public class ViewAccountActivity extends AppCompatActivity {
         birthDate.set(year, month, day);
 
 
-        System.out.println("SUBSTRING" + Integer.parseInt( userDetails.getSSN().substring(4,6)));
-        System.out.println("SUBSTRING" + Integer.parseInt( userDetails.getSSN().substring(2,4)));
-        System.out.println("SUBSTRING" + Integer.parseInt( userDetails.getSSN().substring(0,2)));
-
-        System.out.println("BIRTHDATE" + birthDate.get(Calendar.YEAR));
-
         return birthDate;
     }
 
@@ -197,12 +185,18 @@ public class ViewAccountActivity extends AppCompatActivity {
     }
 
     private void cancelPayments() {
-        getNumber();
-        Intent intent = new Intent(this, AutoPayReceiver.class);
+
+            getNumber();
+            Intent intent = new Intent(this, AutoPayReceiver.class);
+
+
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this, Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
+                getApplicationContext(), Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
+
+            alarmManager.cancel(pendingIntent);
+
     }
 }

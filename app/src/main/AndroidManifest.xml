@@ -40,6 +40,7 @@
 
         <receiver
             android:name=".Service.AutoPayReceiver"
+
             android:exported="true" />
         <receiver
             android:name=".Service.MonthlyAutoDepositReceiver"

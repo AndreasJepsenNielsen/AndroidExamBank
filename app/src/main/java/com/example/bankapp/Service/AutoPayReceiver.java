@@ -52,12 +52,14 @@ public class AutoPayReceiver extends BroadcastReceiver{
 
                 try {
                     Intent intent = new Intent(context, AutoPayReceiver.class);
-                    intent.setAction("uniqueCode");
                     intent.putExtra(context.getString(R.string.intentAffiliate), affiliate);
                     intent.putExtra(context.getString(R.string.intentAutoNumber), accountNumber);
                     intent.putExtra(context.getString(R.string.intentUserEmail), userEmail);
                     intent.putExtra(context.getString(R.string.intentUserAccountBalance), userBalance);
                     intent.putExtra(context.getString(R.string.intentAutoAmount), amountWithdraw);
+
+
+
 
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(
                             context, Integer.parseInt(accountNumber), intent, PendingIntent.FLAG_UPDATE_CURRENT);

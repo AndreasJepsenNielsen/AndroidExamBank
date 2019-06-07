@@ -58,7 +58,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
                     myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - Double.parseDouble(paymentAmount.getText().toString()));
 
                     if (checkedAutoPay) {
-                        autoPayEveryMonthAlarm(PayBillsActivity.this);
+                        autoPayEveryMonthAlarm(getApplicationContext());
                     }
 
                     finish();
@@ -72,7 +72,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
     private void autoPayEveryMonthAlarm(Context context) {
         int HOUR = 60 * 60 * 1000;
         Intent intent = new Intent(context, AutoPayReceiver.class);
-        intent.setAction("uniqueCode");
         intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
         intent.putExtra(getString(R.string.intentAutoNumber), number);
         intent.putExtra(getString(R.string.intentUserEmail), user.getEmail());
@@ -80,15 +79,10 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         intent.putExtra(getString(R.string.intentAutoAmount), Double.parseDouble(paymentAmount.getText().toString()));
 
 
-
-
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, Integer.parseInt(number), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
-        /*alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                ,60000, pendingIntent);*/
     }
 
 

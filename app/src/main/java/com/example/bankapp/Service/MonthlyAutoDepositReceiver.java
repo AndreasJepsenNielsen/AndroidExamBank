@@ -36,10 +36,7 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
 
         amountDeposit = intent.getDoubleExtra(context.getString(R.string.intentAutoAmount), 0.0);
 
-        System.out.println(affiliate);
-        System.out.println(accountNumber);
-        System.out.println(userEmail);
-        System.out.println(amountDeposit);
+
 
         readFromDatabaseTest(new MyCallBack() {
             @Override
@@ -47,7 +44,7 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
 
                 try {
                     System.out.println("MONTHLYAUTODEPOSITRECIEVER inde i try onCallBackBalance -> readfromdatabasetest");
-                    Intent intent = new Intent(context, MonthlyPaymentsActivity.class);
+                    Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
                     intent.setAction("uniqueCode");
                     intent.putExtra(context.getString(R.string.intentAffiliate), affiliate);
                     intent.putExtra(context.getString(R.string.intentAutoNumber), accountNumber);
@@ -94,7 +91,7 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Double currentBalance = dataSnapshot.getValue(Double.class);
-                Log.d(TAG, "Value is: " + currentBalance);
+                Log.d(TAG, "MonthlyAuto Value is: " + currentBalance);
                 myCallBack.onCallBackBalance(currentBalance);
             }
 

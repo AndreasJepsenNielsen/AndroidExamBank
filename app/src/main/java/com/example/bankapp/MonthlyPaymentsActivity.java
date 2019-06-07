@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.AutoPayReceiver;
+import com.example.bankapp.Service.MonthlyAutoDepositReceiver;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -57,8 +58,10 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
             public void onClick(View v) {
                 if (validateMonthlyPayment()) {
                     System.out.println("godkendt");
-                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( selectedAccount.getBalance() + Double.parseDouble(amountMonthly.getText().toString()));
                     autoPayEveryMonthAlarm(MonthlyPaymentsActivity.this);
+                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( selectedAccount.getBalance() + Double.parseDouble(amountMonthly.getText().toString()));
+                }else{
+                    System.out.println("øv validationen gik ikke");
                 }
 
             }
@@ -86,7 +89,7 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
                 }
             }
             catch (NullPointerException npE){
-
+                System.out.println("Halløjsovs det gik ikke");
             }
 
         }
@@ -130,20 +133,21 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
     private void autoPayEveryMonthAlarm(Context context) {
         int HOUR = 60 * 60 * 1000;
-        Intent intent = new Intent(context, MonthlyPaymentsActivity.class);
-        intent.setAction("uniqueCode");
+        Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
         intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
         intent.putExtra(getString(R.string.intentAutoNumber), number);
         intent.putExtra(getString(R.string.intentUserEmail), user.getEmail());
         intent.putExtra(getString(R.string.intentUserAccountBalance), selectedAccount.getBalance());
         intent.putExtra(getString(R.string.intentAutoAmount), Double.parseDouble(amountMonthly.getText().toString()));
 
+        String concatRequestCode = number + context.getString(R.string.one);
+
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, Integer.parseInt(number), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                context, Integer.parseInt(concatRequestCode), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
-        /*alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                ,60000, pendingIntent);*/
+
     }
 
 
