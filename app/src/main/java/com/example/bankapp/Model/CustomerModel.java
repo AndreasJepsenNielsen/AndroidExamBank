@@ -29,8 +29,8 @@ public class CustomerModel implements Parcelable {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.accounts = new ArrayList<>();
-        defaultAccount = new AccountModel(0.0,"DEFAULT");
-        budgetAccount = new AccountModel(0.0,"BUDGET");
+        defaultAccount = new AccountModel(0.0, "DEFAULT");
+        budgetAccount = new AccountModel(0.0, "BUDGET");
         this.accounts.add(defaultAccount);
         this.accounts.add(budgetAccount);
         this.affiliate = affiliate;

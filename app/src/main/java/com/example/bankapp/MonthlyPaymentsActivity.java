@@ -4,16 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.GetNumberService;
@@ -57,8 +51,8 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
             public void onClick(View v) {
                 if (validateMonthlyPayment()) {
                     autoPayEveryMonthAlarm(MonthlyPaymentsActivity.this);
-                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( selectedAccount.getBalance() + Double.parseDouble(amountMonthly.getText().toString()));
-                }else{
+                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(selectedAccount.getBalance() + Double.parseDouble(amountMonthly.getText().toString()));
+                } else {
                     Toast.makeText(MonthlyPaymentsActivity.this, getString(R.string.somethingWentWrong), Toast.LENGTH_LONG).show();
                 }
             }
@@ -77,13 +71,12 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
         adapter.add(accounts.get(1));
 
-        for (int i = 0; i < accounts.size() ; i++) {
+        for (int i = 0; i < accounts.size(); i++) {
             try {
-                if (accounts.get(i).getType() != null && accounts.get(i).getType().equals(getString(R.string.SAVINGS))){
+                if (accounts.get(i).getType() != null && accounts.get(i).getType().equals(getString(R.string.SAVINGS))) {
                     adapter.add(accounts.get(i));
                 }
-            }
-            catch (NullPointerException npE){
+            } catch (NullPointerException npE) {
                 Toast.makeText(this, getString(R.string.somethingWentWrong), Toast.LENGTH_LONG).show();
             }
         }
@@ -102,7 +95,6 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
     }
 
     private void autoPayEveryMonthAlarm(Context context) {
-        int HOUR = 60 * 60 * 1000;
         Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
         intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
         intent.putExtra(getString(R.string.intentAutoNumber), number);
@@ -121,7 +113,7 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selectedAccount = (AccountModel) spinnerAccount.getSelectedItem();
-        number = numberService.getNumber(this,selectedAccount);
+        number = numberService.getNumber(this, selectedAccount);
     }
 
     @Override

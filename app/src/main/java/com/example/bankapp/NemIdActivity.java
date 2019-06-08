@@ -1,24 +1,24 @@
 package com.example.bankapp;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
-
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-
 import org.apache.commons.lang3.RandomStringUtils;
 
-public class NemIdActivity extends AppCompatActivity{
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.Properties;
+
+public class NemIdActivity extends AppCompatActivity {
 
     static String nemId;
     Button verifyButton;
@@ -47,18 +47,18 @@ public class NemIdActivity extends AppCompatActivity{
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(System.currentTimeMillis() >= timeStamp10){
+                if (System.currentTimeMillis() >= timeStamp10) {
                     Toast.makeText(NemIdActivity.this, getString(R.string.codeSessionRunOut), Toast.LENGTH_LONG).show();
                     sendMail();
-                }else{
-                    if(inputCode.getText().toString().equals(nemId)){
-                        if(choice.equals(getString(R.string.transfer))){
+                } else {
+                    if (inputCode.getText().toString().equals(nemId)) {
+                        if (choice.equals(getString(R.string.transfer))) {
                             Intent transferIntent = new Intent(NemIdActivity.this, TransferMoneyOthersActivity.class);
                             transferIntent.putExtra(getString(R.string.intentUser), userDetails);
                             transferIntent.putExtra(getString(R.string.intentAccount), account);
                             startActivity(transferIntent);
                             finish();
-                        }else{
+                        } else {
                             Intent transferIntent = new Intent(NemIdActivity.this, PayBillsActivity.class);
                             transferIntent.putExtra(getString(R.string.intentUser), userDetails);
                             transferIntent.putExtra(getString(R.string.intentAccount), account);
@@ -66,7 +66,7 @@ public class NemIdActivity extends AppCompatActivity{
                             startActivity(transferIntent);
                             finish();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(NemIdActivity.this, getString(R.string.nemIdIncorrect), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -100,19 +100,16 @@ public class NemIdActivity extends AppCompatActivity{
                     InternetAddress.parse(userDetails.getEmail()));
             message.setSubject(getString(R.string.nemIdCode));
             message.setText(getString(R.string.nemIdCodeExpires)
-                    + "\n\n" + nemId );
-            Transport.send(message);;
-        }
-
-        catch (MessagingException e)
-        {
+                    + "\n\n" + nemId);
+            Transport.send(message);
+        } catch (MessagingException e) {
             // throw new RuntimeException(e);
             e.printStackTrace();
         }
     }
 
     public String generateNemId() {
-        String generatedString = RandomStringUtils.random(6,"0123456789");
+        String generatedString = RandomStringUtils.random(6, "0123456789");
 
         System.out.println(generatedString);
 
@@ -123,7 +120,8 @@ public class NemIdActivity extends AppCompatActivity{
 
         return generatedString;
     }
-    private void init(){
+
+    private void init() {
         verifyButton = findViewById(R.id.verifyButton);
         inputCode = findViewById(R.id.inputCode);
     }

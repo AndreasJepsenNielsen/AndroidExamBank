@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.bankapp.Model.CustomerModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -21,7 +20,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -45,58 +43,58 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         init();
 
-            getDeviceLocation(new MyCallBack() {
-                @Override
-                public void onCallBack(CustomerModel value) {
+        getDeviceLocation(new MyCallBack() {
+            @Override
+            public void onCallBack(CustomerModel value) {
+            }
+
+            @Override
+            public void onCallBackLocation(Location value) {
+                userLocation = value;
+                double longitude = userLocation.getLongitude();
+                double latitude = userLocation.getLatitude();
+
+                double copenhagen = distance(latitude, longitude, 55.6760968, 12.5683371);
+                double odense = distance(latitude, longitude, 55.403756, 10.402370);
+
+                if (copenhagen < odense) {
+                    affiliate = getString(R.string.copenhagen);
+
+                } else {
+                    affiliate = getString(R.string.odense);
                 }
+            }
 
-                @Override
-                public void onCallBackLocation(Location value) {
-                    userLocation = value;
-                    double longitude = userLocation.getLongitude();
-                    double latitude = userLocation.getLatitude();
+            @Override
+            public void onCallBackBalance(Double value) {
 
-                    double copenhagen = distance(latitude, longitude, 55.6760968, 12.5683371);
-                    double odense = distance(latitude, longitude, 55.403756, 10.402370);
-
-                    if(copenhagen < odense){
-                        affiliate = getString(R.string.copenhagen);
-
-                    }else{
-                        affiliate = getString(R.string.odense);
-                    }
-                }
-
-                @Override
-                public void onCallBackBalance(Double value) {
-
-                }
-            });
+            }
+        });
 
 
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                CheckValidity();
-            try {
-                if (CheckValidity()) {
-                    CustomerModel tempCustomer = new CustomerModel(SSN.getText().toString(), Email.getText().toString(),
-                            Password.getText().toString(), Address.getText().toString(), Firstname.getText().toString(),
-                            Lastname.getText().toString(), Phonenumber.getText().toString(), affiliate);
-                    writeNewUser(tempCustomer);
+                checkValidity();
+                try {
+                    if (checkValidity()) {
+                        CustomerModel tempCustomer = new CustomerModel(SSN.getText().toString(), Email.getText().toString(),
+                                Password.getText().toString(), Address.getText().toString(), Firstname.getText().toString(),
+                                Lastname.getText().toString(), Phonenumber.getText().toString(), affiliate);
+                        writeNewUser(tempCustomer);
 
-                    Intent login = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(login);
+                        Intent login = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(login);
+                    }
+                } catch (NullPointerException Npe) {
+                    Toast.makeText(RegisterActivity.this, getString(R.string.allowLocation), Toast.LENGTH_LONG).show();
                 }
-            }catch(NullPointerException Npe){
-                Toast.makeText(RegisterActivity.this,getString(R.string.allowLocation), Toast.LENGTH_LONG).show();
-            }
             }
         });
     }
@@ -108,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
 
-            dist = dist * 1.609344;
+        dist = dist * 1.609344;
 
         return (dist);
     }
@@ -127,57 +125,57 @@ public class RegisterActivity extends AppCompatActivity {
         return (rad * 180.0 / Math.PI);
     }
 
-    private boolean CheckValidity(){
-        if(SSN.getText().toString().isEmpty() || SSN.getText().length() < 10 || SSN.getText().length() > 10){
+    private boolean checkValidity() {
+        if (SSN.getText().toString().isEmpty() || SSN.getText().length() < 10 || SSN.getText().length() > 10) {
             Toast.makeText(this, getString(R.string.ssn10Characters), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(Email.getText().toString().isEmpty()){
+        if (Email.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(!isValidEmailAddress(Email.getText().toString())){
-            Toast.makeText(this, getString(R.string.emailNotValid),Toast.LENGTH_LONG).show();
+        if (!isValidEmailAddress(Email.getText().toString())) {
+            Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(Password.getText().toString().isEmpty() || Password.getText().toString().length() < 8){
+        if (Password.getText().toString().isEmpty() || Password.getText().toString().length() < 8) {
             Toast.makeText(this, getString(R.string.mustBe8Characters), Toast.LENGTH_LONG).show();
             return false;
 
         }
 
-        if(checkPassword(Password.getText().toString())){
+        if (checkPassword(Password.getText().toString())) {
             Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
 
         }
 
-        if(Address.getText().toString().isEmpty()){
-            Toast.makeText(this,getString(R.string.addressNotEmpty), Toast.LENGTH_LONG).show();
+        if (Address.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.addressNotEmpty), Toast.LENGTH_LONG).show();
             return false;
 
         }
 
-        if(Firstname.getText().toString().isEmpty()){
-            Toast.makeText(this,getString(R.string.firstnameNotEmpty), Toast.LENGTH_LONG).show();
+        if (Firstname.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.firstnameNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(Lastname.getText().toString().isEmpty()){
-            Toast.makeText(this,getString(R.string.lastnameNotEmpty), Toast.LENGTH_LONG).show();
+        if (Lastname.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.lastnameNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(Phonenumber.getText().toString().isEmpty() || Phonenumber.getText().toString().length()< 8 ||
-                Phonenumber.getText().toString().length() > 8){
+        if (Phonenumber.getText().toString().isEmpty() || Phonenumber.getText().toString().length() < 8 ||
+                Phonenumber.getText().toString().length() > 8) {
             Toast.makeText(this, getString(R.string.phonenumberAuth), Toast.LENGTH_LONG).show();
 
             return false;
@@ -192,48 +190,47 @@ public class RegisterActivity extends AppCompatActivity {
         return validator.isValid(email);
     }
 
-    private boolean checkPassword(String str){
+    private boolean checkPassword(String str) {
         char ch;
         boolean capitalFlag = false;
         boolean lowerCaseFlag = false;
         boolean numberFlag = false;
-        for(int i=0;i < str.length();i++) {
+        for (int i = 0; i < str.length(); i++) {
             ch = str.charAt(i);
-            if( Character.isDigit(ch)) {
+            if (Character.isDigit(ch)) {
                 numberFlag = true;
-            }
-            else if (Character.isUpperCase(ch)) {
+            } else if (Character.isUpperCase(ch)) {
                 capitalFlag = true;
             } else if (Character.isLowerCase(ch)) {
                 lowerCaseFlag = true;
             }
-            if(numberFlag && capitalFlag && lowerCaseFlag)
+            if (numberFlag && capitalFlag && lowerCaseFlag)
                 return true;
         }
         return false;
     }
 
-    private void writeNewUser(CustomerModel customerToCreate){
+    private void writeNewUser(CustomerModel customerToCreate) {
         CustomerModel testCustomer1 = new CustomerModel(customerToCreate.getSSN(), customerToCreate.getEmail(), customerToCreate.getPassword(), customerToCreate.getAddress(), customerToCreate.getFirstName(), customerToCreate.getLastName(), customerToCreate.getPhoneNumber(), affiliate);
         String[] fn = testCustomer1.getEmail().split("\\.");
 
-        String emailNotDot = fn[0] + fn[1].replace(".","");
+        String emailNotDot = fn[0] + fn[1].replace(".", "");
         database.getReference(affiliate + getString(R.string.pathUser)).child(emailNotDot).setValue(testCustomer1);
 
         createAuthUser(customerToCreate.getEmail(), customerToCreate.getPassword());
     }
 
-    private void createAuthUser(String email, String password){
+    private void createAuthUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
 
-                        }else {
+                        } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, getString(R.string.authenticationFailed),
                                     Toast.LENGTH_SHORT).show();
@@ -244,34 +241,34 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void getDeviceLocation(final MyCallBack myCallBack) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        Log.d(TAG,"getDeviceLocation: getting current location");
+        Log.d(TAG, "getDeviceLocation: getting current location");
         try {
-                Task location = fusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "onComplete: found location");
-                            Location currentLocation = (Location) task.getResult();
+            Task location = fusedLocationProviderClient.getLastLocation();
+            location.addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "onComplete: found location");
+                        Location currentLocation = (Location) task.getResult();
 
-                            myCallBack.onCallBackLocation(currentLocation);
+                        myCallBack.onCallBackLocation(currentLocation);
 
-                            Log.d(TAG, "onComplete: LATITUDE AND LONGITUDE: " + Double.toString(currentLocation.getLatitude()) + Double.toString(currentLocation.getLongitude()));
+                        Log.d(TAG, "onComplete: LATITUDE AND LONGITUDE: " + currentLocation.getLatitude() + currentLocation.getLongitude());
 
-                        } else {
-                            Log.d(TAG, "onComplete: Current location is null");
+                    } else {
+                        Log.d(TAG, "onComplete: Current location is null");
 
-                        }
                     }
-                });
+                }
+            });
 
         } catch (SecurityException SE) {
-            Log.d(TAG,"getDeviceLocation: SecurityException" + SE.getMessage());
+            Log.d(TAG, "getDeviceLocation: SecurityException" + SE.getMessage());
         }
     }
 
-    private void init(){
-        RegisterButton = (Button) findViewById(R.id.button);
+    private void init() {
+        RegisterButton = findViewById(R.id.button);
         SSN = findViewById(R.id.editText3);
         Email = findViewById(R.id.editText4);
         Password = findViewById(R.id.editText5);

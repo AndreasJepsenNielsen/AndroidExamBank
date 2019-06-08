@@ -7,19 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
-
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.MyCallBack;
 import com.example.bankapp.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 
 import static android.content.ContentValues.TAG;
 
-public class AutoPayReceiver extends BroadcastReceiver{
+public class AutoPayReceiver extends BroadcastReceiver {
 
     String affiliate, accountNumber, userEmail;
     Double amountWithdraw, userBalance, currentBalance;
@@ -54,9 +49,9 @@ public class AutoPayReceiver extends BroadcastReceiver{
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
 
                     currentBalance = value;
-                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance - amountWithdraw);
+                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".", "") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance - amountWithdraw);
 
-                }catch (NullPointerException npe){
+                } catch (NullPointerException npe) {
                     npe.printStackTrace();
                 }
             }
@@ -70,12 +65,12 @@ public class AutoPayReceiver extends BroadcastReceiver{
             }
 
 
-        },myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
+        }, myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".", "") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
 
         Log.d("DailyAlarmReceiver", affiliate + " // test virk pls");
     }
 
-    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
+    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

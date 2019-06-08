@@ -1,15 +1,10 @@
 package com.example.bankapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.google.firebase.database.DatabaseReference;
@@ -46,21 +41,21 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
         switch (position) {
             case 1:
-                if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])){
+                if (items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
                     accountName = getString(R.string.BUSINESS);
-                }else if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])){
+                } else if (items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
                     accountName = getString(R.string.SAVINGS);
-                }else if(items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])){
-                accountName = getString(R.string.PENSION);
+                } else if (items.get(1).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
+                    accountName = getString(R.string.PENSION);
 
                 }
 
                 break;
 
             case 2:
-                if(items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])){
+                if (items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
                     accountName = getString(R.string.SAVINGS);
-                }else if(items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])){
+                } else if (items.get(2).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
                     accountName = getString(R.string.PENSION);
 
                 }
@@ -76,7 +71,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!accountName.equals(getString(R.string.NONE))) {
+                if (!accountName.equals(getString(R.string.NONE))) {
                     AccountModel newAccount = new AccountModel(0, accountName);
                     accounts.add(newAccount);
                     applyForAccount(accountName, newAccount);
@@ -86,8 +81,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                     backToMenu.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                     startActivity(backToMenu);
                     finish();
-                }
-                else{
+                } else {
                     Toast.makeText(ApplyForAccountsActivity.this, getString(R.string.chooseAnAccount), Toast.LENGTH_LONG).show();
                 }
             }
@@ -98,24 +92,22 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
-    private void applyForAccount(String type, AccountModel newAccount){
+    private void applyForAccount(String type, AccountModel newAccount) {
         String number = getString(R.string.zero);
-        if(type.equals(getString(R.string.BUSINESS))) {
+        if (type.equals(getString(R.string.BUSINESS))) {
             adapter.notifyDataSetChanged();
             number = getString(R.string.two);
-        }
-        else if(type.equals(getString(R.string.SAVINGS))) {
+        } else if (type.equals(getString(R.string.SAVINGS))) {
             adapter.notifyDataSetChanged();
             number = getString(R.string.three);
-        }
-        else if(type.equals(getString(R.string.PENSION))) {
+        } else if (type.equals(getString(R.string.PENSION))) {
             adapter.notifyDataSetChanged();
             number = getString(R.string.four);
         }
 
 
         try {
-            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
+            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,12 +132,12 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
         for (int i = 0; i < accountArrayList.size(); i++) {
             if (accountArrayList.get(i) != null) {
-                for (int j = 0; j < items.size() ; j++) {
+                for (int j = 0; j < items.size(); j++) {
 
 
                     if (accountArrayList.get(i).getType().equals(getString(R.string.BUSINESS)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
 
-                       items.remove(j);
+                        items.remove(j);
                     }
 
                     if (accountArrayList.get(i).getType().equals(getString(R.string.SAVINGS)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {

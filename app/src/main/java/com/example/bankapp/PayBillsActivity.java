@@ -4,18 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.AutoPayReceiver;
@@ -28,7 +20,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
     Spinner paySpinner;
     CheckBox paymentAutoCheckbox;
     Button paymentButton;
-    TextView accountName,accountBalance;
+    TextView accountName, accountBalance;
     AccountModel account;
     CustomerModel user;
     String number;
@@ -50,9 +42,9 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validatePayment()){
+                if (validatePayment()) {
                     checkedAutoPay = paymentAutoCheckbox.isChecked();
-                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - Double.parseDouble(paymentAmount.getText().toString()));
+                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(account.getBalance() - Double.parseDouble(paymentAmount.getText().toString()));
 
                     if (checkedAutoPay) {
                         autoPayEveryMonthAlarm(getApplicationContext());
@@ -65,7 +57,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void autoPayEveryMonthAlarm(Context context) {
-        int HOUR = 60 * 60 * 1000;
         Intent intent = new Intent(context, AutoPayReceiver.class);
         intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
         intent.putExtra(getString(R.string.intentAutoNumber), number);
@@ -80,23 +71,23 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private boolean validatePayment() {
-        if(paymentId.getText().toString().isEmpty() || paymentCreditor.getText().toString().isEmpty() || paymentName.getText().toString().isEmpty() || paymentAmount.getText().toString().isEmpty()){
-            Toast.makeText(this, getString(R.string.emptyFieldsPayBills),Toast.LENGTH_LONG).show();
+        if (paymentId.getText().toString().isEmpty() || paymentCreditor.getText().toString().isEmpty() || paymentName.getText().toString().isEmpty() || paymentAmount.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.emptyFieldsPayBills), Toast.LENGTH_LONG).show();
             return false;
         }
 //8
-        if(paymentCreditor.length() != 8){
-            Toast.makeText(this, getString(R.string.creditorLength),Toast.LENGTH_LONG).show();
+        if (paymentCreditor.length() != 8) {
+            Toast.makeText(this, getString(R.string.creditorLength), Toast.LENGTH_LONG).show();
             return false;
         }
 //14
-        if(paymentId.length() != 14){
-            Toast.makeText(this, getString(R.string.paymentIdLength),Toast.LENGTH_LONG).show();
+        if (paymentId.length() != 14) {
+            Toast.makeText(this, getString(R.string.paymentIdLength), Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if(Double.parseDouble(paymentAmount.getText().toString()) > account.getBalance()) {
-            Toast.makeText(this, getString(R.string.notEnoughMoney),Toast.LENGTH_LONG).show();
+        if (Double.parseDouble(paymentAmount.getText().toString()) > account.getBalance()) {
+            Toast.makeText(this, getString(R.string.notEnoughMoney), Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -116,7 +107,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         accountBalance = findViewById(R.id.accountBalanceAccountsPay);
         accountName = findViewById(R.id.accountNameAccountsPay);
 
-        accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
+        accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

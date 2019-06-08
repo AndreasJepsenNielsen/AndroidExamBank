@@ -1,12 +1,11 @@
 package com.example.bankapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.GetNumberService;
@@ -24,6 +23,7 @@ public class DepositActivity extends AppCompatActivity {
     EditText depositField;
     String number;
     GetNumberService numberService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,48 +36,31 @@ public class DepositActivity extends AppCompatActivity {
         depositButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( !depositField.getText().toString().isEmpty() && Double.parseDouble(depositField.getText().toString()) > 0.0){
+                if (!depositField.getText().toString().isEmpty() && Double.parseDouble(depositField.getText().toString()) > 0.0) {
                     depositMoney(Double.parseDouble(depositField.getText().toString()));
-                }else{
-                    Toast.makeText(DepositActivity.this, getString(R.string.depositPositiveAmount),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(DepositActivity.this, getString(R.string.depositPositiveAmount), Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
 
-    private void depositMoney(double amount){
-        String number = getString(R.string.zero);
-        if(account.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
-
-        if(account.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(account.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(account.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
+    private void depositMoney(double amount) {
         try {
 
-            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(amount + account.getBalance());
+            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(amount + account.getBalance());
             finish();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void init(){
+
+    private void init() {
         depositButton = findViewById(R.id.depositButton);
-        depositField  = findViewById(R.id.depositField);
+        depositField = findViewById(R.id.depositField);
         numberService = new GetNumberService();
-        number = numberService.getNumber(this,account);
+        number = numberService.getNumber(this, account);
     }
 }

@@ -1,13 +1,12 @@
 package com.example.bankapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
     Button applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn, monthlyPayBtn;
-    ImageButton  logOutBtn;
+    ImageButton logOutBtn;
     TextView defaultAccountBalance;
 
     CustomerModel userDetails;
@@ -28,8 +27,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
-         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
+        userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
+        accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
 
         init();
         displayAccounts();
@@ -127,49 +126,48 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-    private AccountModel getAccount(String type){
+    private AccountModel getAccount(String type) {
         AccountModel temp = null;
         for (int i = 0; i < accounts.size(); i++) {
             try {
                 if (accounts.get(i).getType().equals(type)) {
                     temp = accounts.get(i);
                 }
-            }catch(NullPointerException npe){
+            } catch (NullPointerException npe) {
 
             }
         }
         return temp;
     }
 
-    private void displayAccounts(){
+    private void displayAccounts() {
 
-        for (int i = 0; i < accounts.size() ; i++) {
-           try {
-               if(accounts.get(i).getType().equals(getString(R.string.DEFAULT))){
-                   defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-               }
+        for (int i = 0; i < accounts.size(); i++) {
+            try {
+                if (accounts.get(i).getType().equals(getString(R.string.DEFAULT))) {
+                    defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+                }
 
-               if(accounts.get(i).getType().equals(getString(R.string.BUDGET))) {
-                   budgetAccountBtn.setText(getString(R.string.budgetAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-               }
+                if (accounts.get(i).getType().equals(getString(R.string.BUDGET))) {
+                    budgetAccountBtn.setText(getString(R.string.budgetAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+                }
 
-               if(accounts.get(i).getType().equals(getString(R.string.BUSINESS))){
-                   businessAccountBtn.setVisibility(View.VISIBLE);
-                   businessAccountBtn.setText(getString(R.string.businessAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-               }
+                if (accounts.get(i).getType().equals(getString(R.string.BUSINESS))) {
+                    businessAccountBtn.setVisibility(View.VISIBLE);
+                    businessAccountBtn.setText(getString(R.string.businessAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+                }
 
-               if(accounts.get(i).getType().equals(getString(R.string.SAVINGS))){
-                   savingsAccountBtn.setVisibility(View.VISIBLE);
-                   savingsAccountBtn.setText(getString(R.string.savingsAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-               }
+                if (accounts.get(i).getType().equals(getString(R.string.SAVINGS))) {
+                    savingsAccountBtn.setVisibility(View.VISIBLE);
+                    savingsAccountBtn.setText(getString(R.string.savingsAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+                }
 
-               if(accounts.get(i).getType().equals(getString(R.string.PENSION))){
-                   pensionAccountBtn.setVisibility(View.VISIBLE);
-                   pensionAccountBtn.setText(getString(R.string.pensionAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
-               }
-           }
-           catch (NullPointerException npE) {
-           }
+                if (accounts.get(i).getType().equals(getString(R.string.PENSION))) {
+                    pensionAccountBtn.setVisibility(View.VISIBLE);
+                    pensionAccountBtn.setText(getString(R.string.pensionAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
+                }
+            } catch (NullPointerException npE) {
+            }
         }
     }
 

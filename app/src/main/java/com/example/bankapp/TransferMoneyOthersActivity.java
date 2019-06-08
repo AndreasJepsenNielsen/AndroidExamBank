@@ -1,27 +1,21 @@
 package com.example.bankapp;
 
 import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.GetNumberService;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.database.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class TransferMoneyOthersActivity extends AppCompatActivity  {
+public class TransferMoneyOthersActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
@@ -57,24 +51,21 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
     }
 
     private void validate(EditText emailOtherAccount, TextView amountToPay, double accountBalance) {
-        if(emailOtherAccount.getText().toString().isEmpty() && amountToPay.getText().toString().isEmpty()){
-            Toast.makeText(this, getString(R.string.emptyFieldsTransfer),Toast.LENGTH_LONG).show();
-        }
-        else if (!isValidEmailAddress(emailOtherAccount.getText().toString())) {
+        if (emailOtherAccount.getText().toString().isEmpty() && amountToPay.getText().toString().isEmpty()) {
+            Toast.makeText(this, getString(R.string.emptyFieldsTransfer), Toast.LENGTH_LONG).show();
+        } else if (!isValidEmailAddress(emailOtherAccount.getText().toString())) {
             Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
-        }
-        else if(Double.parseDouble(amountToPay.getText().toString()) > accountBalance) {
-            Toast.makeText(this, getString(R.string.notEnoughMoney),Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else if (Double.parseDouble(amountToPay.getText().toString()) > accountBalance) {
+            Toast.makeText(this, getString(R.string.notEnoughMoney), Toast.LENGTH_LONG).show();
+        } else {
             transferMoneyToOthers(Double.parseDouble(amountToPay.getText().toString()));
         }
     }
 
-    private void transferMoneyToOthers(double amount){
+    private void transferMoneyToOthers(double amount) {
         try {
-            depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
-            depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
+            depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".", "")));
+            depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".", "")));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,11 +83,11 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                 try {
                     receiveUser = value;
                     receiverAccount = value.getAccounts().get(0);
-                    myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
-                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( account.getBalance() - Double.parseDouble(amountToTransfer.getText().toString()));
+                    myref.child(getString(R.string.pathSlash) + receiveUser.getAffiliate() + getString(R.string.pathUserSlash) + receiveUser.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + getString(R.string.zero) + getString(R.string.pathBalance)).setValue(receiverAccount.getBalance() + Double.parseDouble(amountToTransfer.getText().toString()));
+                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(account.getBalance() - Double.parseDouble(amountToTransfer.getText().toString()));
 
                     finish();
-                }catch (NullPointerException npe){
+                } catch (NullPointerException npe) {
                     Toast.makeText(TransferMoneyOthersActivity.this, getString(R.string.invalidUser), Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -110,23 +101,23 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
             public void onCallBackBalance(Double value) {
 
             }
-        },currentUserRef);
+        }, currentUserRef);
     }
 
-    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
+    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                    CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
-                    myCallBack.onCallBack(user);
+                CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
+                myCallBack.onCallBack(user);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                return ;
+                return;
             }
         });
     }
@@ -146,7 +137,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         numberService = new GetNumberService();
         number = numberService.getNumber(this, account);
 
-        accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
+        accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
     }
 }

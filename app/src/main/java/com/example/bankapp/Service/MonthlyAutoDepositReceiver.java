@@ -7,15 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
-
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.MyCallBack;
 import com.example.bankapp.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 
 import static android.content.ContentValues.TAG;
 
@@ -36,14 +31,12 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
         amountDeposit = intent.getDoubleExtra(context.getString(R.string.intentAutoAmount), 0.0);
 
 
-
         readFromDatabaseTest(new MyCallBack() {
             @Override
             public void onCallBackBalance(Double value) {
 
                 try {
                     Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
-                    intent.setAction("uniqueCode");
                     intent.putExtra(context.getString(R.string.intentAffiliate), affiliate);
                     intent.putExtra(context.getString(R.string.intentAutoNumber), accountNumber);
                     intent.putExtra(context.getString(R.string.intentUserEmail), userEmail);
@@ -58,10 +51,10 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
 
                     currentBalance = value;
-                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance + amountDeposit);
+                    myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".", "") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance + amountDeposit);
 
 
-                }catch (NullPointerException npe){
+                } catch (NullPointerException npe) {
                     npe.printStackTrace();
                 }
             }
@@ -76,13 +69,13 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
             }
 
 
-        },myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
+        }, myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".", "") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
 
 
         Log.d("DailyAlarmReceiver", affiliate + " // test virk pls");
     }
 
-    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
+    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

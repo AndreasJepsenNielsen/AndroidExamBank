@@ -4,29 +4,23 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.bankapp.Model.CustomerModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.database.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkLoginValidity()){
+                if (checkLoginValidity()) {
 
-                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathCPHSlashUser) + emailLogin.getText().toString().replace(".","")));
+                    login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathCPHSlashUser) + emailLogin.getText().toString().replace(".", "")));
 
-                        Login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathOdenseSlashUser) + emailLogin.getText().toString().replace(".","")));
+                    login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathOdenseSlashUser) + emailLogin.getText().toString().replace(".", "")));
                 }
             }
         });
@@ -70,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ContextCompat.checkSelfPermission(MainActivity.this.getApplicationContext(),
+                if (ContextCompat.checkSelfPermission(MainActivity.this.getApplicationContext(),
                         FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(MainActivity.this.getApplicationContext(),
-                        COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+                        COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     getLocationPermission();
                 }
             }
@@ -84,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RestPasswordActivity.class);
+                Intent intent = new Intent(MainActivity.this, ResetPasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -97,68 +91,67 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getLocationPermission(){
+    private void getLocationPermission() {
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(this,
                         permissions,
                         LOCATION_PERMISSION_REQUEST_CODE);
             }
-        }else{
+        } else {
             ActivityCompat.requestPermissions(this,
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
-    private boolean checkPassword(String str){
+    private boolean checkPassword(String str) {
         char ch;
         boolean capitalFlag = false;
         boolean lowerCaseFlag = false;
         boolean numberFlag = false;
-        for(int i=0;i < str.length();i++) {
+        for (int i = 0; i < str.length(); i++) {
             ch = str.charAt(i);
-            if( Character.isDigit(ch)) {
+            if (Character.isDigit(ch)) {
                 numberFlag = true;
-            }
-            else if (Character.isUpperCase(ch)) {
+            } else if (Character.isUpperCase(ch)) {
                 capitalFlag = true;
             } else if (Character.isLowerCase(ch)) {
                 lowerCaseFlag = true;
             }
-            if(numberFlag && capitalFlag && lowerCaseFlag)
+            if (numberFlag && capitalFlag && lowerCaseFlag)
                 return true;
         }
         return false;
     }
 
-    private boolean checkLoginValidity(){
+    private boolean checkLoginValidity() {
 
 
-        if(emailLogin.getText().toString().isEmpty()){
+        if (emailLogin.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(!isValidEmailAddress(emailLogin.getText().toString())){
-            Toast.makeText(this, getString(R.string.emailNotValid),Toast.LENGTH_LONG).show();
+        if (!isValidEmailAddress(emailLogin.getText().toString())) {
+            Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
 
             return false;
         }
 
-        if(passwordLogin.getText().toString().isEmpty() || passwordLogin.getText().toString().length() < 7){
+        if (passwordLogin.getText().toString().isEmpty() || passwordLogin.getText().toString().length() < 7) {
             Toast.makeText(this, getString(R.string.mustBe8Characters), Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if(checkPassword(passwordLogin.getText().toString())){
+        if (checkPassword(passwordLogin.getText().toString())) {
             Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
         }
@@ -167,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
+    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -187,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void Login(final String email, final String password, final DatabaseReference userRef) {
+    private void login(final String email, final String password, final DatabaseReference userRef) {
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -196,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                        currentUserRef = userRef;
+                            currentUserRef = userRef;
 
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
@@ -215,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
                                         intent.putExtra(getString(R.string.intentUser), currentUser);
                                         intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), currentUser.getAccounts());
                                         startActivity(intent);
-                                    }catch (NullPointerException npe){
-                                        return ;
+                                    } catch (NullPointerException npe) {
+                                        return;
                                     }
                                 }
 
@@ -228,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onCallBackBalance(Double value) {
 
                                 }
-                            },currentUserRef);
+                            }, currentUserRef);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -239,7 +232,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    private void init(){
+
+    private void init() {
         loginButton = findViewById(R.id.button);
         registerButton = findViewById(R.id.button2);
         emailLogin = findViewById(R.id.editText);

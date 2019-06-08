@@ -7,7 +7,7 @@ public class AccountModel implements Parcelable {
     private double balance;
     private String type;
 
-    public AccountModel(double balance ,String type) {
+    public AccountModel(double balance, String type) {
         this.balance = balance;
         this.type = type;
     }

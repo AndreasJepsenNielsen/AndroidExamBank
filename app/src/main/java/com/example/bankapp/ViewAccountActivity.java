@@ -4,12 +4,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.AutoPayReceiver;
@@ -60,81 +59,81 @@ public class ViewAccountActivity extends AppCompatActivity {
         userIs77.set(Calendar.YEAR, getBirthDate().get(Calendar.YEAR) + 77);
 
         transferMoneyBetweenAccounts.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
-                        Toast.makeText(ViewAccountActivity.this,getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
+            @Override
+            public void onClick(View v) {
+                if (account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
+                    Toast.makeText(ViewAccountActivity.this, getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
 
-                    }else {
-                        Intent transferBetweenAccounts = new Intent(ViewAccountActivity.this, TransferMoneyAccounts.class);
-                        transferBetweenAccounts.putExtra(getString(R.string.intentUser), userDetails);
-                        transferBetweenAccounts.putExtra(getString(R.string.intentAccount), account);
-                        transferBetweenAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-                        startActivity(transferBetweenAccounts);
-                    }
+                } else {
+                    Intent transferBetweenAccounts = new Intent(ViewAccountActivity.this, TransferMoneyAccounts.class);
+                    transferBetweenAccounts.putExtra(getString(R.string.intentUser), userDetails);
+                    transferBetweenAccounts.putExtra(getString(R.string.intentAccount), account);
+                    transferBetweenAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+                    startActivity(transferBetweenAccounts);
                 }
-            });
+            }
+        });
 
-            transferMoneyToOtherAccounts.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
-                        Toast.makeText(ViewAccountActivity.this,getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
+        transferMoneyToOtherAccounts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
+                    Toast.makeText(ViewAccountActivity.this, getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
 
-                    }else {
-                        Intent transferToOthers = new Intent(ViewAccountActivity.this, NemIdActivity.class);
-                        transferToOthers.putExtra(getString(R.string.intentUser), userDetails);
-                        transferToOthers.putExtra(getString(R.string.intentAccount), account);
-                        transferToOthers.putExtra(getString(R.string.clicked), getString(R.string.transfer));
-                        startActivity(transferToOthers);
-                    }
+                } else {
+                    Intent transferToOthers = new Intent(ViewAccountActivity.this, NemIdActivity.class);
+                    transferToOthers.putExtra(getString(R.string.intentUser), userDetails);
+                    transferToOthers.putExtra(getString(R.string.intentAccount), account);
+                    transferToOthers.putExtra(getString(R.string.clicked), getString(R.string.transfer));
+                    startActivity(transferToOthers);
                 }
-            });
+            }
+        });
 
-            payBillsBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                        if(account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
-                            Toast.makeText(ViewAccountActivity.this,getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
+        payBillsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
+                    Toast.makeText(ViewAccountActivity.this, getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
 
-                        }else {
-                            Intent payBills = new Intent(ViewAccountActivity.this, NemIdActivity.class);
-                            payBills.putExtra(getString(R.string.intentUser), userDetails);
-                            payBills.putExtra(getString(R.string.intentAccount), account);
-                            payBills.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-                            payBills.putExtra(getString(R.string.clicked), getString(R.string.payBills));
+                } else {
+                    Intent payBills = new Intent(ViewAccountActivity.this, NemIdActivity.class);
+                    payBills.putExtra(getString(R.string.intentUser), userDetails);
+                    payBills.putExtra(getString(R.string.intentAccount), account);
+                    payBills.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
+                    payBills.putExtra(getString(R.string.clicked), getString(R.string.payBills));
 
-                            startActivity(payBills);
+                    startActivity(payBills);
 
-                        }
                 }
-            });
+            }
+        });
 
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                        cancelPayments();
-                }
-            });
-        }
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelPayments();
+            }
+        });
+    }
 
     private Calendar getBirthDate() {
         Calendar birthDate = Calendar.getInstance();
 
-        int day = Integer.parseInt(userDetails.getSSN().substring(0,2));
-        int month = Integer.parseInt(userDetails.getSSN().substring(2,4));
-        int year = Integer.parseInt( userDetails.getSSN().substring(4,6));
+        int day = Integer.parseInt(userDetails.getSSN().substring(0, 2));
+        int month = Integer.parseInt(userDetails.getSSN().substring(2, 4));
+        int year = Integer.parseInt(userDetails.getSSN().substring(4, 6));
 
-        if(year < 20){
-            if(year < 10){
-                String concatYear = Integer.toString( 200) + Integer.toString(year);
+        if (year < 20) {
+            if (year < 10) {
+                String concatYear = Integer.toString(200) + year;
                 year = Integer.parseInt(concatYear);
-            }else {
-                String concatYear = Integer.toString(20) + Integer.toString(year);
+            } else {
+                String concatYear = Integer.toString(20) + year;
                 year = Integer.parseInt(concatYear);
             }
-        }else if(year > 20) {
-            String concatYear = Integer.toString( 19) + Integer.toString(year);
+        } else if (year > 20) {
+            String concatYear = Integer.toString(19) + year;
             year = Integer.parseInt(concatYear);
         }
 
@@ -144,16 +143,17 @@ public class ViewAccountActivity extends AppCompatActivity {
 
     private void cancelPayments() {
 
-            Intent intent = new Intent(this, AutoPayReceiver.class);
+        Intent intent = new Intent(this, AutoPayReceiver.class);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getApplicationContext(), Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
 
-            alarmManager.cancel(pendingIntent);
+        alarmManager.cancel(pendingIntent);
     }
-    private void init(){
+
+    private void init() {
         accountView = findViewById(R.id.AccountBtn2);
         transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
         transferMoneyToOtherAccounts = findViewById(R.id.transferMoneyToOtherAccountsBtn);
