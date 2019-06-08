@@ -1,8 +1,5 @@
 package com.example.bankapp;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +10,12 @@ import android.widget.TextView;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
-import com.example.bankapp.Service.AutoPayReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
-    Button transferBtn, applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn, monthlyPayBtn;
+    Button applyAccountBtn, defaultAccountBtn, budgetAccountBtn, businessAccountBtn, pensionAccountBtn, savingsAccountBtn, monthlyPayBtn;
     ImageButton  logOutBtn;
     TextView defaultAccountBalance;
 
@@ -42,15 +38,11 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ViewAccountActivity.class);
-
                 intent.putExtra(getString(R.string.intentUser), userDetails);
                 clickedAccount = getAccount(getString(R.string.DEFAULT));
-
                 intent.putExtra(getString(R.string.intentAccount), clickedAccount);
                 intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(intent);
-
-
             }
         });
 
@@ -63,8 +55,6 @@ public class MenuActivity extends AppCompatActivity {
                 intent.putExtra(getString(R.string.intentAccount), clickedAccount);
                 intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(intent);
-
-
             }
         });
 
@@ -76,7 +66,6 @@ public class MenuActivity extends AppCompatActivity {
                 clickedAccount = getAccount(getString(R.string.BUSINESS));
                 intent.putExtra(getString(R.string.intentAccount), clickedAccount);
                 intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-
                 startActivity(intent);
             }
         });
@@ -89,9 +78,7 @@ public class MenuActivity extends AppCompatActivity {
                 clickedAccount = getAccount(getString(R.string.PENSION));
                 intent.putExtra(getString(R.string.intentAccount), clickedAccount);
                 intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-
                 startActivity(intent);
-
             }
         });
 
@@ -103,10 +90,7 @@ public class MenuActivity extends AppCompatActivity {
                 clickedAccount = getAccount(getString(R.string.SAVINGS));
                 intent.putExtra(getString(R.string.intentAccount), clickedAccount);
                 intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-
                 startActivity(intent);
-
-
             }
         });
 
@@ -117,9 +101,6 @@ public class MenuActivity extends AppCompatActivity {
                 Intent applyForAccounts = new Intent(MenuActivity.this, ApplyForAccountsActivity.class);
                 applyForAccounts.putExtra(getString(R.string.intentUser), userDetails);
                 applyForAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-                System.out.println("USERAPPLY: " + userDetails);
-                System.out.println("ACCOUNTSAPPLY: " + accounts);
-
                 startActivity(applyForAccounts);
                 finish();
             }
@@ -129,10 +110,8 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent monthlyPay = new Intent(MenuActivity.this, MonthlyPaymentsActivity.class);
-
                 monthlyPay.putExtra(getString(R.string.intentUser), userDetails);
                 monthlyPay.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
-
                 startActivity(monthlyPay);
                 finish();
             }
@@ -149,9 +128,6 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-
-
-
     private AccountModel getAccount(String type){
         AccountModel temp = null;
         for (int i = 0; i < accounts.size(); i++) {
@@ -163,13 +139,10 @@ public class MenuActivity extends AppCompatActivity {
 
             }
         }
-
-        System.out.println("TEMP" + temp);
         return temp;
     }
 
     private void displayAccounts(){
-        System.out.println(accounts);
 
         for (int i = 0; i < accounts.size() ; i++) {
            try {
@@ -197,10 +170,7 @@ public class MenuActivity extends AppCompatActivity {
                }
            }
            catch (NullPointerException npE) {
-               System.out.println(npE);
            }
-
-
         }
     }
 
@@ -216,17 +186,8 @@ public class MenuActivity extends AppCompatActivity {
         logOutBtn = findViewById(R.id.logOutBtn);
         monthlyPayBtn = findViewById(R.id.montlyPayBtn);
 
-
         businessAccountBtn.setVisibility(View.GONE);
         pensionAccountBtn.setVisibility(View.GONE);
         savingsAccountBtn.setVisibility(View.GONE);
-
-
-
-
-        // TEST
-        //andreas.getDefaultAccount().setBalance(390.00);
-        // TEST
-        //defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + andreas.getDefaultAccount().getBalance());
     }
 }

@@ -9,7 +9,6 @@ import android.location.Location;
 import android.util.Log;
 
 import com.example.bankapp.Model.CustomerModel;
-import com.example.bankapp.MonthlyPaymentsActivity;
 import com.example.bankapp.MyCallBack;
 import com.example.bankapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +42,6 @@ public class MonthlyAutoDepositReceiver extends BroadcastReceiver {
             public void onCallBackBalance(Double value) {
 
                 try {
-                    System.out.println("MONTHLYAUTODEPOSITRECIEVER inde i try onCallBackBalance -> readfromdatabasetest");
                     Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
                     intent.setAction("uniqueCode");
                     intent.putExtra(context.getString(R.string.intentAffiliate), affiliate);

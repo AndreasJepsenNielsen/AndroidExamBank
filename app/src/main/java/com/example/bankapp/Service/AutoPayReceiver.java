@@ -6,13 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.nfc.Tag;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.bankapp.MainActivity;
-import com.example.bankapp.MenuActivity;
-import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.MyCallBack;
 import com.example.bankapp.R;
@@ -41,11 +36,6 @@ public class AutoPayReceiver extends BroadcastReceiver{
 
         amountWithdraw = intent.getDoubleExtra(context.getString(R.string.intentAutoAmount), 0.0);
 
-        System.out.println(affiliate);
-        System.out.println(accountNumber);
-        System.out.println(userEmail);
-        System.out.println(amountWithdraw);
-
         readFromDatabaseTest(new MyCallBack() {
             @Override
             public void onCallBackBalance(Double value) {
@@ -58,9 +48,6 @@ public class AutoPayReceiver extends BroadcastReceiver{
                     intent.putExtra(context.getString(R.string.intentUserAccountBalance), userBalance);
                     intent.putExtra(context.getString(R.string.intentAutoAmount), amountWithdraw);
 
-
-
-
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(
                             context, Integer.parseInt(accountNumber), intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -69,7 +56,6 @@ public class AutoPayReceiver extends BroadcastReceiver{
                     currentBalance = value;
                     myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)).setValue(currentBalance - amountWithdraw);
 
-
                 }catch (NullPointerException npe){
                     npe.printStackTrace();
                 }
@@ -77,7 +63,6 @@ public class AutoPayReceiver extends BroadcastReceiver{
 
             @Override
             public void onCallBack(CustomerModel value) {
-
             }
 
             @Override
@@ -86,7 +71,6 @@ public class AutoPayReceiver extends BroadcastReceiver{
 
 
         },myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".","") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
-
 
         Log.d("DailyAlarmReceiver", affiliate + " // test virk pls");
     }
@@ -108,7 +92,5 @@ public class AutoPayReceiver extends BroadcastReceiver{
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
     }
-
 }

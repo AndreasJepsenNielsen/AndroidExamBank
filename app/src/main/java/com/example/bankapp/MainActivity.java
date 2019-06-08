@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -117,9 +115,6 @@ public class MainActivity extends AppCompatActivity {
                     permissions,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
-
     }
 
     private boolean checkPassword(String str){
@@ -169,9 +164,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
-
     }
-
 
 
     private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef){
@@ -216,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
                                         System.out.println(value.getAccounts());
                                         currentUser = value;
                                         currentUser.setAccounts(value.getAccounts());
-                                        System.out.println("HAEJKWJEOKAW" + currentUser.getAccounts());
 
                                         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 

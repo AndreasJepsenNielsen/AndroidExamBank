@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -67,11 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
                     double odense = distance(latitude, longitude, 55.403756, 10.402370, 'K');
 
                     if(copenhagen < odense){
-                        System.out.println("Du er tættest på kbh");
                         affiliate = getString(R.string.copenhagen);
 
                     }else{
-                        System.out.println("Du er tættest på odense");
                         affiliate = getString(R.string.odense);
                     }
                 }
@@ -133,8 +129,6 @@ public class RegisterActivity extends AppCompatActivity {
         return (rad * 180.0 / Math.PI);
     }
 
-
-
     private boolean CheckValidity(){
         if(SSN.getText().toString().isEmpty() || SSN.getText().length() < 10 || SSN.getText().length() > 10){
             Toast.makeText(this, getString(R.string.ssn10Characters), Toast.LENGTH_LONG).show();
@@ -192,14 +186,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         return true;
-
     }
 
     public static boolean isValidEmailAddress(String email) {
         EmailValidator validator = EmailValidator.getInstance();
         Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
         return validator.isValid(email);
-
     }
 
     private boolean checkPassword(String str){
@@ -230,7 +222,6 @@ public class RegisterActivity extends AppCompatActivity {
         String[] fn = testCustomer1.getEmail().split("\\.");
 
         String emailNotDot = fn[0] + fn[1].replace(".","");
-        System.out.println("KIG HER ANDREAS" + emailNotDot);
         database.getReference(affiliate + getString(R.string.pathUser)).child(emailNotDot).setValue(testCustomer1);
 
         createAuthUser(customerToCreate.getEmail(), customerToCreate.getPassword());

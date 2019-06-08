@@ -16,7 +16,6 @@ import com.example.bankapp.Service.AutoPayReceiver;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ViewAccountActivity extends AppCompatActivity {
 
@@ -59,7 +58,6 @@ public class ViewAccountActivity extends AppCompatActivity {
         userIs77.set(Calendar.MONTH, getBirthDate().get(Calendar.MONTH));
         userIs77.set(Calendar.YEAR, getBirthDate().get(Calendar.YEAR) + 77);
 
-        System.out.println(today.after(userIs77));
         transferMoneyBetweenAccounts.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,10 +70,7 @@ public class ViewAccountActivity extends AppCompatActivity {
                         transferBetweenAccounts.putExtra(getString(R.string.intentAccount), account);
                         transferBetweenAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                         startActivity(transferBetweenAccounts);
-
-
                     }
-
                 }
             });
 
@@ -91,8 +86,6 @@ public class ViewAccountActivity extends AppCompatActivity {
                         transferToOthers.putExtra(getString(R.string.intentAccount), account);
                         transferToOthers.putExtra(getString(R.string.clicked), getString(R.string.transfer));
                         startActivity(transferToOthers);
-
-
                     }
                 }
             });
@@ -123,11 +116,7 @@ public class ViewAccountActivity extends AppCompatActivity {
                         cancelPayments();
                 }
             });
-
         }
-
-
-
 
     private Calendar getBirthDate() {
         Calendar birthDate = Calendar.getInstance();
@@ -148,9 +137,6 @@ public class ViewAccountActivity extends AppCompatActivity {
             String concatYear = Integer.toString( 19) + Integer.toString(year);
             year = Integer.parseInt(concatYear);
         }
-
-
-
 
         birthDate.set(year, month, day);
 
@@ -184,15 +170,12 @@ public class ViewAccountActivity extends AppCompatActivity {
             getNumber();
             Intent intent = new Intent(this, AutoPayReceiver.class);
 
-
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getApplicationContext(), Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
 
             alarmManager.cancel(pendingIntent);
-
     }
     private void init(){
         accountView = findViewById(R.id.AccountBtn2);

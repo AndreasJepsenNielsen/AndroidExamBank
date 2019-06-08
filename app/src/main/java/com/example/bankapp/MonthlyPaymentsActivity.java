@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
-import com.example.bankapp.Service.AutoPayReceiver;
 import com.example.bankapp.Service.MonthlyAutoDepositReceiver;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -57,17 +55,14 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
             @Override
             public void onClick(View v) {
                 if (validateMonthlyPayment()) {
-                    System.out.println("godkendt");
                     autoPayEveryMonthAlarm(MonthlyPaymentsActivity.this);
                     myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue( selectedAccount.getBalance() + Double.parseDouble(amountMonthly.getText().toString()));
                 }else{
-                    System.out.println("øv validationen gik ikke");
+                    Toast.makeText(MonthlyPaymentsActivity.this, getString(R.string.somethingWentWrong), Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
-
 
     private void init() {
         spinnerAccount = findViewById(R.id.spinnerMonthlyAccount);
@@ -89,16 +84,13 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
                 }
             }
             catch (NullPointerException npE){
-                System.out.println("Halløjsovs det gik ikke");
+                Toast.makeText(this, getString(R.string.somethingWentWrong), Toast.LENGTH_LONG).show();
             }
-
         }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAccount.setAdapter(adapter);
         spinnerAccount.setOnItemSelectedListener(this);
-
-
     }
 
     private String getAccountDatabaseNumber(AccountModel acc){
@@ -142,12 +134,10 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
         String concatRequestCode = number + context.getString(R.string.one);
 
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, Integer.parseInt(concatRequestCode), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
-
     }
 
 
@@ -159,6 +149,5 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

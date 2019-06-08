@@ -50,7 +50,6 @@ public class RestPasswordActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
             }
         });
     }

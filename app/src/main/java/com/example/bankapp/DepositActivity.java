@@ -27,8 +27,9 @@ public class DepositActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deposit);
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         user = getIntent().getParcelableExtra(getString(R.string.intentUser));
-        depositButton = findViewById(R.id.depositButton);
-        depositField  = findViewById(R.id.depositField);
+
+        init();
+
         depositButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,8 +40,6 @@ public class DepositActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 
@@ -72,6 +71,8 @@ public class DepositActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
+    private void init(){
+        depositButton = findViewById(R.id.depositButton);
+        depositField  = findViewById(R.id.depositField);
+    }
 }

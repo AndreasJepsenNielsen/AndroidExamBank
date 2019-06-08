@@ -22,7 +22,6 @@ import com.example.bankapp.Service.AutoPayReceiver;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Calendar;
 
 public class PayBillsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText paymentId, paymentName, paymentCreditor, paymentAmount;
@@ -60,8 +59,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
 
                     finish();
                 }
-
-
             }
         });
     }
@@ -74,7 +71,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         intent.putExtra(getString(R.string.intentUserEmail), user.getEmail());
         intent.putExtra(getString(R.string.intentUserAccountBalance), account.getBalance());
         intent.putExtra(getString(R.string.intentAutoAmount), Double.parseDouble(paymentAmount.getText().toString()));
-
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, Integer.parseInt(number), intent, PendingIntent.FLAG_UPDATE_CURRENT);

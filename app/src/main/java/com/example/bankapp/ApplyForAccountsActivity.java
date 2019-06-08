@@ -70,13 +70,13 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                 accountName = getString(R.string.PENSION);
                 break;
             default:
-                accountName = "NONE";
+                accountName = getString(R.string.NONE);
         }
 
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!accountName.equals("NONE")) {
+                if(!accountName.equals(getString(R.string.NONE))) {
                     AccountModel newAccount = new AccountModel(0, accountName);
                     accounts.add(newAccount);
                     applyForAccount(accountName, newAccount);
@@ -88,7 +88,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
                     finish();
                 }
                 else{
-                    Toast.makeText(ApplyForAccountsActivity.this, "Please choose an account", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ApplyForAccountsActivity.this, getString(R.string.chooseAnAccount), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -115,8 +115,6 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
 
         try {
-            System.out.println(user.getAffiliate());
-            System.out.println(myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number));
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number).setValue(newAccount);
 
         } catch (Exception e) {
@@ -139,10 +137,6 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
     }
 
     private void checkAccounts(ArrayList<AccountModel> accountArrayList) {
-        System.out.println(accountArrayList);
-        System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[1]);
-        System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[2]);
-        System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[3]);
 
         for (int i = 0; i < accountArrayList.size(); i++) {
             if (accountArrayList.get(i) != null) {
@@ -150,27 +144,18 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
 
 
                     if (accountArrayList.get(i).getType().equals(getString(R.string.BUSINESS)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1])) {
-                        System.out.println(items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[1]));
-                        System.out.println("jeg er business");
 
                        items.remove(j);
-
                     }
 
                     if (accountArrayList.get(i).getType().equals(getString(R.string.SAVINGS)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[2])) {
-                        System.out.println(getResources().getStringArray(R.array.applyForAccountsItems)[2]);
-                        System.out.println(items.get(j));
-                        System.out.println("jeg er savings");
+
                         items.remove(j);
-
-
                     }
 
                     if (accountArrayList.get(i).getType().equals(getString(R.string.PENSION)) && items.get(j).equals(getResources().getStringArray(R.array.applyForAccountsItems)[3])) {
-                        System.out.println("jeg er pension");
+
                         items.remove(j);
-
-
                     }
                 }
             }

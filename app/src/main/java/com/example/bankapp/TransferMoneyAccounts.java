@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TransferMoneyAccounts extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -120,20 +119,16 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
                 if (accounts.get(i).getType() != null && !accounts.get(i).getType().equals(account.getType())){
                     adapter.add(accounts.get(i));
                 }
-
             }
             catch (NullPointerException npE){
 
             }
-
         }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTransferAccounts.setAdapter(adapter);
         spinnerTransferAccounts.setOnItemSelectedListener(this);
     }
-
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -74,11 +74,13 @@
     <!-- applyForAccountActivity -->
     <string name="pathUserSlash">/users/</string>
     <string name="pathAccountSlash">/accounts/</string>
+    <string name="chooseAnAccount">Please choose an account</string>
     <string name="BUDGET">BUDGET</string>
     <string name="DEFAULT">DEFAULT</string>
     <string name="BUSINESS">BUSINESS</string>
     <string name="SAVINGS">SAVINGS</string>
     <string name="PENSION">PENSION</string>
+    <string name="NONE">NONE</string>
 
     <!-- DepositActivity -->
     <string name="pathBalance">/balance</string>
@@ -146,11 +148,18 @@
     <string name="monthlyPay">Monthly pay to</string>
     <string name="monthlyFromAccount">From account</string>
     <string name="monthlyPayButton">Monthly pay</string>
+    <string name="somethingWentWrong">Something went wrong</string>
     <string-array name="monthlyAccounts">
         <item>Budget account</item>
         <item>Savings account</item>
     </string-array>
     <string name="amountGreaterThanZero">Amount must be greater than zero</string>
+
+    <!-- NemidActivity -->
+    <string name="codeSessionRunOut">This code session has run out, sending you a new code</string>
+    <string name="nemIdIncorrect">NemId is incorrect</string>
+    <string name="nemIdCode">NemId Code</string>
+    <string name="nemIdCodeExpires">Here is your nemId Code it expires in 10 minutes:</string>
 
 
 </resources>

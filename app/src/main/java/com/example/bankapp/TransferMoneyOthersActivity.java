@@ -1,22 +1,17 @@
 package com.example.bankapp;
 
-import android.content.Intent;
 import android.location.Location;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +36,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
     TextView accountName, accountBalance;
     EditText amountToTransfer, emailOtherAccount;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +52,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                 validate(emailOtherAccount, amountToTransfer, account.getBalance());
             }
         });
-
     }
 
     private void validate(EditText emailOtherAccount, TextView amountToPay, double accountBalance) {
@@ -98,13 +90,11 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
         }
         try {
-            System.out.println("KIG HER ELLER" + receiveUser);
             depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
             depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
 
 
         } catch (Exception e) {
-            System.out.println("FEJL ANDROGGELS");
             e.printStackTrace();
         }
     }
@@ -150,18 +140,13 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                 // whenever data at this location is updated.
                     CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
                     myCallBack.onCallBack(user);
-
             }
-
-
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
                 return ;
             }
-
-
         });
     }
 
@@ -170,7 +155,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
         return validator.isValid(email);
     }
-
 
     private void init() {
         transferMoneyBtn = findViewById(R.id.transferMoneyBtn);
@@ -182,5 +166,4 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
     }
-
 }

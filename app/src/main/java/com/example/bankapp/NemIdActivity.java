@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 
-
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -32,8 +31,6 @@ public class NemIdActivity extends AppCompatActivity{
     private static final int TEN_MINUTES = 10 * 60 * 1000;
     private long timeStamp10;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +39,10 @@ public class NemIdActivity extends AppCompatActivity{
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
-        verifyButton = findViewById(R.id.verifyButton);
-        inputCode = findViewById(R.id.inputCode);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        init();
         sendMail();
 
 
@@ -54,11 +50,10 @@ public class NemIdActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 if(System.currentTimeMillis() >= timeStamp10){
-                    Toast.makeText(NemIdActivity.this, "This code session has run out, sending you a new code", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NemIdActivity.this, getString(R.string.codeSessionRunOut), Toast.LENGTH_LONG).show();
                     sendMail();
                 }else{
                     if(inputCode.getText().toString().equals(nemId)){
-                        System.out.println("Rigtig kode");
                         if(choice.equals(getString(R.string.transfer))){
                             Intent transferIntent = new Intent(NemIdActivity.this, TransferMoneyOthersActivity.class);
                             transferIntent.putExtra(getString(R.string.intentUser), userDetails);
@@ -74,13 +69,11 @@ public class NemIdActivity extends AppCompatActivity{
                             finish();
                         }
                     }else{
-                        Toast.makeText(NemIdActivity.this, "NemId is incorrect", Toast.LENGTH_LONG).show();
+                        Toast.makeText(NemIdActivity.this, getString(R.string.nemIdIncorrect), Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
         });
-
     }
 
     private void sendMail() {
@@ -97,7 +90,7 @@ public class NemIdActivity extends AppCompatActivity{
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
+                new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
@@ -108,20 +101,16 @@ public class NemIdActivity extends AppCompatActivity{
             Message message = new MimeMessage(session);
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(userDetails.getEmail()));
-            message.setSubject("NemId Code");
-            message.setText("Here is your nemId Code it expires in 10 minutes: "
+            message.setSubject(getString(R.string.nemIdCode));
+            message.setText(getString(R.string.nemIdCodeExpires)
                     + "\n\n" + nemId );
-
-            Transport.send(message);
-
-            System.out.println("Done");
-
+            Transport.send(message);;
         }
 
         catch (MessagingException e)
         {
             // throw new RuntimeException(e);
-            System.out.println("Username or Password are incorrect ... exiting !");
+            e.printStackTrace();
         }
     }
 
@@ -136,5 +125,9 @@ public class NemIdActivity extends AppCompatActivity{
         System.out.println(timeStamp10);
 
         return generatedString;
+    }
+    private void init(){
+        verifyButton = findViewById(R.id.verifyButton);
+        inputCode = findViewById(R.id.inputCode);
     }
 }
