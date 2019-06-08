@@ -26,11 +26,6 @@ public class RestPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest_password);
 
-
-
-        emailfield = findViewById(R.id.editText8);
-        resetPassword = findViewById(R.id.button3);
-
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -75,5 +70,9 @@ public class RestPasswordActivity extends AppCompatActivity {
         } else {
             Log.w(" error ", " bad entry ");
         }
+    }
+    private void init(){
+        emailfield = findViewById(R.id.editText8);
+        resetPassword = findViewById(R.id.button3);
     }
 }

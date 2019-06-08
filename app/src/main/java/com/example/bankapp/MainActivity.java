@@ -55,12 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-        loginButton = findViewById(R.id.button);
-        registerButton = findViewById(R.id.button2);
-        emailLogin = findViewById(R.id.editText);
-        passwordLogin = findViewById(R.id.editText2);
-        forgotPassword = findViewById(R.id.textView3);
+        init();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,5 +246,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private void init(){
+        loginButton = findViewById(R.id.button);
+        registerButton = findViewById(R.id.button2);
+        emailLogin = findViewById(R.id.editText);
+        passwordLogin = findViewById(R.id.editText2);
+        forgotPassword = findViewById(R.id.textView3);
     }
 }

@@ -128,9 +128,6 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
 
         }
 
-
-
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTransferAccounts.setAdapter(adapter);
         spinnerTransferAccounts.setOnItemSelectedListener(this);

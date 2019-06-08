@@ -83,13 +83,6 @@ public class NemIdActivity extends AppCompatActivity{
 
     }
 
-
-
-
-
-
-
-
     private void sendMail() {
 
         nemId = generateNemId();
@@ -132,8 +125,6 @@ public class NemIdActivity extends AppCompatActivity{
         }
     }
 
-
-
     public String generateNemId() {
         String generatedString = RandomStringUtils.random(6,"0123456789");
 
@@ -146,10 +137,4 @@ public class NemIdActivity extends AppCompatActivity{
 
         return generatedString;
     }
-
-
-
-
-
-
 }

@@ -131,9 +131,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
             }
 
-
-
-
             @Override
             public void onCallBackLocation(Location value) {
             }
@@ -166,9 +163,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
 
         });
-
-
-
     }
 
     public boolean isValidEmailAddress(String email) {
@@ -176,7 +170,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
         return validator.isValid(email);
     }
-
 
 
     private void init() {

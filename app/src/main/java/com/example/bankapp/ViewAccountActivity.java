@@ -37,12 +37,7 @@ public class ViewAccountActivity extends AppCompatActivity {
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
 
-        accountView = findViewById(R.id.AccountBtn2);
-        transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
-        transferMoneyToOtherAccounts = findViewById(R.id.transferMoneyToOtherAccountsBtn);
-        depositButton = findViewById(R.id.DepositBtn);
-        payBillsBtn = findViewById(R.id.payBillsBtn);
-        cancelButton = findViewById(R.id.cancelBtn);
+        init();
 
         accountView.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) + " " + getString(R.string.balance) + account.getBalance());
 
@@ -198,5 +193,13 @@ public class ViewAccountActivity extends AppCompatActivity {
 
             alarmManager.cancel(pendingIntent);
 
+    }
+    private void init(){
+        accountView = findViewById(R.id.AccountBtn2);
+        transferMoneyBetweenAccounts = findViewById(R.id.transferMoneyBetweenAccountsBtn);
+        transferMoneyToOtherAccounts = findViewById(R.id.transferMoneyToOtherAccountsBtn);
+        depositButton = findViewById(R.id.DepositBtn);
+        payBillsBtn = findViewById(R.id.payBillsBtn);
+        cancelButton = findViewById(R.id.cancelBtn);
     }
 }

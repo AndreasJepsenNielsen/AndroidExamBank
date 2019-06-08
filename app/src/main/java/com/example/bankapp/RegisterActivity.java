@@ -50,15 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        RegisterButton = (Button) findViewById(R.id.button);
-        SSN = findViewById(R.id.editText3);
-        Email = findViewById(R.id.editText4);
-        Password = findViewById(R.id.editText5);
-        Address = findViewById(R.id.editText6);
-        Firstname = findViewById(R.id.editText7);
-        Lastname = findViewById(R.id.editText2);
-        Phonenumber = findViewById(R.id.editText);
+        init();
 
             getDeviceLocation(new MyCallBack() {
                 @Override
@@ -293,16 +285,19 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-
+    private void init(){
+        RegisterButton = (Button) findViewById(R.id.button);
+        SSN = findViewById(R.id.editText3);
+        Email = findViewById(R.id.editText4);
+        Password = findViewById(R.id.editText5);
+        Address = findViewById(R.id.editText6);
+        Firstname = findViewById(R.id.editText7);
+        Lastname = findViewById(R.id.editText2);
+        Phonenumber = findViewById(R.id.editText);
+    }
 
     private void restart(){
         finish();
         startActivity(getIntent());
     }
-
-
-
-
-
-
 }

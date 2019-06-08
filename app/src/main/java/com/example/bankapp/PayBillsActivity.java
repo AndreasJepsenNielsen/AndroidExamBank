@@ -47,9 +47,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
 
         init();
 
-
-
-
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,13 +120,11 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         paymentButton = findViewById(R.id.buttonPay);
         paymentAmount = findViewById(R.id.paymentAmount);
 
-
         accountBalance = findViewById(R.id.accountBalanceAccountsPay);
         accountName = findViewById(R.id.accountNameAccountsPay);
 
         accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
-
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.paySpinner, android.R.layout.simple_spinner_item);
