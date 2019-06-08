@@ -42,7 +42,6 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
     String number;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +77,6 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
         adapter.add(accounts.get(1));
 
-
         for (int i = 0; i < accounts.size() ; i++) {
             try {
                 if (accounts.get(i).getType() != null && accounts.get(i).getType().equals(getString(R.string.SAVINGS))){
@@ -94,8 +92,6 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
         spinnerAccount.setAdapter(adapter);
         spinnerAccount.setOnItemSelectedListener(this);
     }
-
-
 
     private boolean validateMonthlyPayment() {
         if (Double.parseDouble(amountMonthly.getText().toString()) < 0) {
@@ -121,7 +117,6 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

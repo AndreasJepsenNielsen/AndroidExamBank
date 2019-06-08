@@ -23,7 +23,6 @@ import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 public class PayBillsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText paymentId, paymentName, paymentCreditor, paymentAmount;
     Spinner paySpinner;
@@ -80,8 +79,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
     }
 
-
-
     private boolean validatePayment() {
         if(paymentId.getText().toString().isEmpty() || paymentCreditor.getText().toString().isEmpty() || paymentName.getText().toString().isEmpty() || paymentAmount.getText().toString().isEmpty()){
             Toast.makeText(this, getString(R.string.emptyFieldsPayBills),Toast.LENGTH_LONG).show();
@@ -96,7 +93,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         if(paymentId.length() != 14){
             Toast.makeText(this, getString(R.string.paymentIdLength),Toast.LENGTH_LONG).show();
             return false;
-
         }
 
         if(Double.parseDouble(paymentAmount.getText().toString()) > account.getBalance()) {
@@ -105,9 +101,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         }
 
         return true;
-
     }
-
 
     private void init() {
         paymentId = findViewById(R.id.payId);
@@ -135,8 +129,6 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         paySpinner.setOnItemSelectedListener(this);
 
         number = numberService.getNumber(this, account);
-
-
     }
 
 

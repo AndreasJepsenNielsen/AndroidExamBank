@@ -13,8 +13,6 @@ import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.GetNumberService;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,12 +71,10 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         }
     }
 
-
     private void transferMoneyToOthers(double amount){
         try {
             depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
             depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,7 +100,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
                     Toast.makeText(TransferMoneyOthersActivity.this, getString(R.string.invalidUser), Toast.LENGTH_SHORT).show();
                     return;
                 }
-
             }
 
             @Override
@@ -151,9 +146,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         numberService = new GetNumberService();
         number = numberService.getNumber(this, account);
 
-
-
-                accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
+        accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
     }
 }

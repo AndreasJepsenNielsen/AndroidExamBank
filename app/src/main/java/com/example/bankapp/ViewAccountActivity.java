@@ -28,7 +28,6 @@ public class ViewAccountActivity extends AppCompatActivity {
 
     Button accountView, transferMoneyBetweenAccounts, transferMoneyToOtherAccounts, depositButton, payBillsBtn, cancelButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +97,6 @@ public class ViewAccountActivity extends AppCompatActivity {
                         if(account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
                             Toast.makeText(ViewAccountActivity.this,getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
 
-
                         }else {
                             Intent payBills = new Intent(ViewAccountActivity.this, NemIdActivity.class);
                             payBills.putExtra(getString(R.string.intentUser), userDetails);
@@ -141,12 +139,8 @@ public class ViewAccountActivity extends AppCompatActivity {
         }
 
         birthDate.set(year, month, day);
-
-
         return birthDate;
     }
-
-
 
     private void cancelPayments() {
 
@@ -156,7 +150,6 @@ public class ViewAccountActivity extends AppCompatActivity {
                 getApplicationContext(), Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
-
 
             alarmManager.cancel(pendingIntent);
     }

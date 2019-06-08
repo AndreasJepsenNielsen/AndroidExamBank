@@ -83,8 +83,6 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         }
     }
 
-
-
     private void init() {
         transferMoneyAccountsBtn = findViewById(R.id.transferMoneyAccountsBtn);
         accountNameAccounts = findViewById(R.id.accountNameAccounts);
@@ -97,7 +95,6 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         accountBalanceAccounts.setText(getString(R.string.accountBalance) + account.getBalance());
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item);
-
 
         for (int i = 0; i < accounts.size() ; i++) {
             try {

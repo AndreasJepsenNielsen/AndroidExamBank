@@ -16,7 +16,6 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class NemIdActivity extends AppCompatActivity{
@@ -44,7 +43,6 @@ public class NemIdActivity extends AppCompatActivity{
 
         init();
         sendMail();
-
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +93,6 @@ public class NemIdActivity extends AppCompatActivity{
                         return new PasswordAuthentication(username, password);
                     }
                 });
-
         try {
 
             Message message = new MimeMessage(session);

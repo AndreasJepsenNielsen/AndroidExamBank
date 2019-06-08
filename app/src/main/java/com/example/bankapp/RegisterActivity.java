@@ -213,8 +213,6 @@ public class RegisterActivity extends AppCompatActivity {
         return false;
     }
 
-
-
     private void writeNewUser(CustomerModel customerToCreate){
         CustomerModel testCustomer1 = new CustomerModel(customerToCreate.getSSN(), customerToCreate.getEmail(), customerToCreate.getPassword(), customerToCreate.getAddress(), customerToCreate.getFirstName(), customerToCreate.getLastName(), customerToCreate.getPhoneNumber(), affiliate);
         String[] fn = testCustomer1.getEmail().split("\\.");
@@ -223,7 +221,6 @@ public class RegisterActivity extends AppCompatActivity {
         database.getReference(affiliate + getString(R.string.pathUser)).child(emailNotDot).setValue(testCustomer1);
 
         createAuthUser(customerToCreate.getEmail(), customerToCreate.getPassword());
-
     }
 
     private void createAuthUser(String email, String password){
@@ -240,7 +237,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, getString(R.string.authenticationFailed),
                                     Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
@@ -284,6 +280,4 @@ public class RegisterActivity extends AppCompatActivity {
         Lastname = findViewById(R.id.editText2);
         Phonenumber = findViewById(R.id.editText);
     }
-
-
 }

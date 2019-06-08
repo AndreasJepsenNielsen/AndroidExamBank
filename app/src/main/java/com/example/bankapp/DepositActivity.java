@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,8 +43,6 @@ public class DepositActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 

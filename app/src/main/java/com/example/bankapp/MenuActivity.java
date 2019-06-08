@@ -94,7 +94,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-
         applyAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,7 +173,6 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-
     private void init() {
         applyAccountBtn = findViewById(R.id.applyAccountBtn);
         defaultAccountBalance = findViewById(R.id.defaultAccountBalance);
@@ -189,7 +187,5 @@ public class MenuActivity extends AppCompatActivity {
         businessAccountBtn.setVisibility(View.GONE);
         pensionAccountBtn.setVisibility(View.GONE);
         savingsAccountBtn.setVisibility(View.GONE);
-
-
     }
 }

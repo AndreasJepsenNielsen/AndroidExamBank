@@ -60,7 +60,6 @@ public class RestPasswordActivity extends AppCompatActivity {
         EmailValidator validator = EmailValidator.getInstance();
         Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
         return validator.isValid(email);
-
     }
     private void PassResetViaEmail(){
 
