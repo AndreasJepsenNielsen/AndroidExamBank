@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.AutoPayReceiver;
+import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,6 +34,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
     AccountModel account;
     CustomerModel user;
     String number;
+    GetNumberService numberService;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
     boolean checkedAutoPay;
@@ -119,6 +121,7 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         paymentAutoCheckbox = findViewById(R.id.checkBoxPayAuto);
         paymentButton = findViewById(R.id.buttonPay);
         paymentAmount = findViewById(R.id.paymentAmount);
+        numberService = new GetNumberService();
 
         accountBalance = findViewById(R.id.accountBalanceAccountsPay);
         accountName = findViewById(R.id.accountNameAccountsPay);
@@ -135,31 +138,11 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
 
         paySpinner.setOnItemSelectedListener(this);
 
-        getNumber();
+        number = numberService.getNumber(this, account);
 
 
     }
 
-    private void getNumber() {
-        number = getString(R.string.zero);
-        if(account.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
-
-        if(account.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(account.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(account.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

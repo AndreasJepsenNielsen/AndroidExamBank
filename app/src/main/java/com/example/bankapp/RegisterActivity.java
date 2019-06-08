@@ -296,8 +296,5 @@ public class RegisterActivity extends AppCompatActivity {
         Phonenumber = findViewById(R.id.editText);
     }
 
-    private void restart(){
-        finish();
-        startActivity(getIntent());
-    }
+
 }

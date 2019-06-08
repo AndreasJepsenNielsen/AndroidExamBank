@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
-import com.example.bankapp.Service.AutoPayReceiver;
+import com.example.bankapp.Service.GetNumberService;
 import com.example.bankapp.Service.MonthlyAutoDepositReceiver;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,6 +35,7 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
     ArrayAdapter<AccountModel> adapter;
     CustomerModel user;
     AccountModel selectedAccount;
+    GetNumberService numberService;
 
     Spinner spinnerAccount;
     EditText amountMonthly;
@@ -73,7 +74,7 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
         spinnerAccount = findViewById(R.id.spinnerMonthlyAccount);
         amountMonthly = findViewById(R.id.amountMonthly);
         depositMonthlyBtn = findViewById(R.id.depositMonthlyBtn);
-
+        numberService = new GetNumberService();
         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.monthlyAccounts)));
 
         adapter = new ArrayAdapter<>(this,
@@ -101,27 +102,7 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
     }
 
-    private String getAccountDatabaseNumber(AccountModel acc){
-        String number = getString(R.string.zero);
-        if(acc.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
 
-        if(acc.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(acc.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(acc.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
-        return number;
-    }
 
     private boolean validateMonthlyPayment() {
         if (Double.parseDouble(amountMonthly.getText().toString()) < 0) {
@@ -154,7 +135,7 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selectedAccount = (AccountModel) spinnerAccount.getSelectedItem();
-        number = getAccountDatabaseNumber(selectedAccount);
+        number = numberService.getNumber(this,selectedAccount);
     }
 
     @Override

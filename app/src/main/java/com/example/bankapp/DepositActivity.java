@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,12 +22,17 @@ public class DepositActivity extends AppCompatActivity {
     CustomerModel user;
     Button depositButton;
     EditText depositField;
+    String number;
+    GetNumberService numberService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         user = getIntent().getParcelableExtra(getString(R.string.intentUser));
+        numberService = new GetNumberService();
+        number = numberService.getNumber(this,account);
+
         depositButton = findViewById(R.id.depositButton);
         depositField  = findViewById(R.id.depositField);
         depositButton.setOnClickListener(new View.OnClickListener() {
@@ -45,24 +51,7 @@ public class DepositActivity extends AppCompatActivity {
 
 
     private void depositMoney(double amount){
-        String number = getString(R.string.zero);
-        if(account.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
 
-        if(account.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(account.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(account.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
         try {
 
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(amount + account.getBalance());

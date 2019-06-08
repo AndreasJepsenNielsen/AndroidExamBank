@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Service.AutoPayReceiver;
+import com.example.bankapp.Service.GetNumberService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ public class ViewAccountActivity extends AppCompatActivity {
     AccountModel account;
     ArrayList<AccountModel> accounts;
     String number;
+    GetNumberService numberService;
 
     Button accountView, transferMoneyBetweenAccounts, transferMoneyToOtherAccounts, depositButton, payBillsBtn, cancelButton;
 
@@ -158,30 +160,10 @@ public class ViewAccountActivity extends AppCompatActivity {
         return birthDate;
     }
 
-    private void getNumber() {
-        number = getString(R.string.zero);
-        if(account.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
 
-        if(account.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(account.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(account.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
-    }
 
     private void cancelPayments() {
 
-            getNumber();
             Intent intent = new Intent(this, AutoPayReceiver.class);
 
 
@@ -190,6 +172,7 @@ public class ViewAccountActivity extends AppCompatActivity {
                 getApplicationContext(), Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
+
 
             alarmManager.cancel(pendingIntent);
 
@@ -201,5 +184,9 @@ public class ViewAccountActivity extends AppCompatActivity {
         depositButton = findViewById(R.id.DepositBtn);
         payBillsBtn = findViewById(R.id.payBillsBtn);
         cancelButton = findViewById(R.id.cancelBtn);
+        numberService = new GetNumberService();
+
+        number = numberService.getNumber(this, account);
+        System.out.println("MYNUMBER" + number);
     }
 }

@@ -222,11 +222,5 @@ public class MenuActivity extends AppCompatActivity {
         savingsAccountBtn.setVisibility(View.GONE);
 
 
-
-
-        // TEST
-        //andreas.getDefaultAccount().setBalance(390.00);
-        // TEST
-        //defaultAccountBtn.setText(getString(R.string.defaultAccount) + getString(R.string.balance) + andreas.getDefaultAccount().getBalance());
     }
 }
