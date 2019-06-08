@@ -189,5 +189,7 @@ public class MenuActivity extends AppCompatActivity {
         businessAccountBtn.setVisibility(View.GONE);
         pensionAccountBtn.setVisibility(View.GONE);
         savingsAccountBtn.setVisibility(View.GONE);
+
+
     }
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,6 +29,9 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
     AccountModel selectedAccount;
     ArrayList<AccountModel> accounts;
     ArrayAdapter<AccountModel> adapter;
+    GetNumberService numberService;
+    String numberForDeduction;
+    String numberForAddition;
 
     Button transferMoneyAccountsBtn;
     TextView accountNameAccounts, accountBalanceAccounts;
@@ -55,8 +59,8 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
     private void transferMoneyBetweenAccounts(double amount){
 
         try {
-            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getAccountDatabaseNumber(account) + getString(R.string.pathBalance)).setValue(account.getBalance() - amount);
-            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + getAccountDatabaseNumber(selectedAccount) + getString(R.string.pathBalance)).setValue(selectedAccount.getBalance() + amount);
+            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + numberService.getNumber(this,account) + getString(R.string.pathBalance)).setValue(account.getBalance() - amount);
+            myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".","") + getString(R.string.pathAccountSlash) + numberService.getNumber(this, selectedAccount) + getString(R.string.pathBalance)).setValue(selectedAccount.getBalance() + amount);
 
             finish();
 
@@ -79,27 +83,7 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         }
     }
 
-    private String getAccountDatabaseNumber(AccountModel acc){
-        String number = getString(R.string.zero);
-        if(acc.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
 
-        if(acc.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(acc.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(acc.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
-        return number;
-    }
 
     private void init() {
         transferMoneyAccountsBtn = findViewById(R.id.transferMoneyAccountsBtn);
@@ -107,7 +91,8 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         accountBalanceAccounts = findViewById(R.id.accountBalanceAccounts);
         spinnerTransferAccounts = findViewById(R.id.spinnerTransferAccounts);
         amountToTransferAccounts = findViewById(R.id.amountTransferAccounts);
-
+        numberService = new GetNumberService();
+        
         accountNameAccounts.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
         accountBalanceAccounts.setText(getString(R.string.accountBalance) + account.getBalance());
         adapter = new ArrayAdapter<>(this,

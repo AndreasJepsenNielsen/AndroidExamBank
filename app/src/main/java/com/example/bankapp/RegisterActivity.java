@@ -61,8 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
                     double longitude = userLocation.getLongitude();
                     double latitude = userLocation.getLatitude();
 
-                    double copenhagen = distance(latitude, longitude, 55.6760968, 12.5683371, 'K');
-                    double odense = distance(latitude, longitude, 55.403756, 10.402370, 'K');
+                    double copenhagen = distance(latitude, longitude, 55.6760968, 12.5683371);
+                    double odense = distance(latitude, longitude, 55.403756, 10.402370);
 
                     if(copenhagen < odense){
                         affiliate = getString(R.string.copenhagen);
@@ -101,17 +101,15 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
-        if (unit == 'K') {
+
             dist = dist * 1.609344;
-        } else if (unit == 'N') {
-            dist = dist * 0.8684;
-        }
+
         return (dist);
     }
 
@@ -287,8 +285,5 @@ public class RegisterActivity extends AppCompatActivity {
         Phonenumber = findViewById(R.id.editText);
     }
 
-    private void restart(){
-        finish();
-        startActivity(getIntent());
-    }
+
 }

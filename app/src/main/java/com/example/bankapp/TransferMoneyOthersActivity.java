@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.Service.GetNumberService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +29,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
     DatabaseReference myref = database.getReference();
     private DatabaseReference currentUserRef;
     CustomerModel receiveUser;
+    GetNumberService numberService;
 
     String number;
 
@@ -71,24 +75,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
 
 
     private void transferMoneyToOthers(double amount){
-        number = getString(R.string.zero);
-        if(account.getType().equals(getString(R.string.BUDGET))){
-            number = getString(R.string.one);
-        }
-
-        if(account.getType().equals(getString(R.string.BUSINESS))){
-            number = getString(R.string.two);
-
-        }
-
-        if(account.getType().equals(getString(R.string.SAVINGS))){
-            number = getString(R.string.three);
-
-        }
-        if(account.getType().equals(getString(R.string.PENSION))){
-            number = getString(R.string.four);
-
-        }
         try {
             depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
             depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".","")));
@@ -162,8 +148,12 @@ public class TransferMoneyOthersActivity extends AppCompatActivity  {
         emailOtherAccount = findViewById(R.id.emailOtherAccount);
         amountToTransfer = findViewById(R.id.amountToTransfer);
         accountBalance = findViewById(R.id.accountBalance);
+        numberService = new GetNumberService();
+        number = numberService.getNumber(this, account);
 
-        accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
+
+
+                accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity) );
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
     }
 }

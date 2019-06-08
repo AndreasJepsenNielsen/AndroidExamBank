@@ -21,6 +21,8 @@ public class DepositActivity extends AppCompatActivity {
     CustomerModel user;
     Button depositButton;
     EditText depositField;
+    String number;
+    GetNumberService numberService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@ public class DepositActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
 
@@ -74,5 +78,7 @@ public class DepositActivity extends AppCompatActivity {
     private void init(){
         depositButton = findViewById(R.id.depositButton);
         depositField  = findViewById(R.id.depositField);
+        numberService = new GetNumberService();
+        number = numberService.getNumber(this,account);
     }
 }
