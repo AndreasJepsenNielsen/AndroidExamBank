@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
 import com.example.bankapp.Model.CustomerModel;
-import com.example.bankapp.MyCallBack;
+import com.example.bankapp.Interface.MyCallBack;
 import com.example.bankapp.R;
 import com.google.firebase.database.*;
 

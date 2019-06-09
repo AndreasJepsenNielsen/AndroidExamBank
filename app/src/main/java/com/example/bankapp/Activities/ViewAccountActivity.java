@@ -1,4 +1,4 @@
-package com.example.bankapp;
+package com.example.bankapp.Activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.R;
 import com.example.bankapp.Service.AutoPayReceiver;
 import com.example.bankapp.Service.GetNumberService;
 

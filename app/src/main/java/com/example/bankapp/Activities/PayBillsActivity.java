@@ -1,4 +1,4 @@
-package com.example.bankapp;
+package com.example.bankapp.Activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.*;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.R;
 import com.example.bankapp.Service.AutoPayReceiver;
 import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
