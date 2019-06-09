@@ -35,13 +35,14 @@
     <string name="businessAccount">Business Account</string>
     <string name="pensionAccount">Pension Account</string>
     <string name="savingsAccount">Savings Account</string>
-    <string name="balance">&#160;Balance: &#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="balance">&#160;Balance: &#160;&#160;&#160;&#160;&#160;&#160;$</string>
+    <string name="overviewAccounts">Overview</string>
 
     <string name="email_login">E-Mail</string>
     <string name="login_button">Login</string>
-    <string name="text_to_register_button">If you are not registered in the bank. Click the register button</string>
+    <string name="text_to_register_button">If you are not registered in the bank. Register instead</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="resetPassword">forgot your password?</string>
+    <string name="resetPassword"><u>Forgot your password?</u></string>
 
     <string name="SSN">SSN</string>
     <string name="Email">Email</string>
@@ -102,6 +103,7 @@
 
     <!-- ResetPasswordActivity -->
     <string name="resetPasswordBTN">Reset password</string>
+    <string name="resetPasswordInfo">Enter your email below, and we will send an mail with instructions</string>
 
     <!-- ViewAccount -->
     <string name="clicked">clicked</string>
@@ -109,6 +111,7 @@
     <string name="please_check_your_email_for_your_nemid_code">Please check your email for your NemId code</string>
     <string name="logoutbutton">LogOutButton</string>
     <string name="notOldEnough">You are not old enough to access these functions</string>
+    <string name="actionsAccount">Actions</string>
 
 
     <!-- PayBills -->

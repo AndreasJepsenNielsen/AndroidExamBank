@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
@@ -21,6 +22,7 @@ public class DepositActivity extends AppCompatActivity {
     CustomerModel user;
     Button depositButton;
     EditText depositField;
+    TextView accountDeposit;
     String number;
     GetNumberService numberService;
 
@@ -61,6 +63,8 @@ public class DepositActivity extends AppCompatActivity {
         depositButton = findViewById(R.id.depositButton);
         depositField = findViewById(R.id.depositField);
         numberService = new GetNumberService();
+        accountDeposit = findViewById(R.id.accountDeposit);
+        accountDeposit.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         number = numberService.getNumber(this, account);
     }
 }
