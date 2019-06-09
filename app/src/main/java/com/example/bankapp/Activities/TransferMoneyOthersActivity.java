@@ -14,6 +14,7 @@ import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Interface.MyCallBack;
 import com.example.bankapp.R;
 import com.example.bankapp.Service.GetNumberService;
+import com.example.bankapp.Service.ValidEmailAddressService;
 import com.google.firebase.database.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -24,6 +25,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
     private DatabaseReference currentUserRef;
     CustomerModel receiveUser;
     GetNumberService numberService;
+    ValidEmailAddressService emailAddressService;
 
     String number;
 
@@ -55,7 +57,7 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
     private void validate(EditText emailOtherAccount, TextView amountToPay, double accountBalance) {
         if (emailOtherAccount.getText().toString().isEmpty() && amountToPay.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emptyFieldsTransfer), Toast.LENGTH_LONG).show();
-        } else if (!isValidEmailAddress(emailOtherAccount.getText().toString())) {
+        } else if (!emailAddressService.isValidEmailAddress(emailOtherAccount.getText().toString())) {
             Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
         } else if (Double.parseDouble(amountToPay.getText().toString()) > accountBalance) {
             Toast.makeText(this, getString(R.string.notEnoughMoney), Toast.LENGTH_LONG).show();
@@ -124,12 +126,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
         });
     }
 
-    public boolean isValidEmailAddress(String email) {
-        EmailValidator validator = EmailValidator.getInstance();
-        Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
-        return validator.isValid(email);
-    }
-
     private void init() {
         transferMoneyBtn = findViewById(R.id.transferMoneyBtn);
         accountName = findViewById(R.id.accountName);
@@ -141,5 +137,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
 
         accountName.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         accountBalance.setText(getString(R.string.accountBalance) + account.getBalance());
+        emailAddressService = new ValidEmailAddressService();
     }
 }

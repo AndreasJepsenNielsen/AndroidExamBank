@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Interface.MyCallBack;
 import com.example.bankapp.R;
+import com.example.bankapp.Service.CheckPasswordService;
+import com.example.bankapp.Service.ValidEmailAddressService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-import org.apache.commons.validator.routines.EmailValidator;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -40,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText Lastname;
     EditText Phonenumber;
     Button RegisterButton;
+    CheckPasswordService passwordService;
+    ValidEmailAddressService emailAddressService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!isValidEmailAddress(Email.getText().toString())) {
+        if (!emailAddressService.isValidEmailAddress(Email.getText().toString())) {
             Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
 
             return false;
@@ -152,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
 
-        if (checkPassword(Password.getText().toString())) {
+        if (passwordService.checkPassword(Password.getText().toString())) {
             Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
 
@@ -186,31 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    public static boolean isValidEmailAddress(String email) {
-        EmailValidator validator = EmailValidator.getInstance();
-        Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
-        return validator.isValid(email);
-    }
 
-    private boolean checkPassword(String str) {
-        char ch;
-        boolean capitalFlag = false;
-        boolean lowerCaseFlag = false;
-        boolean numberFlag = false;
-        for (int i = 0; i < str.length(); i++) {
-            ch = str.charAt(i);
-            if (Character.isDigit(ch)) {
-                numberFlag = true;
-            } else if (Character.isUpperCase(ch)) {
-                capitalFlag = true;
-            } else if (Character.isLowerCase(ch)) {
-                lowerCaseFlag = true;
-            }
-            if (numberFlag && capitalFlag && lowerCaseFlag)
-                return true;
-        }
-        return false;
-    }
 
     private void writeNewUser(CustomerModel customerToCreate) {
         CustomerModel testCustomer1 = new CustomerModel(customerToCreate.getSSN(), customerToCreate.getEmail(), customerToCreate.getPassword(), customerToCreate.getAddress(), customerToCreate.getFirstName(), customerToCreate.getLastName(), customerToCreate.getPhoneNumber(), affiliate);
@@ -278,5 +257,7 @@ public class RegisterActivity extends AppCompatActivity {
         Firstname = findViewById(R.id.editText7);
         Lastname = findViewById(R.id.editText2);
         Phonenumber = findViewById(R.id.editText);
+        passwordService = new CheckPasswordService();
+        emailAddressService = new ValidEmailAddressService();
     }
 }

@@ -67,7 +67,7 @@ public class AutoPayReceiver extends BroadcastReceiver {
 
         }, myref.child(context.getString(R.string.pathSlash) + affiliate + context.getString(R.string.pathUserSlash) + userEmail.replace(".", "") + context.getString(R.string.pathAccountSlash) + accountNumber + context.getString(R.string.pathBalance)));
 
-        Log.d("DailyAlarmReceiver", affiliate + " // test virk pls");
+
     }
 
     private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {

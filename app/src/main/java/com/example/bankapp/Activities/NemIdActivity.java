@@ -39,6 +39,9 @@ public class NemIdActivity extends AppCompatActivity {
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
+        /***
+         * Strict is here so that we dont get the NetWorkOnMAinThreadException, another way around this is using AsyncTask
+         */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -104,7 +107,7 @@ public class NemIdActivity extends AppCompatActivity {
                     + "\n\n" + nemId);
             Transport.send(message);
         } catch (MessagingException e) {
-            // throw new RuntimeException(e);
+
             e.printStackTrace();
         }
     }

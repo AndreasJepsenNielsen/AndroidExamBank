@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.bankapp.R;
+import com.example.bankapp.Service.ValidEmailAddressService;
 import com.google.firebase.auth.FirebaseAuth;
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -17,6 +18,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     EditText emailfield;
     Button resetPassword;
     private FirebaseAuth mAuth;
+    ValidEmailAddressService emailAddressService;
 
 
     @Override
@@ -33,7 +35,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (emailfield.getText().length() <= 0) {
                     Toast.makeText(ResetPasswordActivity.this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
-                } else if (!isValidEmailAddress(emailfield.getText().toString())) {
+                } else if (!emailAddressService.isValidEmailAddress(emailfield.getText().toString())) {
                     Toast.makeText(ResetPasswordActivity.this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
                 } else {
                     passResetViaEmail();
@@ -45,12 +47,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
     }
 
-
-    public static boolean isValidEmailAddress(String email) {
-        EmailValidator validator = EmailValidator.getInstance();
-        Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
-        return validator.isValid(email);
-    }
 
     private void passResetViaEmail() {
 
@@ -65,5 +61,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private void init() {
         emailfield = findViewById(R.id.editText8);
         resetPassword = findViewById(R.id.button3);
+        emailAddressService = new ValidEmailAddressService();
     }
 }

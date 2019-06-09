@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Interface.MyCallBack;
 import com.example.bankapp.R;
+import com.example.bankapp.Service.CheckPasswordService;
+import com.example.bankapp.Service.ValidEmailAddressService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
     final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private Boolean mLocationPermissionGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private DatabaseReference currentUserRef;
+    CheckPasswordService passwordService;
+    ValidEmailAddressService emailAddressService;
+
 
 
     @Override
@@ -86,13 +90,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static boolean isValidEmailAddress(String email) {
-        EmailValidator validator = EmailValidator.getInstance();
-        Log.d("HER", "isValidEmailAddress: " + validator.isValid(email));
-        return validator.isValid(email);
-
-    }
-
     private void getLocationPermission() {
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
@@ -113,25 +110,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkPassword(String str) {
-        char ch;
-        boolean capitalFlag = false;
-        boolean lowerCaseFlag = false;
-        boolean numberFlag = false;
-        for (int i = 0; i < str.length(); i++) {
-            ch = str.charAt(i);
-            if (Character.isDigit(ch)) {
-                numberFlag = true;
-            } else if (Character.isUpperCase(ch)) {
-                capitalFlag = true;
-            } else if (Character.isLowerCase(ch)) {
-                lowerCaseFlag = true;
-            }
-            if (numberFlag && capitalFlag && lowerCaseFlag)
-                return true;
-        }
-        return false;
-    }
 
     private boolean checkLoginValidity() {
 
@@ -142,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!isValidEmailAddress(emailLogin.getText().toString())) {
+        if (!emailAddressService.isValidEmailAddress(emailLogin.getText().toString())) {
             Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
 
             return false;
@@ -153,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
-        if (checkPassword(passwordLogin.getText().toString())) {
+        if (passwordService.checkPassword(passwordLogin.getText().toString())) {
             Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
         }
@@ -241,5 +219,7 @@ public class MainActivity extends AppCompatActivity {
         emailLogin = findViewById(R.id.editText);
         passwordLogin = findViewById(R.id.editText2);
         forgotPassword = findViewById(R.id.textView3);
+        passwordService = new CheckPasswordService();
+        emailAddressService = new ValidEmailAddressService();
     }
 }

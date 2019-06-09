@@ -128,17 +128,17 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private AccountModel getAccount(String type) {
-        AccountModel temp = null;
+        AccountModel tempAccount = null;
         for (int i = 0; i < accounts.size(); i++) {
             try {
                 if (accounts.get(i).getType().equals(type)) {
-                    temp = accounts.get(i);
+                    tempAccount = accounts.get(i);
                 }
             } catch (NullPointerException npe) {
 
             }
         }
-        return temp;
+        return tempAccount;
     }
 
     private void displayAccounts() {

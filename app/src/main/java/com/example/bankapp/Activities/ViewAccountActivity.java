@@ -164,6 +164,5 @@ public class ViewAccountActivity extends AppCompatActivity {
         numberService = new GetNumberService();
 
         number = numberService.getNumber(this, account);
-        System.out.println("MYNUMBER" + number);
     }
 }
