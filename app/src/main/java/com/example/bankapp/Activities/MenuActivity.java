@@ -1,4 +1,4 @@
-package com.example.bankapp;
+package com.example.bankapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -127,17 +128,17 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private AccountModel getAccount(String type) {
-        AccountModel temp = null;
+        AccountModel tempAccount = null;
         for (int i = 0; i < accounts.size(); i++) {
             try {
                 if (accounts.get(i).getType().equals(type)) {
-                    temp = accounts.get(i);
+                    tempAccount = accounts.get(i);
                 }
             } catch (NullPointerException npe) {
 
             }
         }
-        return temp;
+        return tempAccount;
     }
 
     private void displayAccounts() {

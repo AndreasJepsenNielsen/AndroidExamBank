@@ -1,4 +1,4 @@
-package com.example.bankapp;
+package com.example.bankapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.bankapp.Model.AccountModel;
 import com.example.bankapp.Model.CustomerModel;
+import com.example.bankapp.R;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.mail.*;
@@ -38,6 +39,9 @@ public class NemIdActivity extends AppCompatActivity {
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
+        /***
+         * Strict is here so that we dont get the NetWorkOnMAinThreadException, another way around this is using AsyncTask
+         */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -103,7 +107,7 @@ public class NemIdActivity extends AppCompatActivity {
                     + "\n\n" + nemId);
             Transport.send(message);
         } catch (MessagingException e) {
-            // throw new RuntimeException(e);
+
             e.printStackTrace();
         }
     }

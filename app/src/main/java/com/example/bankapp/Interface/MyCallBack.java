@@ -1,4 +1,4 @@
-package com.example.bankapp;
+package com.example.bankapp.Interface;
 
 import android.location.Location;
 import com.example.bankapp.Model.CustomerModel;
