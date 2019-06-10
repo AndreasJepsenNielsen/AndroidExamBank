@@ -101,7 +101,7 @@ public class MenuActivity extends AppCompatActivity {
                 applyForAccounts.putExtra(getString(R.string.intentUser), userDetails);
                 applyForAccounts.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(applyForAccounts);
-                finish();
+
             }
         });
 
@@ -112,7 +112,6 @@ public class MenuActivity extends AppCompatActivity {
                 monthlyPay.putExtra(getString(R.string.intentUser), userDetails);
                 monthlyPay.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(monthlyPay);
-                finish();
             }
         });
 
@@ -171,6 +170,9 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() { }
 
     private void init() {
         applyAccountBtn = findViewById(R.id.applyAccountBtn);

@@ -4,7 +4,8 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".Activities.ApplyForAccountsActivity">
+                                             tools:context=".Activities.ApplyForAccountsActivity"
+                                             android:background="@color/backgroundBLUE">
 
     <TextView
             android:id="@+id/textView"
@@ -14,14 +15,15 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/applyToNewAccount"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.047"/>
+            app:layout_constraintVertical_bias="0.047"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:fontFamily="sans-serif-thin"
+            android:textColor="@android:color/white"/>
 
     <Spinner
             android:id="@+id/applyDropDown"
@@ -31,6 +33,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -47,10 +50,11 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/applyForAccount"
+            android:background="@drawable/rounded_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.856"/>
+            app:layout_constraintVertical_bias="0.856" android:textColor="@color/backgroundBLUE"/>
 </android.support.constraint.ConstraintLayout>

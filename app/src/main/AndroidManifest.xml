@@ -14,20 +14,20 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MonthlyPaymentsActivity"></activity>
-        <activity android:name=".PayBillsActivity"/>
-        <activity android:name=".TransferMoneyAccounts"/>
-        <activity android:name=".TransferMoneyOthersActivity"/>
-        <activity android:name=".ApplyForAccountsActivity"/>
-        <activity android:name=".NemIdActivity"/>
-        <activity android:name=".ResetPasswordActivity"/>
-        <activity android:name=".ViewAccountActivity"/>
-        <activity android:name=".DepositActivity"/>
+        <activity android:name=".Activities.MonthlyPaymentsActivity"></activity>
+        <activity android:name=".Activities.PayBillsActivity"/>
+        <activity android:name=".Activities.TransferMoneyAccounts"/>
+        <activity android:name=".Activities.TransferMoneyOthersActivity"/>
+        <activity android:name=".Activities.ApplyForAccountsActivity"/>
+        <activity android:name=".Activities.NemIdActivity"/>
+        <activity android:name=".Activities.ResetPasswordActivity"/>
+        <activity android:name=".Activities.ViewAccountActivity"/>
+        <activity android:name=".Activities.DepositActivity"/>
         <activity
-                android:name=".RegisterActivity"
+                android:name=".Activities.RegisterActivity"
                 android:label="@string/title_activity_register"
                 android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".MenuActivity"
+                android:name=".Activities.MenuActivity"
                 android:label="MenuActivity"/>
 
         <receiver

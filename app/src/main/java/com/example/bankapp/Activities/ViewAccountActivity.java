@@ -114,6 +114,7 @@ public class ViewAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cancelPayments();
+                Toast.makeText(ViewAccountActivity.this, getString(R.string.cancelledAllAutoPays), Toast.LENGTH_LONG).show();
             }
         });
     }

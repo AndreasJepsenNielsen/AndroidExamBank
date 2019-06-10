@@ -1,6 +1,7 @@
 package com.example.bankapp.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,10 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.example.bankapp.Model.CustomerModel;
 import com.example.bankapp.Interface.MyCallBack;
 import com.example.bankapp.R;
@@ -25,25 +23,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
-import org.apache.commons.validator.routines.EmailValidator;
 
 public class MainActivity extends AppCompatActivity {
-
+    final String TAG = "MAINACTIVITY";
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Button loginButton;
     Button registerButton;
     EditText emailLogin;
     EditText passwordLogin;
     TextView forgotPassword;
     CustomerModel currentUser;
-    final String TAG = "MAINACTIVITY";
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private DatabaseReference currentUserRef;
     CheckPasswordService passwordService;
     ValidEmailAddressService emailAddressService;
+    ProgressDialog loginProgressDialog;
 
 
 
@@ -52,14 +49,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         init();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkLoginValidity()) {
 
+                if (checkLoginValidity()) {
                     login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathCPHSlashUser) + emailLogin.getText().toString().replace(".", "")));
 
                     login(emailLogin.getText().toString(), passwordLogin.getText().toString(), database.getReference(getString(R.string.pathOdenseSlashUser) + emailLogin.getText().toString().replace(".", "")));
@@ -110,10 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private boolean checkLoginValidity() {
-
-
         if (emailLogin.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
 
@@ -161,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(final String email, final String password, final DatabaseReference userRef) {
-
+        loginProgressDialog.show();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
@@ -188,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
                                         intent.putExtra(getString(R.string.intentUser), currentUser);
                                         intent.putParcelableArrayListExtra(getString(R.string.intentAccounts), currentUser.getAccounts());
                                         startActivity(intent);
+
+                                        loginProgressDialog.dismiss();
+
                                     } catch (NullPointerException npe) {
                                         return;
                                     }
@@ -205,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
+                            loginProgressDialog.dismiss();
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, getString(R.string.authenticationFailed),
                                     Toast.LENGTH_SHORT).show();
@@ -221,5 +218,9 @@ public class MainActivity extends AppCompatActivity {
         forgotPassword = findViewById(R.id.textView3);
         passwordService = new CheckPasswordService();
         emailAddressService = new ValidEmailAddressService();
+
+        loginProgressDialog = new ProgressDialog(MainActivity.this);
+        loginProgressDialog.setIndeterminate(true);
+        loginProgressDialog.setMessage("Authenticating...");
     }
 }

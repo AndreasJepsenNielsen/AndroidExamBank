@@ -4,7 +4,8 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".Activities.TransferMoneyOthersActivity">
+                                             tools:context=".Activities.TransferMoneyOthersActivity"
+                                             android:background="@color/backgroundBLUE">
 
     <Button
             android:id="@+id/transferMoneyBtn"
@@ -15,12 +16,12 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/transferMoney"
+            android:background="@drawable/rounded_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.817"/>
+            app:layout_constraintVertical_bias="0.653" android:textColor="@color/backgroundBLUE"/>
 
     <TextView
             android:id="@+id/textView2"
@@ -31,40 +32,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/transferMoneyFrom"
-            android:textSize="18sp"
+            android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@+id/transferMoneyBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.138"/>
-
-    <TextView
-            android:id="@+id/accountName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/transferMoneyBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.023"/>
-
-    <TextView
-            android:id="@+id/accountBalance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/transferMoneyBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.068"/>
+            app:layout_constraintVertical_bias="0.138" android:fontFamily="sans-serif-thin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textColor="@android:color/white"/>
 
     <EditText
             android:id="@+id/emailOtherAccount"
@@ -77,7 +51,8 @@
             android:ems="10"
             android:hint="@string/emailOtherAccount"
             android:inputType="text|textEmailAddress"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintBottom_toTopOf="@+id/amountToTransfer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,12 +70,39 @@
             android:ems="10"
             android:hint="@string/amountToTransfer"
             android:inputType="numberDecimal"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintBottom_toTopOf="@+id/transferMoneyBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/accountName"
-            app:layout_constraintVertical_bias="0.775"/>
+            app:layout_constraintTop_toBottomOf="@+id/accountBalance"
+            app:layout_constraintVertical_bias="0.936"/>
+
+    <TextView
+            android:layout_width="292dp"
+            android:layout_height="41dp"
+            android:id="@+id/accountBalance" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:fontFamily="sans-serif-thin"
+            app:layout_constraintVertical_bias="0.237"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAlignment="center" app:layout_constraintHorizontal_bias="0.504" android:textSize="26sp"/>
+
+    <TextView
+            android:layout_width="290dp"
+            android:layout_height="43dp"
+            android:id="@+id/accountName" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:fontFamily="sans-serif-thin"
+            app:layout_constraintVertical_bias="0.174"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAlignment="center" app:layout_constraintHorizontal_bias="0.495" android:textSize="26sp"/>
 
 
 </android.support.constraint.ConstraintLayout>
