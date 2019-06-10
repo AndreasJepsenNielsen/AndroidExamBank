@@ -3,7 +3,6 @@ package com.example.bankapp.Activities;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.example.bankapp.R;
 import com.example.bankapp.Service.GetNumberService;
 import com.example.bankapp.Service.ValidEmailAddressService;
 import com.google.firebase.database.*;
-import org.apache.commons.validator.routines.EmailValidator;
 
 public class TransferMoneyOthersActivity extends AppCompatActivity {
 

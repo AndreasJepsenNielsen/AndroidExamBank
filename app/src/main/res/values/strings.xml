@@ -59,13 +59,12 @@
     <string name="mustBe8Characters">Must be atleast 8 characters</string>
     <string name="mustContainUppercaseLetterAndNumber">Must contain atleast one uppercase letter and a number</string>
     <string name="authenticationFailed">Authentication failed</string>
-
-    <!-- MainActivity -->
     <string name="intentUser">user</string>
     <string name="intentAccounts">accounts</string>
     <string name="intentAccount">account</string>
     <string name="pathCPHSlashUser">Copenhagen/users/</string>
     <string name="pathOdenseSlashUser">Odense/users/</string>
+    <string name="authenticateUserLogin">Authenticating&#8230;</string>
 
     <!-- applyForAccountActivity -->
     <string name="pathUserSlash">/users/</string>
@@ -112,6 +111,7 @@
     <string name="logoutbutton">LogOutButton</string>
     <string name="notOldEnough">You are not old enough to access these functions</string>
     <string name="actionsAccount">Actions</string>
+    <string name="cancelledAllAutoPays">Cancelled all auto payments</string>
 
 
     <!-- PayBills -->

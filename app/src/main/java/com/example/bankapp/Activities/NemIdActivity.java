@@ -78,6 +78,9 @@ public class NemIdActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * sends a mail to the user with the Nemid code
+     */
     private void sendMail() {
 
         nemId = generateNemId();
@@ -112,6 +115,11 @@ public class NemIdActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @return
+     * generate a random number with 6 digits
+     */
     public String generateNemId() {
         String generatedString = RandomStringUtils.random(6, "0123456789");
         timeStamp10 = System.currentTimeMillis() + TEN_MINUTES;

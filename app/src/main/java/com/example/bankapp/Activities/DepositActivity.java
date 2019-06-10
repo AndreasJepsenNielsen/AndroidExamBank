@@ -14,7 +14,6 @@ import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 public class DepositActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -48,10 +47,12 @@ public class DepositActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * find the user and he's accounts. it sets the balance to the balance + deposit
+     * @param amount
+     */
     private void depositMoney(double amount) {
         try {
-
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(amount + account.getBalance());
             finish();
 
@@ -64,7 +65,7 @@ public class DepositActivity extends AppCompatActivity {
         depositButton = findViewById(R.id.depositButton);
         depositField = findViewById(R.id.depositField);
         numberService = new GetNumberService();
-        accountDeposit = findViewById(R.id.accountDeposit);
+        accountDeposit = findViewById(R.id.accountBalance);
         accountDeposit.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         number = numberService.getNumber(this, account);
     }

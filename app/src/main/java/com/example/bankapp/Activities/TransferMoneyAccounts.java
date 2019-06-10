@@ -10,7 +10,6 @@ import com.example.bankapp.R;
 import com.example.bankapp.Service.GetNumberService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 
 public class TransferMoneyAccounts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -48,12 +47,15 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         });
     }
 
+    /**
+     *
+     * @param amount
+     * transfer money from and to
+     */
     private void transferMoneyBetweenAccounts(double amount) {
-
         try {
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + numberService.getNumber(this, account) + getString(R.string.pathBalance)).setValue(account.getBalance() - amount);
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + numberService.getNumber(this, selectedAccount) + getString(R.string.pathBalance)).setValue(selectedAccount.getBalance() + amount);
-
             finish();
 
         } catch (Exception e) {
@@ -61,6 +63,13 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         }
     }
 
+    /**
+     *
+     * @param amountToPay
+     * @param accountBalance
+     *
+     * validate if there is money on the account and if the information i right.
+     */
     private void validate(EditText amountToPay, double accountBalance) {
         if (amountToPay.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emptyFieldsTransfer), Toast.LENGTH_LONG).show();
@@ -79,7 +88,6 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
         spinnerTransferAccounts = findViewById(R.id.spinnerTransferAccounts);
         amountToTransferAccounts = findViewById(R.id.amountTransferAccounts);
         numberService = new GetNumberService();
-
         accountNameAccounts.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         accountBalanceAccounts.setText(getString(R.string.accountBalance) + account.getBalance());
         adapter = new ArrayAdapter<>(this,
@@ -94,7 +102,6 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
 
             }
         }
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTransferAccounts.setAdapter(adapter);
         spinnerTransferAccounts.setOnItemSelectedListener(this);
@@ -107,6 +114,5 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

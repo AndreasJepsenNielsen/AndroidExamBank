@@ -15,7 +15,6 @@ import com.example.bankapp.Service.GetNumberService;
 import com.example.bankapp.Service.MonthlyAutoDepositReceiver;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,18 +22,15 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
-
     ArrayList<AccountModel> accounts;
     ArrayList<String> items;
     ArrayAdapter<AccountModel> adapter;
     CustomerModel user;
     AccountModel selectedAccount;
     GetNumberService numberService;
-
     Spinner spinnerAccount;
     EditText amountMonthly;
     Button depositMonthlyBtn;
-
     String number;
 
     @Override
@@ -60,6 +56,59 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
         });
     }
 
+    /**
+     *
+     * @return
+     *
+     * check if the number is greater the zero
+     */
+    private boolean validateMonthlyPayment() {
+        if (Double.parseDouble(amountMonthly.getText().toString()) < 0) {
+            Toast.makeText(this, getString(R.string.amountGreaterThanZero), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     *
+     * @param context
+     *
+     * sends all the user information with intent to the receiver. run the code and sets a new alarm
+     */
+    private void autoPayEveryMonthAlarm(Context context) {
+        Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
+        intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
+        intent.putExtra(getString(R.string.intentAutoNumber), number);
+        intent.putExtra(getString(R.string.intentUserEmail), user.getEmail());
+        intent.putExtra(getString(R.string.intentUserAccountBalance), selectedAccount.getBalance());
+        intent.putExtra(getString(R.string.intentAutoAmount), Double.parseDouble(amountMonthly.getText().toString()));
+        String concatRequestCode = number + context.getString(R.string.one);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, Integer.parseInt(concatRequestCode), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
+    }
+
+    /**
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     *
+     * checks which account thats selected
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selectedAccount = (AccountModel) spinnerAccount.getSelectedItem();
+        number = numberService.getNumber(this, selectedAccount);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
     private void init() {
         spinnerAccount = findViewById(R.id.spinnerMonthlyAccount);
         amountMonthly = findViewById(R.id.amountMonthly);
@@ -70,8 +119,10 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item);
 
+        /**
+         * check if the user have savings as an account option
+         */
         adapter.add(accounts.get(1));
-
         for (int i = 0; i < accounts.size(); i++) {
             try {
                 if (accounts.get(i).getType() != null && accounts.get(i).getType().equals(getString(R.string.SAVINGS))) {
@@ -85,39 +136,5 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAccount.setAdapter(adapter);
         spinnerAccount.setOnItemSelectedListener(this);
-    }
-
-    private boolean validateMonthlyPayment() {
-        if (Double.parseDouble(amountMonthly.getText().toString()) < 0) {
-            Toast.makeText(this, getString(R.string.amountGreaterThanZero), Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    private void autoPayEveryMonthAlarm(Context context) {
-        Intent intent = new Intent(context, MonthlyAutoDepositReceiver.class);
-        intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
-        intent.putExtra(getString(R.string.intentAutoNumber), number);
-        intent.putExtra(getString(R.string.intentUserEmail), user.getEmail());
-        intent.putExtra(getString(R.string.intentUserAccountBalance), selectedAccount.getBalance());
-        intent.putExtra(getString(R.string.intentAutoAmount), Double.parseDouble(amountMonthly.getText().toString()));
-
-        String concatRequestCode = number + context.getString(R.string.one);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, Integer.parseInt(concatRequestCode), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selectedAccount = (AccountModel) spinnerAccount.getSelectedItem();
-        number = numberService.getNumber(this, selectedAccount);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
     }
 }

@@ -5,7 +5,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -79,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,9 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
-
         dist = dist * 1.609344;
-
         return (dist);
     }
 
@@ -167,23 +163,19 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (Firstname.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.firstnameNotEmpty), Toast.LENGTH_LONG).show();
-
             return false;
         }
 
         if (Lastname.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.lastnameNotEmpty), Toast.LENGTH_LONG).show();
-
             return false;
         }
 
         if (Phonenumber.getText().toString().isEmpty() || Phonenumber.getText().toString().length() < 8 ||
                 Phonenumber.getText().toString().length() > 8) {
             Toast.makeText(this, getString(R.string.phonenumberAuth), Toast.LENGTH_LONG).show();
-
             return false;
         }
-
         return true;
     }
 
@@ -207,7 +199,6 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
 
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
