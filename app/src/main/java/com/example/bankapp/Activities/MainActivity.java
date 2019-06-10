@@ -25,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
-import org.apache.commons.validator.routines.EmailValidator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,13 +44,10 @@ public class MainActivity extends AppCompatActivity {
     CheckPasswordService passwordService;
     ValidEmailAddressService emailAddressService;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         init();
 
@@ -90,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * gives the user the the option to share the location.
+     */
     private void getLocationPermission() {
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
 
@@ -110,9 +109,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * @return
+     *
+     *  checks if the inputfield is an valid email and a valid password
+     */
     private boolean checkLoginValidity() {
-
 
         if (emailLogin.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
@@ -135,51 +137,31 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
         }
-
         return true;
     }
 
-
-    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
-                Log.d(TAG, "Value is: " + currentUser);
-                myCallBack.onCallBack(user);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-    }
-
+    /**
+     * @param email
+     * @param password
+     * @param userRef
+     *
+     *
+     */
     private void login(final String email, final String password, final DatabaseReference userRef) {
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             currentUserRef = userRef;
-
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-
                             readFromDatabaseTest(new MyCallBack() {
                                 @Override
                                 public void onCallBack(CustomerModel value) {
 
                                     try {
-                                        System.out.println(value.getAccounts());
                                         currentUser = value;
                                         currentUser.setAccounts(value.getAccounts());
 
@@ -211,6 +193,32 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    /**
+     *
+     * @param myCallBack
+     * @param myRef
+     *
+     *
+     */
+    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                CustomerModel user = dataSnapshot.getValue(CustomerModel.class);
+                Log.d(TAG, "Value is: " + currentUser);
+                myCallBack.onCallBack(user);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
     private void init() {

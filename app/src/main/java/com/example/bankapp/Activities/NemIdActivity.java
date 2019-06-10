@@ -114,14 +114,7 @@ public class NemIdActivity extends AppCompatActivity {
 
     public String generateNemId() {
         String generatedString = RandomStringUtils.random(6, "0123456789");
-
-        System.out.println(generatedString);
-
         timeStamp10 = System.currentTimeMillis() + TEN_MINUTES;
-
-        System.out.println(System.currentTimeMillis());
-        System.out.println(timeStamp10);
-
         return generatedString;
     }
 
