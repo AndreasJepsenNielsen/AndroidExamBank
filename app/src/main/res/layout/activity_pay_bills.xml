@@ -4,7 +4,8 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".Activities.PayBillsActivity">
+                                             tools:context=".Activities.PayBillsActivity"
+                                             android:background="@color/backgroundBLUE">
 
     <EditText
             android:id="@+id/payId"
@@ -12,28 +13,28 @@
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="428dp"
             android:ems="10"
             android:hint="@string/payment_id"
             android:inputType="number"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.453"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="388dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
             android:id="@+id/payName"
-            android:layout_width="317dp"
-            android:layout_height="40dp"
+            android:layout_width="342dp"
+            android:layout_height="41dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="480dp"
             android:ems="10"
             android:hint="@string/payment_name"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.433"
+            android:layout_marginBottom="436dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
             android:id="@+id/payCreditor"
@@ -41,24 +42,25 @@
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="428dp"
             android:ems="10"
             android:hint="@string/creditor"
             android:inputType="number"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.872"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.901"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="388dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Spinner
             android:id="@+id/spinnerPay"
             android:layout_width="95dp"
-            android:layout_height="43dp"
-            android:layout_marginEnd="300dp"
-            android:layout_marginBottom="428dp"
+            android:layout_height="40dp"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:overlapAnchor="false"
+            android:background="@drawable/rounded_spinner"
+            android:layout_marginEnd="284dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.958"
+            android:layout_marginBottom="388dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
             android:id="@+id/buttonPay"
@@ -66,12 +68,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="180dp"
+            android:layout_marginBottom="140dp"
             android:text="@string/payBill"
+            android:background="@drawable/rounded_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" android:textColor="@color/backgroundBLUE"/>
 
     <CheckBox
             android:id="@+id/checkBoxPayAuto"
@@ -79,29 +81,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="252dp"
+            android:layout_marginBottom="212dp"
             android:text="@string/checkBoxAutoPay"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/checkBoxAutoPay"/>
-
-    <TextView
-            android:id="@+id/payFrom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/payFrom"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/transferMoneyBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.138"/>
+            tools:text="@string/checkBoxAutoPay" android:textColor="@color/backgroundBLUE"
+            android:textAlignment="viewStart"/>
 
     <EditText
             android:id="@+id/paymentAmount"
@@ -109,37 +96,51 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="304dp"
+            android:layout_marginBottom="264dp"
             android:ems="10"
             android:hint="@string/amountToPay"
             android:inputType="numberDecimal"
+            android:background="@drawable/rounded_edittext"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-            android:id="@+id/accountNameAccountsPay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="292dp"
+            android:layout_height="41dp"
+            android:id="@+id/accountBalanceAccountsPay" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:fontFamily="sans-serif-thin"
+            app:layout_constraintVertical_bias="0.151"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/payFrom"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:textAlignment="center" android:textSize="26sp" app:layout_constraintHorizontal_bias="0.49"/>
 
     <TextView
-            android:id="@+id/accountBalanceAccountsPay"
+            android:layout_width="290dp"
+            android:layout_height="43dp"
+            android:id="@+id/accountNameAccountsPay" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:fontFamily="sans-serif-thin"
+            app:layout_constraintVertical_bias="0.087"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAlignment="center" app:layout_constraintHorizontal_bias="0.495" android:textSize="26sp"/>
+
+    <TextView
+            android:text="@string/payFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/accountNameAccountsPay"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:id="@+id/textView7" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/defaultAccountBtn" android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:fontFamily="sans-serif-thin"
+            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.347"/>
 </android.support.constraint.ConstraintLayout>
