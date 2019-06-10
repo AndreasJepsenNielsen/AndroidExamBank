@@ -113,7 +113,6 @@
     <string name="actionsAccount">Actions</string>
     <string name="cancelledAllAutoPays">Cancelled all auto payments</string>
 
-
     <!-- PayBills -->
     <string-array name="paySpinner">
         <item>+01</item>
