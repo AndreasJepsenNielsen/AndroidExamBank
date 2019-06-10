@@ -65,7 +65,7 @@ public class DepositActivity extends AppCompatActivity {
         depositButton = findViewById(R.id.depositButton);
         depositField = findViewById(R.id.depositField);
         numberService = new GetNumberService();
-        accountDeposit = findViewById(R.id.accountBalance);
+        accountDeposit = findViewById(R.id.accountBalanceAccounts);
         accountDeposit.setText(account.getType() + " " + getString(R.string.AccountInViewActivity));
         number = numberService.getNumber(this, account);
     }

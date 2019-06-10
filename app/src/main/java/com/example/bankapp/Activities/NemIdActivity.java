@@ -1,5 +1,6 @@
 package com.example.bankapp.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -39,6 +40,7 @@ public class NemIdActivity extends AppCompatActivity {
         userDetails = getIntent().getParcelableExtra(getString(R.string.intentUser));
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
+
         /***
          * Strict is here so that we dont get the NetWorkOnMAinThreadException, another way around this is using AsyncTask
          */
@@ -47,6 +49,7 @@ public class NemIdActivity extends AppCompatActivity {
 
         init();
         sendMail();
+
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override

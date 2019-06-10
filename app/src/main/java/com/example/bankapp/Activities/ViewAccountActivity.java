@@ -2,6 +2,7 @@ package com.example.bankapp.Activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class ViewAccountActivity extends AppCompatActivity {
     ArrayList<AccountModel> accounts;
     String number;
     GetNumberService numberService;
+
+
 
     Button accountView, transferMoneyBetweenAccounts, transferMoneyToOtherAccounts, depositButton, payBillsBtn, cancelButton;
 
@@ -79,7 +82,7 @@ public class ViewAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (account.getType().equals(getString(R.string.PENSION)) && !today.after(userIs77)) {
-                    Toast.makeText(ViewAccountActivity.this, getString(R.string.notOldEnough), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewAccountActivity.this, getString(R.string.notOldEnough), Toast.LENGTH_SHORT).show();
 
                 } else {
                     Intent transferToOthers = new Intent(ViewAccountActivity.this, NemIdActivity.class);
@@ -165,5 +168,7 @@ public class ViewAccountActivity extends AppCompatActivity {
         numberService = new GetNumberService();
 
         number = numberService.getNumber(this, account);
+
+
     }
 }

@@ -235,6 +235,6 @@ public class MainActivity extends AppCompatActivity {
 
         loginProgressDialog = new ProgressDialog(MainActivity.this);
         loginProgressDialog.setIndeterminate(true);
-        loginProgressDialog.setMessage("Authenticating...");
+        loginProgressDialog.setMessage(getString(R.string.authenticateUserLogin));
     }
 }

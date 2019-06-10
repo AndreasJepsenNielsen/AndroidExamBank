@@ -126,10 +126,10 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
 
     private void init() {
         transferMoneyBtn = findViewById(R.id.transferMoneyBtn);
-        accountName = findViewById(R.id.accountName);
+        accountName = findViewById(R.id.accountNameAccounts);
         emailOtherAccount = findViewById(R.id.emailOtherAccount);
         amountToTransfer = findViewById(R.id.amountToTransfer);
-        accountBalance = findViewById(R.id.accountBalance);
+        accountBalance = findViewById(R.id.accountBalanceAccounts);
         numberService = new GetNumberService();
         number = numberService.getNumber(this, account);
 
