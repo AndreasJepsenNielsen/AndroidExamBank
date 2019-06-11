@@ -52,6 +52,14 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param emailOtherAccount
+     * @param amountToPay
+     * @param accountBalance
+     *
+     * Validate if information, email and if there is enough money on the account
+     */
     private void validate(EditText emailOtherAccount, TextView amountToPay, double accountBalance) {
         if (emailOtherAccount.getText().toString().isEmpty() && amountToPay.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emptyFieldsTransfer), Toast.LENGTH_LONG).show();
@@ -64,16 +72,28 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @param amount
+     *
+     * transfer the money from your account
+     */
     private void transferMoneyToOthers(double amount) {
         try {
             depositMoneyReceiver(database.getReference(getString(R.string.pathOdenseSlashUser) + emailOtherAccount.getText().toString().replace(".", "")));
             depositMoneyReceiver(database.getReference(getString(R.string.pathCPHSlashUser) + emailOtherAccount.getText().toString().replace(".", "")));
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NullPointerException npE) {
+            npE.printStackTrace();
         }
     }
 
+    /**
+     *
+     * @param ref
+     *
+     * deposit the money to the receiver account
+     */
     private void depositMoneyReceiver(DatabaseReference ref) {
         currentUserRef = ref;
 
@@ -91,7 +111,6 @@ public class TransferMoneyOthersActivity extends AppCompatActivity {
                     finish();
                 } catch (NullPointerException npe) {
                     Toast.makeText(TransferMoneyOthersActivity.this, getString(R.string.invalidUser), Toast.LENGTH_SHORT).show();
-                    return;
                 }
             }
 

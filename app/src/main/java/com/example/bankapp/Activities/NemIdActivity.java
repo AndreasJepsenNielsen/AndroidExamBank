@@ -113,7 +113,6 @@ public class NemIdActivity extends AppCompatActivity {
                     + "\n\n" + nemId);
             Transport.send(message);
         } catch (MessagingException e) {
-
             e.printStackTrace();
         }
     }

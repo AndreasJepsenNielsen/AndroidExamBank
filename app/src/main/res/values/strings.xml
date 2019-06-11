@@ -140,7 +140,7 @@
     <string name="intentUserEmail">userEmail</string>
     <string name="cancel_payments">Cancel Payments</string>
 
-    <!-- MonthlyPaymentsActivity -->
+    <!-- MonthlyDepositActivity -->
     <string name="monthlyPay">Monthly pay to</string>
     <string name="monthlyPayButton">Monthly pay</string>
     <string name="somethingWentWrong">Something went wrong</string>

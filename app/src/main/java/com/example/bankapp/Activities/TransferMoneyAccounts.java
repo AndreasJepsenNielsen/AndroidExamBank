@@ -58,8 +58,8 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
             myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + numberService.getNumber(this, selectedAccount) + getString(R.string.pathBalance)).setValue(selectedAccount.getBalance() + amount);
             finish();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NullPointerException npE) {
+            npE.printStackTrace();
         }
     }
 
@@ -99,7 +99,7 @@ public class TransferMoneyAccounts extends AppCompatActivity implements AdapterV
                     adapter.add(accounts.get(i));
                 }
             } catch (NullPointerException npE) {
-
+                npE.printStackTrace();
             }
         }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

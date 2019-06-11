@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MonthlyPaymentsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MonthlyDepositActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myref = database.getReference();
@@ -47,10 +47,10 @@ public class MonthlyPaymentsActivity extends AppCompatActivity implements Adapte
             @Override
             public void onClick(View v) {
                 if (validateMonthlyPayment()) {
-                    autoPayEveryMonthAlarm(MonthlyPaymentsActivity.this);
+                    autoPayEveryMonthAlarm(MonthlyDepositActivity.this);
                     myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(selectedAccount.getBalance() + Double.parseDouble(amountMonthly.getText().toString()));
                 } else {
-                    Toast.makeText(MonthlyPaymentsActivity.this, getString(R.string.somethingWentWrong), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MonthlyDepositActivity.this, getString(R.string.somethingWentWrong), Toast.LENGTH_LONG).show();
                 }
             }
         });

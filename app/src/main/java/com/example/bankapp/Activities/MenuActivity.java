@@ -108,7 +108,7 @@ public class MenuActivity extends AppCompatActivity {
         monthlyPayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent monthlyPay = new Intent(MenuActivity.this, MonthlyPaymentsActivity.class);
+                Intent monthlyPay = new Intent(MenuActivity.this, MonthlyDepositActivity.class);
                 monthlyPay.putExtra(getString(R.string.intentUser), userDetails);
                 monthlyPay.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                 startActivity(monthlyPay);
@@ -141,8 +141,8 @@ public class MenuActivity extends AppCompatActivity {
                 if (accounts.get(i).getType().equals(type)) {
                     tempAccount = accounts.get(i);
                 }
-            } catch (NullPointerException npe) {
-
+            } catch (NullPointerException npE) {
+                npE.printStackTrace();
             }
         }
         return tempAccount;
@@ -178,6 +178,7 @@ public class MenuActivity extends AppCompatActivity {
                     pensionAccountBtn.setText(getString(R.string.pensionAccount) + getString(R.string.balance) + accounts.get(i).getBalance());
                 }
             } catch (NullPointerException npE) {
+                npE.printStackTrace();
             }
         }
     }

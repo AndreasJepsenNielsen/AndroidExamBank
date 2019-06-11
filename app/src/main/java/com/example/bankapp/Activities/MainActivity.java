@@ -172,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
 
                                         loginProgressDialog.dismiss();
 
-                                    } catch (NullPointerException npe) {
-                                        return;
+                                    } catch (NullPointerException npE) {
+                                        npE.printStackTrace();
                                     }
                                 }
 

@@ -2,7 +2,6 @@ package com.example.bankapp.Activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +25,6 @@ public class ViewAccountActivity extends AppCompatActivity {
     ArrayList<AccountModel> accounts;
     String number;
     GetNumberService numberService;
-
-
 
     Button accountView, transferMoneyBetweenAccounts, transferMoneyToOtherAccounts, depositButton, payBillsBtn, cancelButton;
 
@@ -106,9 +103,7 @@ public class ViewAccountActivity extends AppCompatActivity {
                     payBills.putExtra(getString(R.string.intentAccount), account);
                     payBills.putParcelableArrayListExtra(getString(R.string.intentAccounts), accounts);
                     payBills.putExtra(getString(R.string.clicked), getString(R.string.payBills));
-
                     startActivity(payBills);
-
                 }
             }
         });
@@ -122,9 +117,17 @@ public class ViewAccountActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *
+     * @return
+     * its in octal
+     * >20 = 1900 and up
+     * <20 = 2000 and up
+     * <10 = 2009 and down
+     */
     private Calendar getBirthDate() {
         Calendar birthDate = Calendar.getInstance();
-
         int day = Integer.parseInt(userDetails.getSSN().substring(0, 2));
         int month = Integer.parseInt(userDetails.getSSN().substring(2, 4));
         int year = Integer.parseInt(userDetails.getSSN().substring(4, 6));
@@ -146,15 +149,15 @@ public class ViewAccountActivity extends AppCompatActivity {
         return birthDate;
     }
 
+    /**
+     * Stops all the auto payments
+     */
     private void cancelPayments() {
-
         Intent intent = new Intent(this, AutoPayReceiver.class);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getApplicationContext(), Integer.parseInt(number), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
-
         alarmManager.cancel(pendingIntent);
     }
 
@@ -166,9 +169,6 @@ public class ViewAccountActivity extends AppCompatActivity {
         payBillsBtn = findViewById(R.id.payBillsBtn);
         cancelButton = findViewById(R.id.cancelBtn);
         numberService = new GetNumberService();
-
         number = numberService.getNumber(this, account);
-
-
     }
 }

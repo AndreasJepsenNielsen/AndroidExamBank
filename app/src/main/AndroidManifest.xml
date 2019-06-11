@@ -14,7 +14,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Activities.MonthlyPaymentsActivity"></activity>
+        <activity android:name=".Activities.MonthlyDepositActivity"></activity>
         <activity android:name=".Activities.PayBillsActivity"/>
         <activity android:name=".Activities.TransferMoneyAccounts"/>
         <activity android:name=".Activities.TransferMoneyOthersActivity"/>

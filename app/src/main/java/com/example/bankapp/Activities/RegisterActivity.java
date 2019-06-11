@@ -100,26 +100,25 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    //calculate the distance between to points
     private double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
         dist = Math.acos(dist);
         dist = rad2deg(dist);
+        //to convert to miles
         dist = dist * 60 * 1.1515;
+        //to covert to kilometers
         dist = dist * 1.609344;
         return (dist);
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts decimal degrees to radians             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    // This function converts decimal degrees to radians
     private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts radians to decimal degrees             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    // This function converts radians to decimal degrees
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
@@ -127,38 +126,32 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean checkValidity() {
         if (SSN.getText().toString().isEmpty() || SSN.getText().length() < 10 || SSN.getText().length() > 10) {
             Toast.makeText(this, getString(R.string.ssn10Characters), Toast.LENGTH_LONG).show();
-
             return false;
         }
 
         if (Email.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emailNotEmpty), Toast.LENGTH_LONG).show();
-
             return false;
         }
 
         if (!emailAddressService.isValidEmailAddress(Email.getText().toString())) {
             Toast.makeText(this, getString(R.string.emailNotValid), Toast.LENGTH_LONG).show();
-
             return false;
         }
 
         if (Password.getText().toString().isEmpty() || Password.getText().toString().length() < 8) {
             Toast.makeText(this, getString(R.string.mustBe8Characters), Toast.LENGTH_LONG).show();
             return false;
-
         }
 
         if (passwordService.checkPassword(Password.getText().toString())) {
             Toast.makeText(this, getString(R.string.mustContainUppercaseLetterAndNumber), Toast.LENGTH_LONG).show();
             return false;
-
         }
 
         if (Address.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.addressNotEmpty), Toast.LENGTH_LONG).show();
             return false;
-
         }
 
         if (Firstname.getText().toString().isEmpty()) {
@@ -180,7 +173,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     *
+     * @param customerToCreate
+     *
+     * write a new user in the DB
+     */
     private void writeNewUser(CustomerModel customerToCreate) {
         CustomerModel testCustomer1 = new CustomerModel(customerToCreate.getSSN(), customerToCreate.getEmail(), customerToCreate.getPassword(), customerToCreate.getAddress(), customerToCreate.getFirstName(), customerToCreate.getLastName(), customerToCreate.getPhoneNumber(), affiliate);
         String[] fn = testCustomer1.getEmail().split("\\.");
@@ -191,6 +189,13 @@ public class RegisterActivity extends AppCompatActivity {
         createAuthUser(customerToCreate.getEmail(), customerToCreate.getPassword());
     }
 
+    /**
+     *
+     * @param email
+     * @param password
+     *
+     * créate a user and give him auth privileges in firebase
+     */
     private void createAuthUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -209,6 +214,12 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     *
+     * @param myCallBack
+     *
+     * get the location of the device
+     */
     private void getDeviceLocation(final MyCallBack myCallBack) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         Log.d(TAG, "getDeviceLocation: getting current location");
