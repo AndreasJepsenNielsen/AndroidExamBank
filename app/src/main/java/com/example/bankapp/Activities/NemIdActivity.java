@@ -1,9 +1,8 @@
 package com.example.bankapp.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +30,7 @@ public class NemIdActivity extends AppCompatActivity {
     String choice;
     private static final int TEN_MINUTES = 10 * 60 * 1000;
     private long timeStamp10;
+    AsyncTask asyncTaskClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +41,9 @@ public class NemIdActivity extends AppCompatActivity {
         account = getIntent().getParcelableExtra(getString(R.string.intentAccount));
         accounts = getIntent().getParcelableArrayListExtra(getString(R.string.intentAccounts));
 
-        /***
-         * Strict is here so that we dont get the NetWorkOnMAinThreadException, another way around this is using AsyncTask
-         */
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         init();
-        sendMail();
+        asyncTaskClass.execute();
+
 
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +51,7 @@ public class NemIdActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (System.currentTimeMillis() >= timeStamp10) {
                     Toast.makeText(NemIdActivity.this, getString(R.string.codeSessionRunOut), Toast.LENGTH_LONG).show();
-                    sendMail();
+                    asyncTaskClass.execute();
                 } else {
                     if (inputCode.getText().toString().equals(nemId)) {
                         if (choice.equals(getString(R.string.transfer))) {
@@ -132,5 +127,15 @@ public class NemIdActivity extends AppCompatActivity {
     private void init() {
         verifyButton = findViewById(R.id.verifyButton);
         inputCode = findViewById(R.id.inputCode);
+        asyncTaskClass = new AsyncTaskClass();
     }
+
+     class AsyncTaskClass extends AsyncTask<Object, Object, Object> {
+         @Override
+         protected Object doInBackground(Object... objects) {
+             sendMail();
+             return null;
+         }
+     }
+
 }
