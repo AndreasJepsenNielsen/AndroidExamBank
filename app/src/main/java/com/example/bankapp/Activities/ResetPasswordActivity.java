@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.bankapp.R;
 import com.example.bankapp.Service.ValidEmailAddressService;
 import com.google.firebase.auth.FirebaseAuth;
-import org.apache.commons.validator.routines.EmailValidator;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
@@ -19,7 +18,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
     Button resetPassword;
     private FirebaseAuth mAuth;
     ValidEmailAddressService emailAddressService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
+        /**
+         * checks if the email is valid.
+         */
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,9 +47,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * send a email to the email from the input field with the rest password
+     */
     private void passResetViaEmail() {
-
         if (mAuth != null) {
             Log.w(" if Email authenticated", "Recovery Email has been  sent to " + emailfield.getText().toString());
             mAuth.sendPasswordResetEmail(emailfield.getText().toString());

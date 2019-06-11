@@ -126,6 +126,14 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *
+     * @param type
+     * @return
+     *
+     * gets the account that is cliked
+     */
     private AccountModel getAccount(String type) {
         AccountModel tempAccount = null;
         for (int i = 0; i < accounts.size(); i++) {
@@ -140,6 +148,9 @@ public class MenuActivity extends AppCompatActivity {
         return tempAccount;
     }
 
+    /**
+     * shows the accounts the user have
+     */
     private void displayAccounts() {
 
         for (int i = 0; i < accounts.size(); i++) {

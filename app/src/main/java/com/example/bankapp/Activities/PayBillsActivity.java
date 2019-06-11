@@ -40,23 +40,33 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
 
         init();
 
+        /**
+         * checks is auto pay is checked
+         */
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validatePayment()) {
                     checkedAutoPay = paymentAutoCheckbox.isChecked();
-                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") + getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(account.getBalance() - Double.parseDouble(paymentAmount.getText().toString()));
+                    myref.child(getString(R.string.pathSlash) + user.getAffiliate() + getString(R.string.pathUserSlash) + user.getEmail().replace(".", "") +
+                            getString(R.string.pathAccountSlash) + number + getString(R.string.pathBalance)).setValue(account.getBalance() -
+                            Double.parseDouble(paymentAmount.getText().toString()));
 
                     if (checkedAutoPay) {
                         autoPayEveryMonthAlarm(getApplicationContext());
                     }
-
                     finish();
                 }
             }
         });
     }
 
+    /**
+     *
+     * @param context
+     *
+     * sends all the user information with intent to the receiver. run the code and sets a new alarm
+     */
     private void autoPayEveryMonthAlarm(Context context) {
         Intent intent = new Intent(context, AutoPayReceiver.class);
         intent.putExtra(getString(R.string.intentAffiliate), user.getAffiliate());
@@ -71,17 +81,22 @@ public class PayBillsActivity extends AppCompatActivity implements AdapterView.O
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pendingIntent);
     }
 
+    /**
+     *
+     * @return
+     * check if is a valid payment and if it meets the requirements for at payment.
+     */
     private boolean validatePayment() {
         if (paymentId.getText().toString().isEmpty() || paymentCreditor.getText().toString().isEmpty() || paymentName.getText().toString().isEmpty() || paymentAmount.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.emptyFieldsPayBills), Toast.LENGTH_LONG).show();
             return false;
         }
-//8
+        //8
         if (paymentCreditor.length() != 8) {
             Toast.makeText(this, getString(R.string.creditorLength), Toast.LENGTH_LONG).show();
             return false;
         }
-//14
+        //14
         if (paymentId.length() != 14) {
             Toast.makeText(this, getString(R.string.paymentIdLength), Toast.LENGTH_LONG).show();
             return false;
