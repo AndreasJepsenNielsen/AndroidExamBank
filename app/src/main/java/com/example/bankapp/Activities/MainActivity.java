@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * first ask for fine location the ask for coares location
+     * Checks if the user has given permission for using fine and coarse location
      */
     private void getLocationPermission() {
         String[] permissions = {FINE_LOCATION, COARSE_LOCATION};
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
      *
      *
      */
-    private void login(final String email, final String password, final DatabaseReference userRef) {
+    private void login(String email, String password, final DatabaseReference userRef) {
         loginProgressDialog.show();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -153,10 +153,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            //Accessed from within an inner class must be declared final
                             currentUserRef = userRef;
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            readFromDatabaseTest(new MyCallBack() {
+                            readFromDatabase(new MyCallBack() {
                                 @Override
                                 public void onCallBack(CustomerModel value) {
 
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
      *
      *
      */
-    private void readFromDatabaseTest(final MyCallBack myCallBack, DatabaseReference myRef) {
+    private void readFromDatabase(final MyCallBack myCallBack, DatabaseReference myRef) {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

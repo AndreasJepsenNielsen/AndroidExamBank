@@ -99,7 +99,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
      * @param type
      * @param newAccount
      *
-     * check type of account and put it in the DB
+     * checks the type of account and put it in the database
      */
     private void applyForAccount(String type, AccountModel newAccount) {
         String number = getString(R.string.zero);
@@ -135,7 +135,7 @@ public class ApplyForAccountsActivity extends AppCompatActivity implements Adapt
      *
      * @param accountArrayList
      *
-     * check which account the user have and only show the accounts the user don't have
+     * checks which account the user has and shows only the accounts the user doesn't have
      */
     private void checkAccounts(ArrayList<AccountModel> accountArrayList) {
         for (int i = 0; i < accountArrayList.size(); i++) {
