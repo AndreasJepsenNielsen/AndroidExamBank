@@ -48,7 +48,7 @@ public class DepositActivity extends AppCompatActivity {
     }
 
     /**
-     * find the user and he's accounts. it sets the balance to the balance + deposit
+     * find the user and his accounts. it sets the balance to the balance + deposit
      * @param amount
      */
     private void depositMoney(double amount) {
